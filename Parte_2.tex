@@ -1,0 +1,50 @@
+\section{Descripción formal de la sintaxis del lenguaje}
+
+\begin{verbatim}
+<Programa>                    ::= <Cabecera_programa> <bloque>
+<bloque>                      ::= <Inicio_de_bloque>
+                                  <Declar_de_variables_locales>
+                                  <Declar_de_subprogs>
+                                  <Sentencias>
+                                  <Fin_de_bloque>
+<Declar_subprog>              ::= <Cabecera_subprograma> <bloque>
+<Declar_de_variables_locales> ::= declarar <tipo> <Variables_locales>;
+<Cabecera_programa>           ::= <identificador>()
+<Inicio_de_bloque>            ::= {
+<Fin_de_bloque>               ::= }
+<Variables_locales>           ::= <identificador>,
+                                  <Variables_locales>
+                                  | <identificador> <sentencia_asignacion>
+                                  | <identificador>
+<Cabecera_subprog>            ::= <identificador>(<argumentos>)
+                                  | <identificador>()
+<argumentos>                  ::= <identificador>
+                                  | <identificador>, <argumentos>
+<Sentencias>                  ::= <Sentencias> <Sentencia>
+                                  | <Sentencia>
+<Sentencia>                   ::= <bloque>
+                                  | <sentencia_asignacion>
+                                  | <sentencia_si>
+                                  | <sentencia_mientras>
+                                  | <sentencia_entrada>
+                                  | <sentencia_salida>
+                                  | <sentencia_retornar>
+                                  | (Resto de sentencias del lenguaje asignado)
+<sentencia_asignacion>        ::= <identificador> = <expresion>;
+<sentencia_si>                ::= si (<expresion>) <bloque>
+<sentencia_mientras>          ::= mientras (<expresion>) <bloque>
+<sentencia_hacer_mientras>    ::= hacer <bloque> mientras(<expresion>)
+<sentencia_entrada>           ::= leer <lista_variables>
+<sentencia_salida>            ::= escribir <lista_expresiones_o_cadena>
+<expresion>                   ::= ( <expresion> )
+                                  | <op_unario> <expresion>
+                                  | <expresion> <op_binario> <expresion>
+                                  | <identificador>
+                                  | <constante>
+                                  | <funcion>
+<funcion>                     ::= <identificador>()
+                                  | <identificador>(<argumentos>)
+
+\end{verbatim}
+
+
