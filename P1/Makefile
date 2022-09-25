@@ -1,9 +1,9 @@
 FUEN=./Texto_plano
 SAL=.
 
-Entrega_%.pdf: Entrega_%.tex clean
-	pdflatex $^
-	pdflatex $^
+Entrega_1.pdf: Entrega_1.tex clean
+	pdflatex Entrega_1.tex
+	pdflatex Entrega_1.tex
 	@make tidy
 
 tidy:
