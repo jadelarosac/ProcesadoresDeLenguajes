@@ -1,0 +1,81 @@
+\section{Descripción formal de la sintaxis del lenguaje}
+
+\begin{verbatim}
+<Programa>                    ::= <Cabecera_programa> <bloque>
+<bloque>                      ::= <Inicio_de_bloque> <Declar_de_variables_locales> <Declar_subprogs> <Sentencias> <Fin_de_bloque>
+<Declar_subprogs>             ::= <Declar_subprog>
+															| 	<Declar_subprog> <Declar_subprogs>
+<Declar_subprog>              ::= <Cabecera_subprograma> <bloque>
+<Declar_de_variables_locales> ::= { <Variables_locales> } 
+															| 	ϵ
+<Cabecera_programa>           ::= programa_principal()
+<Inicio_de_bloque>            ::= {
+<Fin_de_bloque>               ::= }
+<Variables_locales>           ::= <Variables_locales> <Cuerpo_declar_variables>
+															| 	<Cuerpo_declar_variables>
+<Cabecera_subprog>            ::= <tipo> <identificador>(<argumentos>)
+															| 	<tipo> <identificador>()
+<argumentos>                  ::= <tipo> <identificador>
+															| 	<tipo> <identificador>, <argumentos>
+<variable>                    ::= <identificador>
+															| 	<elemento_de_array>
+<elemento_de_array>           ::= <identificador>[<expresion>]
+															| 	<identificador>[<expresion>, <expresion>]
+<Sentencias>                  ::= <Sentencias> <Sentencia>
+															| 	<Sentencia>
+<Sentencia>                   ::= <bloque>
+															| 	<sentencia_asignacion>
+															| 	<sentencia_si>
+															| 	<sentencia_mientras>
+															| 	<sentencia_hacer_hasta>
+															| 	<sentencia_entrada>
+															| 	<sentencia_salida>
+															| 	<sentencia_retornar>
+<sentencia_asignacion>        ::= <variable> = <expresion>;
+<sentencia_si>                ::= si (<expresion>) <bloque>
+<sentencia_mientras>          ::= mientras (<expresion>) <bloque>
+<sentencia_hacer_hasta>       ::= hacer <bloque> hasta que (<expresion>);
+<sentencia_entrada>           ::= leer <lista_variables>;
+<sentencia_salida>            ::= escribir <lista_expresiones>;
+<sentencia_retornar>          ::= retornar <expresion>;
+<sentencia_llamada>           ::= <identificador>(<lista_variables>); (NO ESTOY SEGURO SI ES NECESARIO) 
+															| 	<identificador>();
+<lista_variables>             ::= <variable>
+															| 	<variable>, <lista_variables>
+<lista_expresiones>           ::= <expresion>
+															| 	<expresion>, <lista_expresiones>
+<expresion>                   ::= ( <expresion> )
+															| 	<op_unario> <expresion>
+															| 	<expresion> <op_binario> <expresion>
+															| 	<variable>
+															| 	<constante>
+															| 	<funcion>
+<funcion>                     ::= <identificador>()
+															| 	<identificador>(<lista_variables>)
+<tipo>                        ::= <tipo_elemental>
+															| 	<tipo_elemental> vector[<expresion>]
+															| 	<tipo_elemental> matriz[<expresion>, <expresion>]
+<tipo_elemental>              ::= entero | real | caracter | booleano
+<op_binario>                  ::= + | - | * | / | ** | && | || | == | !=
+															| 	<= | >= | < | >
+<op_unario>                   ::= - | !
+<caracter>                    ::= [a-z] | [A-Z]
+<digito>                      ::= [0-9]
+<numero>                      ::= <digito> | <digito><numero>
+<numero_en_coma_flotante>     ::= <numero>.<numero>
+<cadena>                      ::= <caracter> | <caracter><cadena>
+<identificador>               ::= <identificador><numero>
+															| 	<identificador><cadena>
+															| 	<cadena>
+<constante>                   ::= <numero>
+															| 	<numero_en_coma_flotante>
+															| 	"<cadena>"
+															| 	true
+															| 	false
+															| 	<elemento_de_array>
+															| 	[<ini_elementos_array>]
+<ini_elementos_array>         ::= <lista_expresiones>; <ini_elementos_array>
+															| 	<lista_expresiones>
+\end{verbatim}
+
+
