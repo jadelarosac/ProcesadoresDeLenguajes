@@ -1,0 +1,2 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Descripción formal de la sintaxis del lenguaje}{2}{section.1}%

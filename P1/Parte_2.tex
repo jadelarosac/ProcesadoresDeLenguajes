@@ -1,43 +1,44 @@
 \section{Descripción formal de la sintaxis del lenguaje}
 
 \begin{verbatim}
-<Programa>                    ::= <Declar_de_subprogs>
-                                  <Cabecera_programa>\n<bloque>
+<Programa>                    ::= <Cabecera_programa> <bloque>
 <bloque>                      ::= <Inicio_de_bloque>
-                                  <Sentencias>
-                                  <Fin_de_bloque>\n
-<Declar_subprogs>             ::= <Declar_subprog>
-                                  | <Declar_subprog><Declar_subprogs>
-                                  | \n<Declar_subprogs>
-                                  | <Declar_subprogs>\n
-<Declar_subprog>              ::= <Cabecera_subprograma>\n<bloque>
-<Declar_de_variables_locales> ::= <tipo> <Variables_locales>;
+																	<Declar_de_variables_locales>					
+																	<Declar_subprogs>
+																	<Sentencias> <Fin_de_bloque>
+<Declar_subprogs>             ::= <Declar_subprog> <Declar_subprogs>
+															|
+<Declar_subprog>              ::= <Cabecera_subprograma> <bloque>
+<Declar_de_variables_locales> ::= <Marca_ini_declar_variables>
+																	<Variables_locales>
+																	<Marca_fin_declar_variables>
+															|
+<Marca_ini_declar_variables>  ::= declarar
+<Marca_fin_declar_variables>  ::= fin declarar
 <Cabecera_programa>           ::= programa_principal()
-<Inicio_de_bloque>            ::= {\n
-<Fin_de_bloque>               ::= \n}
-<elemento_de_array>           ::= <identificador>[<expresion>]
-                                  | <identificador>[<expresion>, <expresion>]
-<variable>                    ::= <identificador>
-                                  | <elemento_de_array>
-<Variables_locales>           ::= <lista_variables>
-                                  | <lista_variables>, <sentencia_asignacion>
-                                  | <sentencia_asignacion>
-<Cabecera_subprog>            ::= <identificador>(<argumentos>)
-                                  | <identificador>()
+<Inicio_de_bloque>            ::= {
+<Fin_de_bloque>               ::= }
+<Variables_locales>           ::= <Variables_locales> <Cuerpo_declar_variables>
+															| 	<Cuerpo_declar_variables>
+<Cuerpo_declar_variables>			::= <tipo> <lista_declaracion_variables>;
+<Cabecera_subprog>            ::= <tipo_funcion> <identificador>(<argumentos>)
+															| 	<tipo_funcion> <identificador>()
 <argumentos>                  ::= <tipo> <identificador>
-                                  | <tipo> <identificador>, <argumentos>
-<Sentencias>                  ::= \t<Sentencias>
-                                  | <Sentencia>\n<Sentencias>
-                                  | <Sentencia>
-<Sentencia>                   ::= <Declar_de_variables_locales>
-                                  | <sentencia_asignacion>
-                                  | <sentencia_si>
-                                  | <sentencia_mientras>
-                                  | <sentencia_hacer_hasta>
-                                  | <sentencia_entrada>
-                                  | <sentencia_salida>
-                                  | <sentencia_retornar>
-                                  | \n
+															| 	<tipo> <identificador>, <argumentos>
+<variable>                    ::= <identificador>
+															| 	<elemento_de_array>
+<elemento_de_array>           ::= <identificador>[<expresion>]
+															| 	<identificador>[<expresion>, <expresion>]
+<Sentencias>                  ::= <Sentencias> <Sentencia>
+															| 	<Sentencia>
+<Sentencia>                   ::= <bloque>
+															| 	<sentencia_asignacion>
+															| 	<sentencia_si>
+															| 	<sentencia_mientras>
+															| 	<sentencia_hacer_hasta>
+															| 	<sentencia_entrada>
+															| 	<sentencia_salida>
+															| 	<sentencia_retornar>
 <sentencia_asignacion>        ::= <variable> = <expresion>;
 <sentencia_si>                ::= si (<expresion>) <bloque>
 <sentencia_mientras>          ::= mientras (<expresion>) <bloque>
@@ -45,42 +46,56 @@
 <sentencia_entrada>           ::= leer <lista_variables>;
 <sentencia_salida>            ::= escribir <lista_expresiones>;
 <sentencia_retornar>          ::= retornar <expresion>;
+<sentencia_llamada>           ::= <identificador>(<lista_variables>);
+															| 	<identificador>();
 <lista_variables>             ::= <variable>
-                                  | <variable>, <lista_variables>
+															| 	<variable>, <lista_variables>
+<lista_declaracion_variables> ::= <variable> = <expresion>
+															| 	<variable> = <expresion>, 		
+																	<lista_declaracion_variables>
+															|		<variable>
+															| 	<variable>, 		
+																	<lista_declaracion_variables>
 <lista_expresiones>           ::= <expresion>
-                                  | <expresion>, <lista_expresiones>
+															| 	<expresion>, <lista_expresiones>
 <expresion>                   ::= ( <expresion> )
-                                  | <op_unario> <expresion>
-                                  | <expresion> <op_binario> <expresion>
-                                  | <variable>
-                                  | <constante>
-                                  | <funcion>
+															| 	<op_unario> <expresion>
+															| 	<expresion> <op_binario> <expresion>
+															| 	<variable>
+															| 	<constante>
+															| 	<funcion>
 <funcion>                     ::= <identificador>()
-                                  | <identificador>(<lista_variables>)
+															| 	<identificador>(<lista_variables>)
 <tipo>                        ::= <tipo_elemental>
-                                  | <tipo_elemental> vector[<expresion>]
-                                  | <tipo_elemental>
-                                  matriz[<expresion>, <expresion>]
+															| 	<tipo_elemental> <elemento_array>
+															|		cadena
 <tipo_elemental>              ::= entero | real | caracter | booleano
+<tipo_funcion>	              ::= nada | <tipo>
 <op_binario>                  ::= + | - | * | / | ** | && | || | == | !=
-                                  | <= | >= | < | >
+															| 	<= | >= | < | > | %
 <op_unario>                   ::= - | !
-<caracter>                    ::= [a-z] | [A-Z]
+<caracter>                    ::= [a-z] | [A-Z] | _
 <digito>                      ::= [0-9]
 <numero>                      ::= <digito> | <digito><numero>
 <numero_en_coma_flotante>     ::= <numero>.<numero>
-<cadena>                      ::= <caracter> | <caracter><cadena>
+<cadena_identificador>        ::= <caracter> | <caracter><cadena_identificador>
+<cadena>        							::= <caracter> | <caracter><cadena>
+															|		<digito> | <digito><cadena>
 <identificador>               ::= <identificador><numero>
-                                  | <identificador><cadena>
-                                  | <cadena>
+															| 	<identificador><cadena_identificador>
+															| 	<cadena_identificador>
 <constante>                   ::= <numero>
-                                  | <numero_en_coma_flotante>
-                                  | "<cadena>"
-                                  | true
-                                  | false
-                                  | <elemento_de_array>
-                                  | [lista_expresiones]
-                                  | [lista_expresiones; lista_expresiones]
+															| 	<numero_en_coma_flotante>
+															| 	"<cadena>"
+															| 	""
+															|		'<digito>'
+															|		'<caracter>'
+															| 	cierto
+															| 	falso
+															| 	<elemento_de_array>
+															| 	[<ini_elementos_array>]
+<ini_elementos_array>         ::= <lista_expresiones>; <ini_elementos_array>
+															| 	<lista_expresiones>
 \end{verbatim}
 
 
