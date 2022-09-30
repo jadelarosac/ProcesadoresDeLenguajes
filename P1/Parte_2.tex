@@ -3,7 +3,7 @@
 \begin{verbatim}
 <Programa>                    ::= <Cabecera_programa> <bloque>
 <bloque>                      ::= <Inicio_de_bloque>
-                                  <Declar_de_variables_locales>          
+                                  <Declar_de_variables_locales>
                                   <Declar_subprogs>
                                   <Sentencias> <Fin_de_bloque>
 <Declar_subprogs>             ::= <Declar_subprog> <Declar_subprogs>
@@ -51,10 +51,10 @@
 <lista_variables>             ::= <variable>
                               |   <variable>, <lista_variables>
 <lista_declaracion_variables> ::= <variable> = <expresion>
-                              |   <variable> = <expresion>,     
+                              |   <variable> = <expresion>,
                                   <lista_declaracion_variables>
                               |    <variable>
-                              |   <variable>,     
+                              |   <variable>,
                                   <lista_declaracion_variables>
 <lista_expresiones>           ::= <expresion>
                               |   <expresion>, <lista_expresiones>
