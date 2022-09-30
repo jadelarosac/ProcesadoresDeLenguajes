@@ -21,8 +21,8 @@
 <Variables_locales>           ::= <Variables_locales> <Cuerpo_declar_variables>
                               |   <Cuerpo_declar_variables>
 <Cuerpo_declar_variables>      ::= <tipo> <lista_declaracion_variables>;
-<Cabecera_subprog>            ::= <tipo_funcion> <identificador>(<argumentos>)
-                              |   <tipo_funcion> <identificador>()
+<Cabecera_subprog>            ::= <tipo> <identificador>(<argumentos>)
+                              |   <tipo> <identificador>()
 <argumentos>                  ::= <tipo> <identificador>
                               |   <tipo> <identificador>, <argumentos>
 <variable>                    ::= <identificador>
@@ -40,14 +40,15 @@
                               |   <sentencia_salida>
                               |   <sentencia_retornar>
 <sentencia_asignacion>        ::= <variable> = <expresion>;
-<sentencia_si>                ::= si (<expresion>) <bloque>
-<sentencia_mientras>          ::= mientras (<expresion>) <bloque>
-<sentencia_hacer_hasta>       ::= hacer <bloque> hasta que (<expresion>);
+<sentencia_si>                ::= si (<expresion>) <sentencia>
+<sentencia_mientras>          ::= mientras (<expresion>) <sentencia>
+<sentencia_hacer_hasta>       ::= hacer <sentencia> hasta que (<expresion>);
 <sentencia_entrada>           ::= leer <lista_variables>;
-<sentencia_salida>            ::= escribir <lista_expresiones>;
+<sentencia_salida>            ::= escribir <lista_expresiones_cadena>;
 <sentencia_retornar>          ::= retornar <expresion>;
-<sentencia_llamada>           ::= <identificador>(<lista_variables>);
-                              |   <identificador>();
+<lista_expresiones_cadena>    ::= <lista_expresiones_cadena>, <expresion_cadena>
+                              |   <expresion_cadena>
+<expresion_cadena>            ::= <expresion> | <cadena>
 <lista_variables>             ::= <variable>
                               |   <variable>, <lista_variables>
 <lista_declaracion_variables> ::= <variable> = <expresion>
@@ -65,29 +66,24 @@
                               |   <constante>
                               |   <funcion>
 <funcion>                     ::= <identificador>()
-                              |   <identificador>(<lista_variables>)
+                              |   <identificador>(<lista_expresiones>)
 <tipo>                        ::= <tipo_elemental>
                               |   <tipo_elemental> <elemento_array>
-                              |    cadena
 <tipo_elemental>              ::= entero | real | caracter | booleano
-<tipo_funcion>                ::= nada | <tipo>
 <op_binario>                  ::= + | - | * | / | ** | && | || | == | !=
                               |   <= | >= | < | > | %
-<op_unario>                   ::= - | !
+<op_unario>                   ::= - | ! | +
 <caracter>                    ::= [a-z] | [A-Z] | _
 <digito>                      ::= [0-9]
 <numero>                      ::= <digito> | <digito><numero>
 <numero_en_coma_flotante>     ::= <numero>.<numero>
 <cadena_identificador>        ::= <caracter> | <caracter><cadena_identificador>
-<cadena>                      ::= <caracter> | <caracter><cadena>
-                              |    <digito> | <digito><cadena>
+<cadena>                      ::= "concatenación arbitraria de carácteres ASCII"
 <identificador>               ::= <identificador><numero>
                               |   <identificador><cadena_identificador>
                               |   <cadena_identificador>
 <constante>                   ::= <numero>
                               |   <numero_en_coma_flotante>
-                              |   "<cadena>"
-                              |   ""
                               |    '<digito>'
                               |    '<caracter>'
                               |   cierto
