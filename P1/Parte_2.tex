@@ -1,6 +1,6 @@
-\section{Descripción formal de la sintaxis del lenguaje}
+\section{Descripcion formal de la sintaxis del lenguaje}
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines=true, basicstyle=\tiny]
 <Programa>                    ::= <Cabecera_programa> <bloque>
 <bloque>                      ::= <Inicio_de_bloque>
                                   <Declar_de_variables_locales>
@@ -78,7 +78,7 @@
 <numero>                      ::= <digito> | <digito><numero>
 <numero_en_coma_flotante>     ::= <numero>.<numero>
 <cadena_identificador>        ::= <caracter> | <caracter><cadena_identificador>
-<cadena>                      ::= "concatenación arbitraria de carácteres ASCII"
+<cadena>                      ::= "concatenacion arbitraria de caracteres ASCII"
 <identificador>               ::= <identificador><numero>
                               |   <identificador><cadena_identificador>
                               |   <cadena_identificador>
@@ -92,6 +92,6 @@
                               |   [<ini_elementos_array>]
 <ini_elementos_array>         ::= <lista_expresiones>; <ini_elementos_array>
                               |   <lista_expresiones>
-\end{verbatim}
+\end{lstlisting}
 
 
