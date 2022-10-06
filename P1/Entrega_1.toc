@@ -1,2 +1,0 @@
-\babel@toc {nil}{}
-\contentsline {section}{\numberline {1}Descripcion formal de la sintaxis del lenguaje}{3}{section.1}%

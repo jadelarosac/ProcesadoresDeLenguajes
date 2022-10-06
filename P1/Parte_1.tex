@@ -1,20 +1,11 @@
-Descripción del lenguaje:
+\section{Introducción: breve descripción del lenguaje asignado}
 
 Vamos a desarrollar un lenguaje llamado \textit{BABAD}, de forma que consta de una parte común y una específica.
 
-Como parte común, el lenguaje ha de ser un subconjunto de un lenguaje de programación estructurado, donde los identificadores debe ser declarados antes de ser usados. Los tipos de datos básicos a teneren cuenta son: entero, real, carácter y booleano. Para cada una de estos tipos, se necesitará hacer uso de operaciones, como las aritméticas, relacionales y booleanos.
+Como parte común, el lenguaje ha de ser un subconjunto de un lenguaje de programación estructurado, donde los identificadores debe ser declarados antes de ser usados. Los tipos de datos básicos a tener en cuenta son: entero, real, carácter y booleano. Para cada una de estos tipos, se necesitará hacer uso de operaciones, como las aritméticas, relacionales y booleanas.
 
-Tipo de dato Operaciones
-entero, real
-booleano suma, resta, producto, división, operaciones de relación
-and, or, not, xor
-• Poseerá la sentencia de asignación para todos los tipos de expresiones.
-• Permitirá expresiones aritméticas lógicas.
-• Tendrá una sentencia de entrada y otra de salida (se utilizará como dispositivo de entrada el teclado
-y de salida la pantalla). Además, la sentencia de entrada deberá permitir leer sobre una lista de iden-
-tificadores y la sentencia de salida deberá permitir escribir una lista de expresiones y/o constantes
-de tipo cadena. A diferencia de los lenguajes conocidos y usados como referencia, estas sentencias
-no representan llamada a subprograma.
-• Dispone de las estructuras de control siguientes:
-– IF-THEN-ELSE.
-– WHILE
+Además, la sentencia de asignación ha de ser contemplada para todos los tipos de expresiones, permitiendo sentencias con expresiones aritméticas o lógicas. Existirá una sentencia de entrada y otra de salida (se utilizará como dispositivo de entrada el teclado y de salida la pantalla). Además, la sentencia de entrada deberá permitir leer sobre una lista de identificadores y la sentencia de salida deberá permitir escribir una lista de expresiones y/o constantes de tipo cadena. A diferencia de los lenguajes conocidos y usados como referencia, estas sentencias no representan llamada a subprograma.
+
+Nuestro lenguaje, concretamente, se basará en la sintaxis del lenguaje C y tendrá las palabras reservadas en castellano. Además, implementaremos un tipo concreto de estructura de datos: arrays 1D y 2D, contemplando operaciones como el acceso a elemento, producto, suma y resta elemento a elemento, producto externo (producto de un array por un escalar) y producto de matrices ($C = A \times B$, sabiendo que si A es una matriz $m \times n$ y B es matriz $k \times l$ entonces ha de darse necesariamente que $n = k$ y el resultado producto será una matriz C $m \times l$.
+
+Adicionalmente, tendremos en cuenta las variables de tipo array, que solo pueden tener elementos de los tipos básicos. Además, el caso particular de subprogramas que implementaremos serán las funciones. y además añadiremos como estructura de control extra el bucle hacer-hasta.
