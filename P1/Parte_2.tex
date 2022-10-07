@@ -21,8 +21,8 @@
 <Variables_locales>           ::= <Variables_locales> <Cuerpo_declar_variables>
                               |   <Cuerpo_declar_variables>
 <Cuerpo_declar_variables>      ::= <tipo> <lista_declaracion_variables>;
-<Cabecera_subprog>            ::= <tipo> <identificador>(<argumentos>)
-                              |   <tipo> <identificador>()
+<Cabecera_subprog>            ::= <tipo> <variable>(<argumentos>)
+                              |   <tipo> <variable>()
 <argumentos>                  ::= <tipo> <identificador>
                               |   <tipo> <identificador>, <argumentos>
 <variable>                    ::= <identificador>
@@ -52,12 +52,9 @@
 <expresion_cadena>            ::= <expresion> | <cadena>
 <lista_variables>             ::= <variable>
                               |   <variable>, <lista_variables>
-<lista_declaracion_variables> ::= <variable> = <expresion>
-                              |   <variable> = <expresion>,
-                                  <lista_declaracion_variables>
-                              |    <variable>
-                              |   <variable>,
-                                  <lista_declaracion_variables>
+<lista_declaracion_variables> ::= <lista_declaracion_variables>
+                              |   <variable>
+                              |   <variable>, <lista_declaracion_variables>
 <lista_expresiones>           ::= <expresion>
                               |   <expresion>, <lista_expresiones>
 <expresion>                   ::= ( <expresion> )
@@ -68,9 +65,7 @@
                               |   <funcion>
 <funcion>                     ::= <identificador>()
                               |   <identificador>(<lista_expresiones>)
-<tipo>                        ::= <tipo_elemental>
-                              |   <tipo_elemental> <elemento_array>
-<tipo_elemental>              ::= entero | real | caracter | booleano
+<tipo>                        ::= entero | real | caracter | booleano
 <op_binario>                  ::= + | - | * | / | ** | && | || | == | !=
                               |   <= | >= | < | > | %
 <op_unario>                   ::= - | ! | +
