@@ -2,6 +2,12 @@
 
 El lenguaje BABAD tiene tipos elementales (entero, real, carácter, booleano) y compuestos, como es el caso de arrays 1D y 2D que particularmente albergará el lenguaje. Tales arrays son vectores y matrices, respectivamente, constando de elementos del mismo tipo elemental.
 
+En cuanto a las operaciones que se pueden realizar con arrays 1D y 2D en nuestro lenguaje, hemos de tener en cuenta la posibilidad de tener 5 operadores binarios, que definen forma de expresión y no forma de sentencia, es decir, se devuelve un nuevo valor del tipo base del array o un nuevo array tras realizar la operación.
+
+El primero es la suma (+), donde se pueden sumar dos arrays, un array y un valor o viceversa. En cuenta al producto (*) donde se pueden hacer las 3 posibles combinaciones como con el +. La resta (-) involucra solo entre restar 2 arrays o restar array y valor. La división (/) también involucra dividir en las 2 situaciones de la resta. Las operaciones son elemento a elemento y cuando hay valores se le aplica.
+
+En cuanto a la multiplicación de matrices, se usa el operador **.
+
 Para escribir un programa, necesitaremos la cabecera del mismo, que es \texttt{programa\_principal()} y dentro de él contendrá como mínimo un bloque, los cuales se inician y terminan con las llaves \{ y \}.
 
 Al inicio de cada bloque del programa, se habrán de declarar las variables locales correspondientes (pudiendo incluso asignar valor en la misma declaración), que irán entre 2 marcas de comienzo y final de declaración (`\texttt{declarar}' y `\texttt{fin declarar}').
