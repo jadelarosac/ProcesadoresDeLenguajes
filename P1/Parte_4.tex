@@ -1,16 +1,16 @@
 \newpage
 \section{Tabla de Tokens}
 
-\begin{table}
+\begin{table}[H]
 \centering
-\begin{tabular}{| c | c | c | c |}[A]
+\begin{tabular}{| c | c | c | c |}
   \hline
   Token & Atributo & Patrón & Código \\ \hline
   CONST & 0: entero & ( [0-9]+ | [0-9]+``.``[0-9]+ | '([0-9] | [a-z] | [A-Z] | \_ )'  & 257 \\
   & 1:coma flotante & | ``cierto`` | ``falso`` | (``[``((ant,)*ant;)*(ant,)*ant``]``) &  \\
   & 2: carácter & & \\
-  & 3: booleano & & \\
-  & 4: array & & \\
+  & 3: booleano & (Nota: ant corresponde a cualquiera de las & \\
+  & 4: array & expresiones anteriores en la expresión regular)& \\
   & 5: matriz & & \\ \hline
   IDEN & & ([a-z] | [A-Z] | \_ ) ([0-9]+ | [a-z] | [A-Z] | \_ )* & 258 \\ \hline
   CADENA & & ``(caracter ASCII)*`` & 259 \\ \hline
