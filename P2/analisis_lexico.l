@@ -37,7 +37,7 @@
 \"[^\"]+\" {printf("%d", CADENA);}
 ([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* {printf("%d", IDEN);}
 (\'[^\']\'|[0-9]+|[0-9+]\.[0-9]+|"cierto"|"falso") {printf("%d", CONST);}
-. {return -1;}
+. {printf("ERROR LÉXICO\n");return -1;}
 %%
 
 int main(int argc, char* argv[]){

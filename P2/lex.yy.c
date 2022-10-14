@@ -996,7 +996,7 @@ YY_RULE_SETUP
 case 28:
 YY_RULE_SETUP
 #line 40 "analisis_lexico.l"
-{return -1;}
+{printf("ERROR LÉXICO\n");return -1;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
