@@ -19,7 +19,7 @@
 #define HACER 275
 #define HASTA 276
 #define INIDEC 277
-#define FUNDEC 278
+#define FINDEC 278
 #define SALIDA 279
 #define ENTRADA 280
 #define DEVOLVER 281
