@@ -3,3 +3,5 @@
 *.out
 *.aux
 *.toc
+P2/main
+P2/lex.yy.c
