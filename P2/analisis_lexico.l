@@ -10,33 +10,34 @@
 
 %%
 
-("real"|"booleano"|"caracter"|"entero") {printf("%d", TIPOEL);}
-"programa_principal()" {printf("%d", MAIN);}
-"retornar" {printf("%d", DEVOLVER);}
-"leer" {printf("%d", ENTRADA);}
-"escribir" {printf("%d", SALIDA);}
-"fin declarar" {printf("%d", FINDEC );}
-"declarar" {printf("%d", INIDEC);}
-"hasta que" {printf("%d", HASTA);}
-"hacer" {printf("%d", HACER);}
-"mientras" {printf("%d", MIENTRAS);}
-"si no" {printf("%d", SINO);}
-"si" {printf("%d", SI);}
-"," {printf("%d", COMA);}
-";" {printf("%d", PYC);}
-"}" {printf("%d", LLADER);}
-"{" {printf("%d", LLAIZQ);}
-")" {printf("%d", PARDER);}
-"(" {printf("%d", PARIZQ);}
-"]" {printf("%d", CORDER);}
-"[" {printf("%d", CORIZQ);}
-"=" {printf("%d", ASIG);}
-("+"|"-") {printf("%d", OPMIX);}
-"!" {printf("%d", OPUN);}
-("*"|"/"|"**"|"&&"|"||"|"=="|"!="|"<="|">="|"<"|">"|"%") {printf("%d", OPBIN);}
-\"[^\"]+\" {printf("%d", CADENA);}
-([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* {printf("%d", IDEN);}
-(\'[^\']\'|[0-9]+|[0-9+]\.[0-9]+|"cierto"|"falso") {printf("%d", CONST);}
+("real"|"booleano"|"caracter"|"entero") {printf("%d\t", TIPOEL);}
+"programa_principal("[[:space:]]+")" {printf("%d\t", MAIN);}
+"retornar" {printf("%d\t", DEVOLVER);}
+"leer" {printf("%d\t", ENTRADA);}
+"escribir" {printf("%d\t", SALIDA);}
+"fin"[[:space:]]+"declarar" {printf("%d\t", FINDEC );}
+"declarar" {printf("%d\t", INIDEC);}
+"hasta"[[:space:]]+"que" {printf("%d\t", HASTA);}
+"hacer" {printf("%d\t", HACER);}
+"mientras" {printf("%d\t", MIENTRAS);}
+"si"[[:space:]]+"no" {printf("%d\t", SINO);}
+"si" {printf("%d\t", SI);}
+"," {printf("%d\t", COMA);}
+";" {printf("%d\t", PYC);}
+"}" {printf("%d\t", LLADER);}
+"{" {printf("%d\t", LLAIZQ);}
+")" {printf("%d\t", PARDER);}
+"(" {printf("%d\t", PARIZQ);}
+"]" {printf("%d\t", CORDER);}
+"[" {printf("%d\t", CORIZQ);}
+"=" {printf("%d\t", ASIG);}
+("+"|"-") {printf("%d\t", OPMIX);}
+"!" {printf("%d\t", OPUN);}
+("*"|"/"|"**"|"&&"|"||"|"=="|"!="|"<="|">="|"<"|">"|"%") {printf("%d\t", OPBIN);}
+\"[^\"]+\" {printf("%d\t", CADENA);}
+([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* {printf("%d\t", IDEN);}
+(\'[^\']\'|[0-9]+|[0-9+]\.[0-9]+|"cierto"|"falso") {printf("%d\t", CONST);}
+[[:space:]] {}
 . {printf("ERROR LÉXICO\n");return -1;}
 %%
 
