@@ -3,5 +3,5 @@
 *.out
 *.aux
 *.toc
-P2/main
-P2/lex.yy.c
+P2/Lex/main
+P2/Lex/lex.yy.c
