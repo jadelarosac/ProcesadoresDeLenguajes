@@ -23,8 +23,8 @@
 <Cuerpo_declar_variables>      ::= <tipo> <lista_declaracion_variables>;
 <Cabecera_subprog>            ::= <tipo> <variable>(<argumentos>)
                               |   <tipo> <variable>()
-<argumentos>                  ::= <tipo> <identificador>
-                              |   <tipo> <identificador>, <argumentos>
+<argumentos>                  ::= <tipo> <variable>
+                              |   <tipo> <variable>, <argumentos>
 <variable>                    ::= <identificador>
                               |   <elemento_de_array>
 <elemento_de_array>           ::= <identificador>[<expresion>]
@@ -74,14 +74,14 @@
 <numero>                      ::= <digito> | <digito><numero>
 <numero_en_coma_flotante>     ::= <numero>.<numero>
 <cadena_identificador>        ::= <caracter> | <caracter><cadena_identificador>
-<cadena>                      ::= "concatenacion arbitraria de caracteres ASCII"
+<cadena>                      ::= \``{^\``}+\`` 
 <identificador>               ::= <identificador><numero>
                               |   <identificador><cadena_identificador>
                               |   <cadena_identificador>
 <constante>                   ::= <numero>
                               |   <numero_en_coma_flotante>
                               |    '<digito>'
-                              |    '<caracter>'
+                              |    \`{ ^\`}\`
                               |   cierto
                               |   falso
                               |   [<ini_elementos_array>]
