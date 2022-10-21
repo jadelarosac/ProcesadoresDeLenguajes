@@ -14,7 +14,7 @@
 "booleano" {printf("%d\t", TIPOEL);}
 "caracter" {printf("%d\t", TIPOEL);}
 "entero" {printf("%d\t", TIPOEL);}
-"programa_principal("[[:space:]]+")" {printf("%d\t", MAIN);}
+"programa_principal("[[:space:]]*")" {printf("%d\t", MAIN);}
 "retornar" {printf("%d\t", DEVOLVER);}
 "leer" {printf("%d\t", ENTRADA);}
 "escribir" {printf("%d\t", SALIDA);}
@@ -53,7 +53,7 @@
 ([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* {printf("%d\t", IDEN);}
 (\'[^\']\'|[0-9]+|[0-9+]\.[0-9]+|"cierto"|"falso") {printf("%d\t", CONST);}
 [[:space:]] {}
-. {printf("ERROR LÉXICO en %d\n", yylineno);return -1;}
+. {printf("ERROR LÉXICO en %d lexema:%s \n", yylineno,yytext);}
 %%
 
 int main(int argc, char* argv[]){
