@@ -1,0 +1,34 @@
+\section{Introducción: breve descripción del lenguaje asignado}
+
+En esta práctica vamos a desarrollar un lenguaje de programación,
+que consta de una parte común y una específica. A nuestro grupo se le ha
+asignado el código \emph{BABAD}, que es el que determina la parte específica.
+
+Como parte común, el lenguaje ha de ser un subconjunto de un lenguaje de
+programación estructurado, donde los identificadores debe ser declarados antes
+de ser usados. Los tipos de datos básicos a tener en cuenta son: entero, real,
+carácter y booleano. Para cada una de estos tipos, se necesitará hacer uso de
+operaciones, como las aritméticas, relacionales y booleanas.
+
+Además, la sentencia de asignación se contempla para todos los tipos
+de expresiones, permitiendo sentencias con expresiones aritméticas o lógicas.
+Existe una sentencia de entrada y otra de salida (se utiliza como dispositivo
+de entrada el teclado y de salida la pantalla). Además, la sentencia de entrada
+permite leer sobre una lista de identificadores y la sentencia de salida permite
+escribir una lista de expresiones y/o constantes de tipo cadena. A diferencia
+de los lenguajes conocidos y usados como referencia, estas sentencias no
+representan llamada a subprograma.
+
+Nuestro lenguaje, siguiendo el código asignado, se basará en la sintaxis del
+lenguaje C y tendrá las palabras reservadas en castellano. Además,
+implementa un tipo concreto de estructura de datos: arrays 1D y 2D,
+contemplamos operaciones como el acceso a elemento, producto, suma y resta
+elemento a elemento, producto externo (producto de un array por un escalar)
+y producto de matrices ($C = A \times B$, sabiendo que si A es una matriz
+$m \times n$ y B es matriz $k \times l$ entonces ha de darse necesariamente que
+$n = k$ y el resultado producto será una matriz C $m \times l$.
+
+Adicionalmente, tendremos en cuenta las variables de tipo array, que solo
+pueden tener elementos de los tipos básicos. La forma de implementar
+subprogramas es implementar funciones. y además añadiremos como estructura de
+control extra el bucle hacer-hasta.
