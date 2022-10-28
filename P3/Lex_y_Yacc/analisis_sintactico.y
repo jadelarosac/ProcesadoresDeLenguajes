@@ -91,9 +91,10 @@ tipo                        : TIPOEL
 cadena                      : CADENA
 identificador               : IDEN
 constante                   : CONST
+/* Regla sustituida por el token CONST
 ini_elementos_array         : lista_expresiones PYC ini_elementos_array
                               |   lista_expresiones
-
+*/
 %%
 
 #ifdef DOSWINDOWS

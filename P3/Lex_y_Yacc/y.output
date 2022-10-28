@@ -1,14 +1,3 @@
-No terminales inútiles en la gramática
-
-    ini_elementos_array
-
-
-Reglas inútiles en la gramática
-
-   66 ini_elementos_array: lista_expresiones PYC ini_elementos_array
-   67                    | lista_expresiones
-
-
 Estado 110 conflictos: 1 desplazamiento/reducción
 
 

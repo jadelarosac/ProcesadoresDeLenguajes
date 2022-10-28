@@ -1651,7 +1651,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 97 "analisis_sintactico.y"
+#line 98 "analisis_sintactico.y"
 
 
 #ifdef DOSWINDOWS
