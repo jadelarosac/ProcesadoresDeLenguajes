@@ -33,21 +33,21 @@
 "]" {return(CORDER);}
 "[" {return(CORIZQ);}
 "=" {return(ASIG);}
-"+" {return(OPMIX);}
-"-" {return(OPMIX);}
-"!" {return(OPUN);}
-"*" {return(OPBIN);}
-"/" {return(OPBIN);}
-"**" {return(OPBIN);}
-"&&" {return(OPBIN);}
-"||" {return(OPBIN);}
-"==" {return(OPBIN);}
-"!=" {return(OPBIN);}
-"<=" {return(OPBIN);}
-">=" {return(OPBIN);}
-"<" {return(OPBIN);}
-">" {return(OPBIN);}
-"%" {return(OPBIN);}
+"+" {return(OPSUMA);}      //OPMIX
+"-" {return(OPRESTA);}     //OPMIX
+"!" {return(OPNEG);}       //OPUN
+"*" {return(OPMULT);}      //OPBIN
+"/" {return(OPDIV);}       //OPBIN
+"**" {return(OPMULTM);}    //OPBIN
+"&&" {return(OPAND);}      //OPBIN
+"||" {return(OPOR);}       //OPBIN
+"==" {return(OPEQ);}       //OPBIN
+"!=" {return(OPNEQ);}      //OPBIN
+"<=" {return(OPLEQ);}      //OPBIN
+">=" {return(OPGEQ);}      //OPBIN
+"<" {return(OPLESS);}      //OPBIN
+">" {return(OPGR);}        //OPBIN
+"%" {return(OPREST);}      //OPBIN
 \"[^\"]+\" {return(CADENA);}
 ([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* {return(IDEN);}
 (\'[^\']\'|[0-9]+|[0-9+]\.[0-9]+|"cierto"|"falso") {return(CONST);}
@@ -55,5 +55,3 @@
 [[:space:]] {}
 . {snprintf(buffer, MAXLONGBUFFER, "el o los caracteres '%s' no forman ningún token conocido", yytext);
   yyerror(buffer);}
-
-
