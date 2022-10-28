@@ -11,33 +11,7 @@ int linea_actual = 1;
 
 %error-verbose
 
-%token CONST
-%token IDEN
-%token CADENA
-%token OPBIN
-%token OPUN
-%token OPMIX
-%token ASIG
-%token CORIZQ
-%token CORDER
-%token PARIZQ
-%token PARDER
-%token LLAIZQ
-%token LLADER
-%token PYC
-%token COMA
-%token SI
-%token SINO
-%token MIENTRAS
-%token HACER
-%token HASTA
-%token INIDEC
-%token FINDEC
-%token SALIDA
-%token ENTRADA
-%token DEVOLVER
-%token MAIN
-%token TIPOEL
+%token CONST IDEN CADENA OPBIN OPUN OPMIX ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
 
 %%
 
