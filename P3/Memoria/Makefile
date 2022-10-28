@@ -1,9 +1,9 @@
 FUEN=./Texto_plano
 SAL=.
 
-Entrega_1.pdf: Entrega_1.tex clean
-	pdflatex Entrega_1.tex
-	pdflatex Entrega_1.tex
+Memoria.pdf: Memoria.tex clean
+	pdflatex Memoria.tex
+	pdflatex Memoria.tex
 	@make tidy
 
 tidy:
