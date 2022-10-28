@@ -9,9 +9,14 @@ void yyerror(char * msg);
 int linea_actual = 1;
 %}
 
-%error-verbose
+//%error-verbose
+%define parse.error verbose
 
-%token CONST IDEN CADENA OPBIN OPUN OPMIX ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
+%token CONST IDEN CADENA OPBIN OPMIX OPUN ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
+%left OPBIN
+%left OPMIX
+%left OPUN
+
 
 %%
 
@@ -68,22 +73,21 @@ lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena
 expresion_cadena            : expresion | cadena
 lista_variables             : variable
                               |   variable COMA lista_variables
-lista_declaracion_variables : lista_declaracion_variables
-                              |   variable
+lista_declaracion_variables :  variable
                               |   variable COMA lista_declaracion_variables
 lista_expresiones           : expresion
                               |   expresion COMA lista_expresiones
 expresion                   : PARIZQ expresion PARDER
-                              |   op_unario expresion
-                              |   expresion op_binario expresion
+                              |   OPUN expresion
+                              |   OPMIX expresion
+                              |   expresion OPBIN expresion
+                              |   expresion OPMIX expresion
                               |   variable
                               |   constante
                               |   funcion
 funcion                     : identificador PARIZQ PARDER
                               |   identificador PARIZQ lista_expresiones PARDER
 tipo                        : TIPOEL
-op_binario                  : OPBIN
-op_unario                   : OPUN
 cadena                      : CADENA
 identificador               : IDEN
 constante                   : CONST
