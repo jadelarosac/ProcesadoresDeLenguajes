@@ -1,0 +1,1637 @@
+Rules useless in parser due to conflicts
+
+   50 lista_declaracion_variables: variable COMA lista_declaracion_variables
+
+
+State 46 conflicts: 1 shift/reduce
+State 84 conflicts: 2 shift/reduce
+State 94 conflicts: 1 reduce/reduce
+State 100 conflicts: 2 shift/reduce
+State 110 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: Programa $end
+
+    1 Programa: Cabecera_programa bloque
+
+    2 bloque: Inicio_de_bloque Declar_de_variables_locales Declar_subprogs Sentencias Fin_de_bloque
+
+    3 Declar_subprogs: Declar_subprog Declar_subprogs
+    4                | %empty
+
+    5 Declar_subprog: Cabecera_subprog bloque
+
+    6 Declar_de_variables_locales: Marca_ini_declar_variables Variables_locales Marca_fin_declar_variables
+    7                            | %empty
+
+    8 Marca_ini_declar_variables: INIDEC
+
+    9 Marca_fin_declar_variables: FINDEC
+
+   10 Cabecera_programa: MAIN
+
+   11 Inicio_de_bloque: LLAIZQ
+
+   12 Fin_de_bloque: LLADER
+
+   13 Variables_locales: Variables_locales Cuerpo_declar_variables
+   14                  | Cuerpo_declar_variables
+
+   15 Cuerpo_declar_variables: tipo lista_declaracion_variables PYC
+
+   16 Cabecera_subprog: tipo variable PARIZQ argumentos PARDER
+   17                 | tipo variable PARIZQ PARDER
+
+   18 argumentos: tipo variable
+   19           | tipo variable COMA argumentos
+
+   20 variable: identificador
+   21         | elemento_de_array
+
+   22 elemento_de_array: identificador CORIZQ expresion CORDER
+   23                  | identificador CORIZQ expresion COMA expresion CORDER
+
+   24 Sentencias: Sentencias Sentencia
+   25           | Sentencia
+
+   26 Sentencia: bloque
+   27          | sentencia_asignacion
+   28          | sentencia_si
+   29          | sentencia_mientras
+   30          | sentencia_hacer_hasta
+   31          | sentencia_entrada
+   32          | sentencia_salida
+   33          | sentencia_retornar
+
+   34 sentencia_asignacion: variable ASIG expresion PYC
+
+   35 sentencia_si: SI PARIZQ expresion PARDER Sentencia
+   36             | SI PARIZQ expresion PARDER Sentencia SINO Sentencia
+
+   37 sentencia_mientras: MIENTRAS PARIZQ expresion PARDER Sentencia
+
+   38 sentencia_hacer_hasta: HACER Sentencia HASTA PARIZQ expresion PARDER PYC
+
+   39 sentencia_entrada: ENTRADA lista_variables PYC
+
+   40 sentencia_salida: SALIDA lista_expresiones_cadena PYC
+
+   41 sentencia_retornar: DEVOLVER expresion PYC
+
+   42 lista_expresiones_cadena: lista_expresiones_cadena COMA expresion_cadena
+   43                         | expresion_cadena
+
+   44 expresion_cadena: expresion
+   45                 | cadena
+
+   46 lista_variables: variable
+   47                | variable COMA lista_variables
+
+   48 lista_declaracion_variables: lista_declaracion_variables
+   49                            | variable
+   50                            | variable COMA lista_declaracion_variables
+
+   51 lista_expresiones: expresion
+   52                  | expresion COMA lista_expresiones
+
+   53 expresion: PARIZQ expresion PARDER
+   54          | op_unario expresion
+   55          | expresion op_binario expresion
+   56          | variable
+   57          | constante
+   58          | funcion
+
+   59 funcion: identificador PARIZQ PARDER
+   60        | identificador PARIZQ lista_expresiones PARDER
+
+   61 tipo: TIPOEL
+
+   62 op_binario: OPBIN
+   63           | OPMIX
+
+   64 op_unario: OPUN
+   65          | OPMIX
+
+   66 cadena: CADENA
+
+   67 identificador: IDEN
+
+   68 constante: CONST
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    CONST (258) 68
+    IDEN (259) 67
+    CADENA (260) 66
+    OPBIN (261) 62
+    OPUN (262) 64
+    OPMIX (263) 63 65
+    ASIG (264) 34
+    CORIZQ (265) 22 23
+    CORDER (266) 22 23
+    PARIZQ (267) 16 17 35 36 37 38 53 59 60
+    PARDER (268) 16 17 35 36 37 38 53 59 60
+    LLAIZQ (269) 11
+    LLADER (270) 12
+    PYC (271) 15 34 38 39 40 41
+    COMA (272) 19 23 42 47 50 52
+    SI (273) 35 36
+    SINO (274) 36
+    MIENTRAS (275) 37
+    HACER (276) 38
+    HASTA (277) 38
+    INIDEC (278) 8
+    FINDEC (279) 9
+    SALIDA (280) 40
+    ENTRADA (281) 39
+    DEVOLVER (282) 41
+    MAIN (283) 10
+    TIPOEL (284) 61
+
+
+Nonterminals, with rules where they appear
+
+    $accept (30)
+        on left: 0
+    Programa (31)
+        on left: 1
+        on right: 0
+    bloque (32)
+        on left: 2
+        on right: 1 5 26
+    Declar_subprogs (33)
+        on left: 3 4
+        on right: 2 3
+    Declar_subprog (34)
+        on left: 5
+        on right: 3
+    Declar_de_variables_locales (35)
+        on left: 6 7
+        on right: 2
+    Marca_ini_declar_variables (36)
+        on left: 8
+        on right: 6
+    Marca_fin_declar_variables (37)
+        on left: 9
+        on right: 6
+    Cabecera_programa (38)
+        on left: 10
+        on right: 1
+    Inicio_de_bloque (39)
+        on left: 11
+        on right: 2
+    Fin_de_bloque (40)
+        on left: 12
+        on right: 2
+    Variables_locales (41)
+        on left: 13 14
+        on right: 6 13
+    Cuerpo_declar_variables (42)
+        on left: 15
+        on right: 13 14
+    Cabecera_subprog (43)
+        on left: 16 17
+        on right: 5
+    argumentos (44)
+        on left: 18 19
+        on right: 16 19
+    variable (45)
+        on left: 20 21
+        on right: 16 17 18 19 34 46 47 49 50 56
+    elemento_de_array (46)
+        on left: 22 23
+        on right: 21
+    Sentencias (47)
+        on left: 24 25
+        on right: 2 24
+    Sentencia (48)
+        on left: 26 27 28 29 30 31 32 33
+        on right: 24 25 35 36 37 38
+    sentencia_asignacion (49)
+        on left: 34
+        on right: 27
+    sentencia_si (50)
+        on left: 35 36
+        on right: 28
+    sentencia_mientras (51)
+        on left: 37
+        on right: 29
+    sentencia_hacer_hasta (52)
+        on left: 38
+        on right: 30
+    sentencia_entrada (53)
+        on left: 39
+        on right: 31
+    sentencia_salida (54)
+        on left: 40
+        on right: 32
+    sentencia_retornar (55)
+        on left: 41
+        on right: 33
+    lista_expresiones_cadena (56)
+        on left: 42 43
+        on right: 40 42
+    expresion_cadena (57)
+        on left: 44 45
+        on right: 42 43
+    lista_variables (58)
+        on left: 46 47
+        on right: 39 47
+    lista_declaracion_variables (59)
+        on left: 48 49 50
+        on right: 15 48 50
+    lista_expresiones (60)
+        on left: 51 52
+        on right: 52 60
+    expresion (61)
+        on left: 53 54 55 56 57 58
+        on right: 22 23 34 35 36 37 38 41 44 51 52 53 54 55
+    funcion (62)
+        on left: 59 60
+        on right: 58
+    tipo (63)
+        on left: 61
+        on right: 15 16 17 18 19
+    op_binario (64)
+        on left: 62 63
+        on right: 55
+    op_unario (65)
+        on left: 64 65
+        on right: 54
+    cadena (66)
+        on left: 66
+        on right: 45
+    identificador (67)
+        on left: 67
+        on right: 20 22 23 59 60
+    constante (68)
+        on left: 68
+        on right: 57
+
+
+State 0
+
+    0 $accept: . Programa $end
+
+    MAIN  shift, and go to state 1
+
+    Programa           go to state 2
+    Cabecera_programa  go to state 3
+
+
+State 1
+
+   10 Cabecera_programa: MAIN .
+
+    $default  reduce using rule 10 (Cabecera_programa)
+
+
+State 2
+
+    0 $accept: Programa . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 Programa: Cabecera_programa . bloque
+
+    LLAIZQ  shift, and go to state 5
+
+    bloque            go to state 6
+    Inicio_de_bloque  go to state 7
+
+
+State 4
+
+    0 $accept: Programa $end .
+
+    $default  accept
+
+
+State 5
+
+   11 Inicio_de_bloque: LLAIZQ .
+
+    $default  reduce using rule 11 (Inicio_de_bloque)
+
+
+State 6
+
+    1 Programa: Cabecera_programa bloque .
+
+    $default  reduce using rule 1 (Programa)
+
+
+State 7
+
+    2 bloque: Inicio_de_bloque . Declar_de_variables_locales Declar_subprogs Sentencias Fin_de_bloque
+
+    INIDEC  shift, and go to state 8
+
+    $default  reduce using rule 7 (Declar_de_variables_locales)
+
+    Declar_de_variables_locales  go to state 9
+    Marca_ini_declar_variables   go to state 10
+
+
+State 8
+
+    8 Marca_ini_declar_variables: INIDEC .
+
+    $default  reduce using rule 8 (Marca_ini_declar_variables)
+
+
+State 9
+
+    2 bloque: Inicio_de_bloque Declar_de_variables_locales . Declar_subprogs Sentencias Fin_de_bloque
+
+    TIPOEL  shift, and go to state 11
+
+    $default  reduce using rule 4 (Declar_subprogs)
+
+    Declar_subprogs   go to state 12
+    Declar_subprog    go to state 13
+    Cabecera_subprog  go to state 14
+    tipo              go to state 15
+
+
+State 10
+
+    6 Declar_de_variables_locales: Marca_ini_declar_variables . Variables_locales Marca_fin_declar_variables
+
+    TIPOEL  shift, and go to state 11
+
+    Variables_locales        go to state 16
+    Cuerpo_declar_variables  go to state 17
+    tipo                     go to state 18
+
+
+State 11
+
+   61 tipo: TIPOEL .
+
+    $default  reduce using rule 61 (tipo)
+
+
+State 12
+
+    2 bloque: Inicio_de_bloque Declar_de_variables_locales Declar_subprogs . Sentencias Fin_de_bloque
+
+    IDEN      shift, and go to state 19
+    LLAIZQ    shift, and go to state 5
+    SI        shift, and go to state 20
+    MIENTRAS  shift, and go to state 21
+    HACER     shift, and go to state 22
+    SALIDA    shift, and go to state 23
+    ENTRADA   shift, and go to state 24
+    DEVOLVER  shift, and go to state 25
+
+    bloque                 go to state 26
+    Inicio_de_bloque       go to state 7
+    variable               go to state 27
+    elemento_de_array      go to state 28
+    Sentencias             go to state 29
+    Sentencia              go to state 30
+    sentencia_asignacion   go to state 31
+    sentencia_si           go to state 32
+    sentencia_mientras     go to state 33
+    sentencia_hacer_hasta  go to state 34
+    sentencia_entrada      go to state 35
+    sentencia_salida       go to state 36
+    sentencia_retornar     go to state 37
+    identificador          go to state 38
+
+
+State 13
+
+    3 Declar_subprogs: Declar_subprog . Declar_subprogs
+
+    TIPOEL  shift, and go to state 11
+
+    $default  reduce using rule 4 (Declar_subprogs)
+
+    Declar_subprogs   go to state 39
+    Declar_subprog    go to state 13
+    Cabecera_subprog  go to state 14
+    tipo              go to state 15
+
+
+State 14
+
+    5 Declar_subprog: Cabecera_subprog . bloque
+
+    LLAIZQ  shift, and go to state 5
+
+    bloque            go to state 40
+    Inicio_de_bloque  go to state 7
+
+
+State 15
+
+   16 Cabecera_subprog: tipo . variable PARIZQ argumentos PARDER
+   17                 | tipo . variable PARIZQ PARDER
+
+    IDEN  shift, and go to state 19
+
+    variable           go to state 41
+    elemento_de_array  go to state 28
+    identificador      go to state 38
+
+
+State 16
+
+    6 Declar_de_variables_locales: Marca_ini_declar_variables Variables_locales . Marca_fin_declar_variables
+   13 Variables_locales: Variables_locales . Cuerpo_declar_variables
+
+    FINDEC  shift, and go to state 42
+    TIPOEL  shift, and go to state 11
+
+    Marca_fin_declar_variables  go to state 43
+    Cuerpo_declar_variables     go to state 44
+    tipo                        go to state 18
+
+
+State 17
+
+   14 Variables_locales: Cuerpo_declar_variables .
+
+    $default  reduce using rule 14 (Variables_locales)
+
+
+State 18
+
+   15 Cuerpo_declar_variables: tipo . lista_declaracion_variables PYC
+
+    IDEN  shift, and go to state 19
+
+    variable                     go to state 45
+    elemento_de_array            go to state 28
+    lista_declaracion_variables  go to state 46
+    identificador                go to state 38
+
+
+State 19
+
+   67 identificador: IDEN .
+
+    $default  reduce using rule 67 (identificador)
+
+
+State 20
+
+   35 sentencia_si: SI . PARIZQ expresion PARDER Sentencia
+   36             | SI . PARIZQ expresion PARDER Sentencia SINO Sentencia
+
+    PARIZQ  shift, and go to state 47
+
+
+State 21
+
+   37 sentencia_mientras: MIENTRAS . PARIZQ expresion PARDER Sentencia
+
+    PARIZQ  shift, and go to state 48
+
+
+State 22
+
+   38 sentencia_hacer_hasta: HACER . Sentencia HASTA PARIZQ expresion PARDER PYC
+
+    IDEN      shift, and go to state 19
+    LLAIZQ    shift, and go to state 5
+    SI        shift, and go to state 20
+    MIENTRAS  shift, and go to state 21
+    HACER     shift, and go to state 22
+    SALIDA    shift, and go to state 23
+    ENTRADA   shift, and go to state 24
+    DEVOLVER  shift, and go to state 25
+
+    bloque                 go to state 26
+    Inicio_de_bloque       go to state 7
+    variable               go to state 27
+    elemento_de_array      go to state 28
+    Sentencia              go to state 49
+    sentencia_asignacion   go to state 31
+    sentencia_si           go to state 32
+    sentencia_mientras     go to state 33
+    sentencia_hacer_hasta  go to state 34
+    sentencia_entrada      go to state 35
+    sentencia_salida       go to state 36
+    sentencia_retornar     go to state 37
+    identificador          go to state 38
+
+
+State 23
+
+   40 sentencia_salida: SALIDA . lista_expresiones_cadena PYC
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    CADENA  shift, and go to state 51
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable                  go to state 55
+    elemento_de_array         go to state 28
+    lista_expresiones_cadena  go to state 56
+    expresion_cadena          go to state 57
+    expresion                 go to state 58
+    funcion                   go to state 59
+    op_unario                 go to state 60
+    cadena                    go to state 61
+    identificador             go to state 62
+    constante                 go to state 63
+
+
+State 24
+
+   39 sentencia_entrada: ENTRADA . lista_variables PYC
+
+    IDEN  shift, and go to state 19
+
+    variable           go to state 64
+    elemento_de_array  go to state 28
+    lista_variables    go to state 65
+    identificador      go to state 38
+
+
+State 25
+
+   41 sentencia_retornar: DEVOLVER . expresion PYC
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion          go to state 66
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 26
+
+   26 Sentencia: bloque .
+
+    $default  reduce using rule 26 (Sentencia)
+
+
+State 27
+
+   34 sentencia_asignacion: variable . ASIG expresion PYC
+
+    ASIG  shift, and go to state 67
+
+
+State 28
+
+   21 variable: elemento_de_array .
+
+    $default  reduce using rule 21 (variable)
+
+
+State 29
+
+    2 bloque: Inicio_de_bloque Declar_de_variables_locales Declar_subprogs Sentencias . Fin_de_bloque
+   24 Sentencias: Sentencias . Sentencia
+
+    IDEN      shift, and go to state 19
+    LLAIZQ    shift, and go to state 5
+    LLADER    shift, and go to state 68
+    SI        shift, and go to state 20
+    MIENTRAS  shift, and go to state 21
+    HACER     shift, and go to state 22
+    SALIDA    shift, and go to state 23
+    ENTRADA   shift, and go to state 24
+    DEVOLVER  shift, and go to state 25
+
+    bloque                 go to state 26
+    Inicio_de_bloque       go to state 7
+    Fin_de_bloque          go to state 69
+    variable               go to state 27
+    elemento_de_array      go to state 28
+    Sentencia              go to state 70
+    sentencia_asignacion   go to state 31
+    sentencia_si           go to state 32
+    sentencia_mientras     go to state 33
+    sentencia_hacer_hasta  go to state 34
+    sentencia_entrada      go to state 35
+    sentencia_salida       go to state 36
+    sentencia_retornar     go to state 37
+    identificador          go to state 38
+
+
+State 30
+
+   25 Sentencias: Sentencia .
+
+    $default  reduce using rule 25 (Sentencias)
+
+
+State 31
+
+   27 Sentencia: sentencia_asignacion .
+
+    $default  reduce using rule 27 (Sentencia)
+
+
+State 32
+
+   28 Sentencia: sentencia_si .
+
+    $default  reduce using rule 28 (Sentencia)
+
+
+State 33
+
+   29 Sentencia: sentencia_mientras .
+
+    $default  reduce using rule 29 (Sentencia)
+
+
+State 34
+
+   30 Sentencia: sentencia_hacer_hasta .
+
+    $default  reduce using rule 30 (Sentencia)
+
+
+State 35
+
+   31 Sentencia: sentencia_entrada .
+
+    $default  reduce using rule 31 (Sentencia)
+
+
+State 36
+
+   32 Sentencia: sentencia_salida .
+
+    $default  reduce using rule 32 (Sentencia)
+
+
+State 37
+
+   33 Sentencia: sentencia_retornar .
+
+    $default  reduce using rule 33 (Sentencia)
+
+
+State 38
+
+   20 variable: identificador .
+   22 elemento_de_array: identificador . CORIZQ expresion CORDER
+   23                  | identificador . CORIZQ expresion COMA expresion CORDER
+
+    CORIZQ  shift, and go to state 71
+
+    $default  reduce using rule 20 (variable)
+
+
+State 39
+
+    3 Declar_subprogs: Declar_subprog Declar_subprogs .
+
+    $default  reduce using rule 3 (Declar_subprogs)
+
+
+State 40
+
+    5 Declar_subprog: Cabecera_subprog bloque .
+
+    $default  reduce using rule 5 (Declar_subprog)
+
+
+State 41
+
+   16 Cabecera_subprog: tipo variable . PARIZQ argumentos PARDER
+   17                 | tipo variable . PARIZQ PARDER
+
+    PARIZQ  shift, and go to state 72
+
+
+State 42
+
+    9 Marca_fin_declar_variables: FINDEC .
+
+    $default  reduce using rule 9 (Marca_fin_declar_variables)
+
+
+State 43
+
+    6 Declar_de_variables_locales: Marca_ini_declar_variables Variables_locales Marca_fin_declar_variables .
+
+    $default  reduce using rule 6 (Declar_de_variables_locales)
+
+
+State 44
+
+   13 Variables_locales: Variables_locales Cuerpo_declar_variables .
+
+    $default  reduce using rule 13 (Variables_locales)
+
+
+State 45
+
+   49 lista_declaracion_variables: variable .
+   50                            | variable . COMA lista_declaracion_variables
+
+    COMA  shift, and go to state 73
+
+    $default  reduce using rule 49 (lista_declaracion_variables)
+
+
+State 46
+
+   15 Cuerpo_declar_variables: tipo lista_declaracion_variables . PYC
+   48 lista_declaracion_variables: lista_declaracion_variables .
+
+    PYC  shift, and go to state 74
+
+    PYC  [reduce using rule 48 (lista_declaracion_variables)]
+
+
+State 47
+
+   35 sentencia_si: SI PARIZQ . expresion PARDER Sentencia
+   36             | SI PARIZQ . expresion PARDER Sentencia SINO Sentencia
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion          go to state 75
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 48
+
+   37 sentencia_mientras: MIENTRAS PARIZQ . expresion PARDER Sentencia
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion          go to state 76
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 49
+
+   38 sentencia_hacer_hasta: HACER Sentencia . HASTA PARIZQ expresion PARDER PYC
+
+    HASTA  shift, and go to state 77
+
+
+State 50
+
+   68 constante: CONST .
+
+    $default  reduce using rule 68 (constante)
+
+
+State 51
+
+   66 cadena: CADENA .
+
+    $default  reduce using rule 66 (cadena)
+
+
+State 52
+
+   64 op_unario: OPUN .
+
+    $default  reduce using rule 64 (op_unario)
+
+
+State 53
+
+   65 op_unario: OPMIX .
+
+    $default  reduce using rule 65 (op_unario)
+
+
+State 54
+
+   53 expresion: PARIZQ . expresion PARDER
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion          go to state 78
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 55
+
+   56 expresion: variable .
+
+    $default  reduce using rule 56 (expresion)
+
+
+State 56
+
+   40 sentencia_salida: SALIDA lista_expresiones_cadena . PYC
+   42 lista_expresiones_cadena: lista_expresiones_cadena . COMA expresion_cadena
+
+    PYC   shift, and go to state 79
+    COMA  shift, and go to state 80
+
+
+State 57
+
+   43 lista_expresiones_cadena: expresion_cadena .
+
+    $default  reduce using rule 43 (lista_expresiones_cadena)
+
+
+State 58
+
+   44 expresion_cadena: expresion .
+   55 expresion: expresion . op_binario expresion
+
+    OPBIN  shift, and go to state 81
+    OPMIX  shift, and go to state 82
+
+    $default  reduce using rule 44 (expresion_cadena)
+
+    op_binario  go to state 83
+
+
+State 59
+
+   58 expresion: funcion .
+
+    $default  reduce using rule 58 (expresion)
+
+
+State 60
+
+   54 expresion: op_unario . expresion
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion          go to state 84
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 61
+
+   45 expresion_cadena: cadena .
+
+    $default  reduce using rule 45 (expresion_cadena)
+
+
+State 62
+
+   20 variable: identificador .
+   22 elemento_de_array: identificador . CORIZQ expresion CORDER
+   23                  | identificador . CORIZQ expresion COMA expresion CORDER
+   59 funcion: identificador . PARIZQ PARDER
+   60        | identificador . PARIZQ lista_expresiones PARDER
+
+    CORIZQ  shift, and go to state 71
+    PARIZQ  shift, and go to state 85
+
+    $default  reduce using rule 20 (variable)
+
+
+State 63
+
+   57 expresion: constante .
+
+    $default  reduce using rule 57 (expresion)
+
+
+State 64
+
+   46 lista_variables: variable .
+   47                | variable . COMA lista_variables
+
+    COMA  shift, and go to state 86
+
+    $default  reduce using rule 46 (lista_variables)
+
+
+State 65
+
+   39 sentencia_entrada: ENTRADA lista_variables . PYC
+
+    PYC  shift, and go to state 87
+
+
+State 66
+
+   41 sentencia_retornar: DEVOLVER expresion . PYC
+   55 expresion: expresion . op_binario expresion
+
+    OPBIN  shift, and go to state 81
+    OPMIX  shift, and go to state 82
+    PYC    shift, and go to state 88
+
+    op_binario  go to state 83
+
+
+State 67
+
+   34 sentencia_asignacion: variable ASIG . expresion PYC
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion          go to state 89
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 68
+
+   12 Fin_de_bloque: LLADER .
+
+    $default  reduce using rule 12 (Fin_de_bloque)
+
+
+State 69
+
+    2 bloque: Inicio_de_bloque Declar_de_variables_locales Declar_subprogs Sentencias Fin_de_bloque .
+
+    $default  reduce using rule 2 (bloque)
+
+
+State 70
+
+   24 Sentencias: Sentencias Sentencia .
+
+    $default  reduce using rule 24 (Sentencias)
+
+
+State 71
+
+   22 elemento_de_array: identificador CORIZQ . expresion CORDER
+   23                  | identificador CORIZQ . expresion COMA expresion CORDER
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion          go to state 90
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 72
+
+   16 Cabecera_subprog: tipo variable PARIZQ . argumentos PARDER
+   17                 | tipo variable PARIZQ . PARDER
+
+    PARDER  shift, and go to state 91
+    TIPOEL  shift, and go to state 11
+
+    argumentos  go to state 92
+    tipo        go to state 93
+
+
+State 73
+
+   50 lista_declaracion_variables: variable COMA . lista_declaracion_variables
+
+    IDEN  shift, and go to state 19
+
+    variable                     go to state 45
+    elemento_de_array            go to state 28
+    lista_declaracion_variables  go to state 94
+    identificador                go to state 38
+
+
+State 74
+
+   15 Cuerpo_declar_variables: tipo lista_declaracion_variables PYC .
+
+    $default  reduce using rule 15 (Cuerpo_declar_variables)
+
+
+State 75
+
+   35 sentencia_si: SI PARIZQ expresion . PARDER Sentencia
+   36             | SI PARIZQ expresion . PARDER Sentencia SINO Sentencia
+   55 expresion: expresion . op_binario expresion
+
+    OPBIN   shift, and go to state 81
+    OPMIX   shift, and go to state 82
+    PARDER  shift, and go to state 95
+
+    op_binario  go to state 83
+
+
+State 76
+
+   37 sentencia_mientras: MIENTRAS PARIZQ expresion . PARDER Sentencia
+   55 expresion: expresion . op_binario expresion
+
+    OPBIN   shift, and go to state 81
+    OPMIX   shift, and go to state 82
+    PARDER  shift, and go to state 96
+
+    op_binario  go to state 83
+
+
+State 77
+
+   38 sentencia_hacer_hasta: HACER Sentencia HASTA . PARIZQ expresion PARDER PYC
+
+    PARIZQ  shift, and go to state 97
+
+
+State 78
+
+   53 expresion: PARIZQ expresion . PARDER
+   55          | expresion . op_binario expresion
+
+    OPBIN   shift, and go to state 81
+    OPMIX   shift, and go to state 82
+    PARDER  shift, and go to state 98
+
+    op_binario  go to state 83
+
+
+State 79
+
+   40 sentencia_salida: SALIDA lista_expresiones_cadena PYC .
+
+    $default  reduce using rule 40 (sentencia_salida)
+
+
+State 80
+
+   42 lista_expresiones_cadena: lista_expresiones_cadena COMA . expresion_cadena
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    CADENA  shift, and go to state 51
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion_cadena   go to state 99
+    expresion          go to state 58
+    funcion            go to state 59
+    op_unario          go to state 60
+    cadena             go to state 61
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 81
+
+   62 op_binario: OPBIN .
+
+    $default  reduce using rule 62 (op_binario)
+
+
+State 82
+
+   63 op_binario: OPMIX .
+
+    $default  reduce using rule 63 (op_binario)
+
+
+State 83
+
+   55 expresion: expresion op_binario . expresion
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion          go to state 100
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 84
+
+   54 expresion: op_unario expresion .
+   55          | expresion . op_binario expresion
+
+    OPBIN  shift, and go to state 81
+    OPMIX  shift, and go to state 82
+
+    OPBIN     [reduce using rule 54 (expresion)]
+    OPMIX     [reduce using rule 54 (expresion)]
+    $default  reduce using rule 54 (expresion)
+
+    op_binario  go to state 83
+
+
+State 85
+
+   59 funcion: identificador PARIZQ . PARDER
+   60        | identificador PARIZQ . lista_expresiones PARDER
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+    PARDER  shift, and go to state 101
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    lista_expresiones  go to state 102
+    expresion          go to state 103
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 86
+
+   47 lista_variables: variable COMA . lista_variables
+
+    IDEN  shift, and go to state 19
+
+    variable           go to state 64
+    elemento_de_array  go to state 28
+    lista_variables    go to state 104
+    identificador      go to state 38
+
+
+State 87
+
+   39 sentencia_entrada: ENTRADA lista_variables PYC .
+
+    $default  reduce using rule 39 (sentencia_entrada)
+
+
+State 88
+
+   41 sentencia_retornar: DEVOLVER expresion PYC .
+
+    $default  reduce using rule 41 (sentencia_retornar)
+
+
+State 89
+
+   34 sentencia_asignacion: variable ASIG expresion . PYC
+   55 expresion: expresion . op_binario expresion
+
+    OPBIN  shift, and go to state 81
+    OPMIX  shift, and go to state 82
+    PYC    shift, and go to state 105
+
+    op_binario  go to state 83
+
+
+State 90
+
+   22 elemento_de_array: identificador CORIZQ expresion . CORDER
+   23                  | identificador CORIZQ expresion . COMA expresion CORDER
+   55 expresion: expresion . op_binario expresion
+
+    OPBIN   shift, and go to state 81
+    OPMIX   shift, and go to state 82
+    CORDER  shift, and go to state 106
+    COMA    shift, and go to state 107
+
+    op_binario  go to state 83
+
+
+State 91
+
+   17 Cabecera_subprog: tipo variable PARIZQ PARDER .
+
+    $default  reduce using rule 17 (Cabecera_subprog)
+
+
+State 92
+
+   16 Cabecera_subprog: tipo variable PARIZQ argumentos . PARDER
+
+    PARDER  shift, and go to state 108
+
+
+State 93
+
+   18 argumentos: tipo . variable
+   19           | tipo . variable COMA argumentos
+
+    IDEN  shift, and go to state 19
+
+    variable           go to state 109
+    elemento_de_array  go to state 28
+    identificador      go to state 38
+
+
+State 94
+
+   48 lista_declaracion_variables: lista_declaracion_variables .
+   50                            | variable COMA lista_declaracion_variables .
+
+    PYC       reduce using rule 48 (lista_declaracion_variables)
+    PYC       [reduce using rule 50 (lista_declaracion_variables)]
+    $default  reduce using rule 48 (lista_declaracion_variables)
+
+
+State 95
+
+   35 sentencia_si: SI PARIZQ expresion PARDER . Sentencia
+   36             | SI PARIZQ expresion PARDER . Sentencia SINO Sentencia
+
+    IDEN      shift, and go to state 19
+    LLAIZQ    shift, and go to state 5
+    SI        shift, and go to state 20
+    MIENTRAS  shift, and go to state 21
+    HACER     shift, and go to state 22
+    SALIDA    shift, and go to state 23
+    ENTRADA   shift, and go to state 24
+    DEVOLVER  shift, and go to state 25
+
+    bloque                 go to state 26
+    Inicio_de_bloque       go to state 7
+    variable               go to state 27
+    elemento_de_array      go to state 28
+    Sentencia              go to state 110
+    sentencia_asignacion   go to state 31
+    sentencia_si           go to state 32
+    sentencia_mientras     go to state 33
+    sentencia_hacer_hasta  go to state 34
+    sentencia_entrada      go to state 35
+    sentencia_salida       go to state 36
+    sentencia_retornar     go to state 37
+    identificador          go to state 38
+
+
+State 96
+
+   37 sentencia_mientras: MIENTRAS PARIZQ expresion PARDER . Sentencia
+
+    IDEN      shift, and go to state 19
+    LLAIZQ    shift, and go to state 5
+    SI        shift, and go to state 20
+    MIENTRAS  shift, and go to state 21
+    HACER     shift, and go to state 22
+    SALIDA    shift, and go to state 23
+    ENTRADA   shift, and go to state 24
+    DEVOLVER  shift, and go to state 25
+
+    bloque                 go to state 26
+    Inicio_de_bloque       go to state 7
+    variable               go to state 27
+    elemento_de_array      go to state 28
+    Sentencia              go to state 111
+    sentencia_asignacion   go to state 31
+    sentencia_si           go to state 32
+    sentencia_mientras     go to state 33
+    sentencia_hacer_hasta  go to state 34
+    sentencia_entrada      go to state 35
+    sentencia_salida       go to state 36
+    sentencia_retornar     go to state 37
+    identificador          go to state 38
+
+
+State 97
+
+   38 sentencia_hacer_hasta: HACER Sentencia HASTA PARIZQ . expresion PARDER PYC
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion          go to state 112
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 98
+
+   53 expresion: PARIZQ expresion PARDER .
+
+    $default  reduce using rule 53 (expresion)
+
+
+State 99
+
+   42 lista_expresiones_cadena: lista_expresiones_cadena COMA expresion_cadena .
+
+    $default  reduce using rule 42 (lista_expresiones_cadena)
+
+
+State 100
+
+   55 expresion: expresion . op_binario expresion
+   55          | expresion op_binario expresion .
+
+    OPBIN  shift, and go to state 81
+    OPMIX  shift, and go to state 82
+
+    OPBIN     [reduce using rule 55 (expresion)]
+    OPMIX     [reduce using rule 55 (expresion)]
+    $default  reduce using rule 55 (expresion)
+
+    op_binario  go to state 83
+
+
+State 101
+
+   59 funcion: identificador PARIZQ PARDER .
+
+    $default  reduce using rule 59 (funcion)
+
+
+State 102
+
+   60 funcion: identificador PARIZQ lista_expresiones . PARDER
+
+    PARDER  shift, and go to state 113
+
+
+State 103
+
+   51 lista_expresiones: expresion .
+   52                  | expresion . COMA lista_expresiones
+   55 expresion: expresion . op_binario expresion
+
+    OPBIN  shift, and go to state 81
+    OPMIX  shift, and go to state 82
+    COMA   shift, and go to state 114
+
+    $default  reduce using rule 51 (lista_expresiones)
+
+    op_binario  go to state 83
+
+
+State 104
+
+   47 lista_variables: variable COMA lista_variables .
+
+    $default  reduce using rule 47 (lista_variables)
+
+
+State 105
+
+   34 sentencia_asignacion: variable ASIG expresion PYC .
+
+    $default  reduce using rule 34 (sentencia_asignacion)
+
+
+State 106
+
+   22 elemento_de_array: identificador CORIZQ expresion CORDER .
+
+    $default  reduce using rule 22 (elemento_de_array)
+
+
+State 107
+
+   23 elemento_de_array: identificador CORIZQ expresion COMA . expresion CORDER
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    expresion          go to state 115
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 108
+
+   16 Cabecera_subprog: tipo variable PARIZQ argumentos PARDER .
+
+    $default  reduce using rule 16 (Cabecera_subprog)
+
+
+State 109
+
+   18 argumentos: tipo variable .
+   19           | tipo variable . COMA argumentos
+
+    COMA  shift, and go to state 116
+
+    $default  reduce using rule 18 (argumentos)
+
+
+State 110
+
+   35 sentencia_si: SI PARIZQ expresion PARDER Sentencia .
+   36             | SI PARIZQ expresion PARDER Sentencia . SINO Sentencia
+
+    SINO  shift, and go to state 117
+
+    SINO      [reduce using rule 35 (sentencia_si)]
+    $default  reduce using rule 35 (sentencia_si)
+
+
+State 111
+
+   37 sentencia_mientras: MIENTRAS PARIZQ expresion PARDER Sentencia .
+
+    $default  reduce using rule 37 (sentencia_mientras)
+
+
+State 112
+
+   38 sentencia_hacer_hasta: HACER Sentencia HASTA PARIZQ expresion . PARDER PYC
+   55 expresion: expresion . op_binario expresion
+
+    OPBIN   shift, and go to state 81
+    OPMIX   shift, and go to state 82
+    PARDER  shift, and go to state 118
+
+    op_binario  go to state 83
+
+
+State 113
+
+   60 funcion: identificador PARIZQ lista_expresiones PARDER .
+
+    $default  reduce using rule 60 (funcion)
+
+
+State 114
+
+   52 lista_expresiones: expresion COMA . lista_expresiones
+
+    CONST   shift, and go to state 50
+    IDEN    shift, and go to state 19
+    OPUN    shift, and go to state 52
+    OPMIX   shift, and go to state 53
+    PARIZQ  shift, and go to state 54
+
+    variable           go to state 55
+    elemento_de_array  go to state 28
+    lista_expresiones  go to state 119
+    expresion          go to state 103
+    funcion            go to state 59
+    op_unario          go to state 60
+    identificador      go to state 62
+    constante          go to state 63
+
+
+State 115
+
+   23 elemento_de_array: identificador CORIZQ expresion COMA expresion . CORDER
+   55 expresion: expresion . op_binario expresion
+
+    OPBIN   shift, and go to state 81
+    OPMIX   shift, and go to state 82
+    CORDER  shift, and go to state 120
+
+    op_binario  go to state 83
+
+
+State 116
+
+   19 argumentos: tipo variable COMA . argumentos
+
+    TIPOEL  shift, and go to state 11
+
+    argumentos  go to state 121
+    tipo        go to state 93
+
+
+State 117
+
+   36 sentencia_si: SI PARIZQ expresion PARDER Sentencia SINO . Sentencia
+
+    IDEN      shift, and go to state 19
+    LLAIZQ    shift, and go to state 5
+    SI        shift, and go to state 20
+    MIENTRAS  shift, and go to state 21
+    HACER     shift, and go to state 22
+    SALIDA    shift, and go to state 23
+    ENTRADA   shift, and go to state 24
+    DEVOLVER  shift, and go to state 25
+
+    bloque                 go to state 26
+    Inicio_de_bloque       go to state 7
+    variable               go to state 27
+    elemento_de_array      go to state 28
+    Sentencia              go to state 122
+    sentencia_asignacion   go to state 31
+    sentencia_si           go to state 32
+    sentencia_mientras     go to state 33
+    sentencia_hacer_hasta  go to state 34
+    sentencia_entrada      go to state 35
+    sentencia_salida       go to state 36
+    sentencia_retornar     go to state 37
+    identificador          go to state 38
+
+
+State 118
+
+   38 sentencia_hacer_hasta: HACER Sentencia HASTA PARIZQ expresion PARDER . PYC
+
+    PYC  shift, and go to state 123
+
+
+State 119
+
+   52 lista_expresiones: expresion COMA lista_expresiones .
+
+    $default  reduce using rule 52 (lista_expresiones)
+
+
+State 120
+
+   23 elemento_de_array: identificador CORIZQ expresion COMA expresion CORDER .
+
+    $default  reduce using rule 23 (elemento_de_array)
+
+
+State 121
+
+   19 argumentos: tipo variable COMA argumentos .
+
+    $default  reduce using rule 19 (argumentos)
+
+
+State 122
+
+   36 sentencia_si: SI PARIZQ expresion PARDER Sentencia SINO Sentencia .
+
+    $default  reduce using rule 36 (sentencia_si)
+
+
+State 123
+
+   38 sentencia_hacer_hasta: HACER Sentencia HASTA PARIZQ expresion PARDER PYC .
+
+    $default  reduce using rule 38 (sentencia_hacer_hasta)

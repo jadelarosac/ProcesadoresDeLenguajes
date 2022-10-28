@@ -9,7 +9,8 @@ void yyerror(char * msg);
 int linea_actual = 1;
 %}
 
-%error-verbose
+//%error-verbose is deprecated, we use instead:
+%define parse.error verbose
 
 %token CONST IDEN CADENA OPBIN OPUN OPMIX ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
 
@@ -82,13 +83,11 @@ expresion                   : PARIZQ expresion PARDER
 funcion                     : identificador PARIZQ PARDER
                               |   identificador PARIZQ lista_expresiones PARDER
 tipo                        : TIPOEL
-op_binario                  : OPBIN
-op_unario                   : OPUN
+op_binario                  : OPBIN | OPMIX
+op_unario                   : OPUN  | OPMIX
 cadena                      : CADENA
 identificador               : IDEN
 constante                   : CONST
-ini_elementos_array         : lista_expresiones PYC ini_elementos_array
-                              |   lista_expresiones
 
 %%
 
