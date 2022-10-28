@@ -12,10 +12,14 @@ int linea_actual = 1;
 //%error-verbose
 %define parse.error verbose
 
-%token CONST IDEN CADENA OPBIN OPMIX OPUN ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
-%left OPBIN
-%left OPMIX
-%left OPUN
+//%token CONST IDEN CADENA OPBIN OPMIX OPUN ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
+%token CONST IDEN CADENA OPMULT OPDIV OPMULTM OPAND OPPOPR OPEQ OPNEQ OPLEQ OPGEQ OPLESS OPGR OPREST OPSUMA OPRESTA OPNEG ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
+//%left OPBIN
+//%left OPMIX
+//%left OPUN
+%left OPMULT OPDIV OPMULTM OPAND OPPOPR OPEQ OPNEQ OPLEQ OPGEQ OPLESS OPGR OPREST
+%left OPSUMA OPRESTA
+%left OPNEG
 
 
 %%
@@ -78,10 +82,23 @@ lista_declaracion_variables :  variable
 lista_expresiones           : expresion
                               |   expresion COMA lista_expresiones
 expresion                   : PARIZQ expresion PARDER
-                              |   OPUN expresion
-                              |   OPMIX expresion
-                              |   expresion OPBIN expresion
-                              |   expresion OPMIX expresion
+                              |   OPNEG expresion
+                              |   OPSUMA expresion
+                              |   OPRESTA expresion
+                              |   expresion OPMULT expresion
+                              |   expresion OPDIV expresion
+                              |   expresion OPMULTM expresion
+                              |   expresion OPAND expresion
+                              |   expresion OPOR expresion
+                              |   expresion OPEQ expresion
+                              |   expresion OPNEQ expresion
+                              |   expresion OPLEQ expresion
+                              |   expresion OPGEQ expresion
+                              |   expresion OPLESS expresion
+                              |   expresion OPGR expresion
+                              |   expresion OPREST expresion
+                              |   expresion OPSUMA expresion
+                              |   expresion OPRESTA expresion
                               |   variable
                               |   constante
                               |   funcion
@@ -107,5 +124,3 @@ void yyerror(char *msg)
 {
   fprintf(stderr, "[Linea %d]: %s\n", linea_actual, msg);
 }
-
-
