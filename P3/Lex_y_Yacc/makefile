@@ -14,7 +14,7 @@ lex.yy.c: analisis_lexico.l
 	flex analisis_lexico.l
 
 clean:
-	rm -f prueba main.o y.tab.o y.tab.c lex.yy.c
+	rm -f prueba main.o y.tab.o y.tab.c lex.yy.c y.output
 
 all:
 	make clean

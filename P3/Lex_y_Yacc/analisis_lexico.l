@@ -47,7 +47,7 @@
 ">=" {return(OPGEQ);}      //OPBIN
 "<" {return(OPLESS);}      //OPBIN
 ">" {return(OPGR);}        //OPBIN
-"%" {return(OPREST);}      //OPBIN
+"%" {return(OPMOD);}      //OPBIN
 \"[^\"]+\" {return(CADENA);}
 ([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* {return(IDEN);}
 (\'[^\']\'|[0-9]+|[0-9+]\.[0-9]+|"cierto"|"falso") {return(CONST);}

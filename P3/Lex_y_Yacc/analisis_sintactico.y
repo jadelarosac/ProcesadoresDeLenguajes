@@ -12,12 +12,9 @@ int linea_actual = 1;
 //%error-verbose
 %define parse.error verbose
 
-//%token CONST IDEN CADENA OPBIN OPMIX OPUN ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
-%token CONST IDEN CADENA OPMULT OPDIV OPMULTM OPAND OPPOPR OPEQ OPNEQ OPLEQ OPGEQ OPLESS OPGR OPREST OPSUMA OPRESTA OPNEG ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
-//%left OPBIN
-//%left OPMIX
-//%left OPUN
-%left OPMULT OPDIV OPMULTM OPAND OPPOPR OPEQ OPNEQ OPLEQ OPGEQ OPLESS OPGR OPREST
+%token CONST IDEN CADENA OPMULT OPDIV OPMULTM OPAND OPOR OPEQ OPNEQ OPLEQ OPGEQ OPLESS OPGR OPMOD OPSUMA OPRESTA OPNEG ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
+
+%left OPMULT OPDIV OPMULTM OPAND OPOR OPEQ OPNEQ OPLEQ OPGEQ OPLESS OPGR OPMOD
 %left OPSUMA OPRESTA
 %left OPNEG
 
@@ -96,7 +93,7 @@ expresion                   : PARIZQ expresion PARDER
                               |   expresion OPGEQ expresion
                               |   expresion OPLESS expresion
                               |   expresion OPGR expresion
-                              |   expresion OPREST expresion
+                              |   expresion OPMOD expresion
                               |   expresion OPSUMA expresion
                               |   expresion OPRESTA expresion
                               |   variable

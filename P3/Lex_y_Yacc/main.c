@@ -24,7 +24,7 @@ FILE *abrir_entrada(int argc, char *argv[])
   }
   else
   {
-    printf("letendo entrada estándar.\n");
+    printf("leyendo entrada estándar.\n");
   }
 
   return f;
