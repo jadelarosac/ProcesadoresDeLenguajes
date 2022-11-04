@@ -35,7 +35,7 @@ bloque                      : Inicio_de_bloque
                                   Declar_de_variables_locales
                                   Declar_subprogs
                                   Sentencias Fin_de_bloque
-Declar_subprogs             : Declar_subprog Declar_subprogs
+Declar_subprogs             : Declar_subprogs Declar_subprog
                               |
 Declar_subprog              : Cabecera_subprog bloque
 Declar_de_variables_locales : Marca_ini_declar_variables
@@ -53,7 +53,7 @@ Cuerpo_declar_variables      : tipo lista_declaracion_variables PYC
 Cabecera_subprog            : tipo variable PARIZQ argumentos PARDER
                               |   tipo variable PARIZQ PARDER
 argumentos                  : tipo variable
-                              |   tipo variable COMA argumentos
+                              |   argumentos COMA tipo variable 
 variable                    : identificador
                               |   elemento_de_array
 elemento_de_array           : identificador CORIZQ expresion CORDER
@@ -82,11 +82,11 @@ lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena
                               |   expresion_cadena
 expresion_cadena            : expresion | cadena
 lista_variables             : variable
-                              |   variable COMA lista_variables
+                              |   lista_variables COMA variable
 lista_declaracion_variables :  variable
-                              |   variable COMA lista_declaracion_variables
+                              |   lista_declaracion_variables COMA variable
 lista_expresiones           : expresion
-                              |   expresion COMA lista_expresiones
+                              |   lista_expresiones COMA expresion
 expresion                   : PARIZQ expresion PARDER
                               |   OPNEG expresion
                               |   OPSUMA expresion
@@ -115,7 +115,7 @@ cadena                      : CADENA
 identificador               : IDEN
 constante                   : CONST
 /* Regla sustituida por el token CONST
-ini_elementos_array         : lista_expresiones PYC ini_elementos_array
+ini_elementos_array         : ini_elementos_array PYC lista_expresiones 
                               |   lista_expresiones
 */
 %%
