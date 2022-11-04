@@ -1,8 +1,8 @@
 programa_principal(){
 
 	entero funcion_mientras(entero a){
-	    declarar
-    		entero b=0;
+	declarar
+    		entero b;
     	fin declarar
 		mientras(b!=4){
 		    escribir "Escribe '4'";
