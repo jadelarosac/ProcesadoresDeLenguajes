@@ -1,9 +1,18 @@
 programa_principal(){
 
+    declarar
+        entero a, b, c;
+	    entero mat[2,2];
+	    entero mat2[2,2];
+	    real vec[+3];
+	    real vec2[3]; 
+	    booleano d;
+    fin declarar
+
 	entero funcion_mientras(entero a){
-	declarar
+	    declarar
     		entero b;
-    	fin declarar
+    	    fin declarar
 		mientras(b!=4){
 		    escribir "Escribe '4'";
 		    leer b;
@@ -11,14 +20,6 @@ programa_principal(){
 		retornar b-a;
 	}
 
-    declarar
-        entero a=0, b=1, c=2;
-	    entero mat[2,2];
-	    entero mat2[2,2] = [[2,2];[3,3]];
-	    real vec[+3];
-	    real vec2[3] = [1,2,3];
-	    booleano d = falso;
-    fin declarar
     
 	escribir funcion_mientras(a);
 	
@@ -26,9 +27,9 @@ programa_principal(){
 		escribir "hola";
 		a = a+1;
 	}
-	hasta que ( a=4 );
+	hasta que ( a==4 );
 
-	si(d = falso){
+	si(d == falso){
 	    escribir "Pon un entero: ";
 		leer b;
 	}
