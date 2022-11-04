@@ -18,7 +18,7 @@ int linea_actual = 1;
 %token OPEQ OPNEQ
 %token OPLEQ OPGEQ OPLESS OPGR
 %token OPSUMA OPRESTA
-%token OPMULT OPDIV OPMOD
+%token OPMULT OPMULTM OPDIV OPMOD
 %token OPNEG
 
 %token CONST IDEN CADENA ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
@@ -53,7 +53,8 @@ Cuerpo_declar_variables      : tipo lista_declaracion_variables PYC
 Cabecera_subprog            : tipo variable PARIZQ argumentos PARDER
                               |   tipo variable PARIZQ PARDER
 argumentos                  : tipo variable
-                              |   argumentos COMA tipo variable 
+                              |   argumentos COMA tipo variable
+                              |   error
 variable                    : identificador
                               |   elemento_de_array
 elemento_de_array           : identificador CORIZQ expresion CORDER
@@ -85,6 +86,7 @@ lista_variables             : variable
                               |   lista_variables COMA variable
 lista_declaracion_variables :  variable
                               |   lista_declaracion_variables COMA variable
+                              |   error
 lista_expresiones           : expresion
                               |   lista_expresiones COMA expresion
 expresion                   : PARIZQ expresion PARDER
@@ -108,6 +110,7 @@ expresion                   : PARIZQ expresion PARDER
                               |   variable
                               |   constante
                               |   funcion
+                              |   error
 funcion                     : identificador PARIZQ PARDER
                               |   identificador PARIZQ lista_expresiones PARDER
 tipo                        : TIPOEL

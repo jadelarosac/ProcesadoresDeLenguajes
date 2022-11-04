@@ -53,5 +53,5 @@
 (\'[^\']\'|[0-9]+|[0-9+]\.[0-9]+|"cierto"|"falso") {return(CONST);}
 \n {linea_actual++;}
 [[:space:]] {}
-. {snprintf(buffer, MAXLONGBUFFER, "el o los caracteres '%s' no forman ningún token conocido", yytext);
+. {snprintf(buffer, MAXLONGBUFFER, "lexical error: el o los caracteres '%s' no forman ningún token conocido", yytext);
   yyerror(buffer);}

@@ -1088,7 +1088,7 @@ YY_RULE_SETUP
 case 45:
 YY_RULE_SETUP
 #line 56 "analisis_lexico.l"
-{snprintf(buffer, MAXLONGBUFFER, "el o los caracteres '%s' no forman ningún token conocido", yytext);
+{snprintf(buffer, MAXLONGBUFFER, "lexical error: el o los caracteres '%s' no forman ningún token conocido", yytext);
   yyerror(buffer);}
 	YY_BREAK
 case 46:
