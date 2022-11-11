@@ -70,6 +70,7 @@ Sentencia                   : bloque
                               |   sentencia_entrada
                               |   sentencia_salida
                               |   sentencia_retornar
+                              |
 sentencia_asignacion        : variable ASIG expresion PYC
 sentencia_si                : SI PARIZQ expresion PARDER Sentencia
                               |   SI PARIZQ expresion PARDER Sentencia
