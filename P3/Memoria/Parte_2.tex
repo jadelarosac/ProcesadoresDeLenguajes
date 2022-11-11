@@ -20,7 +20,7 @@
 <Fin_de_bloque>               ::= }
 <Variables_locales>           ::= <Variables_locales> <Cuerpo_declar_variables>
                               |   <Cuerpo_declar_variables>
-<Cuerpo_declar_variables>      ::= <tipo> <lista_declaracion_variables>;
+<Cuerpo_declar_variables>     ::= <tipo> <lista_declaracion_variables>;
 <Cabecera_subprog>            ::= <tipo> <variable>(<argumentos>)
                               |   <tipo> <variable>()
 <argumentos>                  ::= <tipo> <variable>
@@ -84,7 +84,7 @@
                               |   cierto
                               |   falso
                               |   [<ini_elementos_array>]
-<ini_elementos_array>         ::= <lista_expresiones>; <ini_elementos_array>
+<ini_elementos_array>         ::= <ini_elementos_array>; <lista_expresiones>
                               |   <lista_expresiones>
 \end{lstlisting}
 
