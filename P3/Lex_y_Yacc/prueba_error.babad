@@ -1,16 +1,16 @@
 programa_principal()
 {
    declarar
-      entero ve; 
-   real vf ;
+      entero ve a,b,c 
+   real vf,d g ;
    caracter vc ;
-   booleano vl ;
+   boo···leano vl ;
    entero pe[5], pe2[2,2] ;
    real pf[5], pf2[2,10] ;
    caracter pc[2,2], pc2[5];
    booleano pl[300,1000];
    fin declarar
-      entero funcionA (entero a1, real a2, caracter a3)
+      entero funcionA (entero a1 real a2, caracter a3)
       {
          declarar
             entero x1, x2 ;
@@ -26,8 +26,8 @@ programa_principal()
                         real x1 ;
                      fin declarar
                         x1= 1.3 ;
-                     si (c2>10)
-                        c2= c2-1 ;
+                     si (c2>10+)
+                        c2= c2-1) ;
                      si no
                         x1= 3.1 ;
                      retornar x1 ;

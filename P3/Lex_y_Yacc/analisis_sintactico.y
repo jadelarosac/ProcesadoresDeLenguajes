@@ -13,19 +13,16 @@ int linea_actual = 1;
 %define parse.error verbose
 
 
-%token OPOR
-%token OPAND
-%token OPEQ OPNEQ
-%token OPLEQ OPGEQ OPLESS OPGR
-%token OPSUMA OPRESTA
-%token OPMULT OPMULTM OPDIV OPMOD
-%token OPNEG
+%left OPOR
+%left OPAND
+%left OPEQ OPNEQ
+%left OPLEQ OPGEQ OPLESS OPGR
+%left OPSUMA OPRESTA
+%left OPMULT OPMULTM OPDIV OPMOD
+%right OPNEG
 
 %token CONST IDEN CADENA ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
 
-%left OPMULT OPDIV OPMULTM OPAND OPOR OPEQ OPNEQ OPLEQ OPGEQ OPLESS OPGR OPMOD
-%left OPSUMA OPRESTA
-%right OPNEG
 
 
 %%
@@ -50,6 +47,7 @@ Fin_de_bloque               : LLADER
 Variables_locales           : Variables_locales Cuerpo_declar_variables
                               |   Cuerpo_declar_variables
 Cuerpo_declar_variables      : tipo lista_declaracion_variables PYC
+                              | error
 Cabecera_subprog            : tipo variable PARIZQ argumentos PARDER
                               |   tipo variable PARIZQ PARDER
 argumentos                  : tipo variable
