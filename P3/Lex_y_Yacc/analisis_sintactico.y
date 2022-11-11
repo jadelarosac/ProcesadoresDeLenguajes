@@ -25,7 +25,7 @@ int linea_actual = 1;
 
 %left OPMULT OPDIV OPMULTM OPAND OPOR OPEQ OPNEQ OPLEQ OPGEQ OPLESS OPGR OPMOD
 %left OPSUMA OPRESTA
-%left OPNEG
+%right OPNEG
 
 
 %%
@@ -70,7 +70,6 @@ Sentencia                   : bloque
                               |   sentencia_entrada
                               |   sentencia_salida
                               |   sentencia_retornar
-                              |
 sentencia_asignacion        : variable ASIG expresion PYC
 sentencia_si                : SI PARIZQ expresion PARDER Sentencia
                               |   SI PARIZQ expresion PARDER Sentencia

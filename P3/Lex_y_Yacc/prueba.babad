@@ -59,7 +59,7 @@ programa_principal()
                declarar
                   entero dato ;
                fin declarar
-               
+
                dato= 2 ;
                dato= valor*20/dato ;
             }
@@ -69,13 +69,14 @@ programa_principal()
             }
             retornar d1 ;
          }
-         pe[1]=10; 
-         pf=[5.1,2.03,3.1415,0.01,1.0]; 
-         pc[1,1]= '#' ; 
-         si ((pe[1]-20) == 20) 
-            ve= pe[2]; 
+         pe[1]=10;
+         pf=[5.1,2.03,3.1415,0.01,1.0];
+         pc[1,1]= '#' ;
+         si ((pe[1]-20) == 20)
+            ve= pe[2];
          si no
-            pe2= pe2 ** pe2 ; 
+            pe2= pe2 ** pe2 ;
          pe[3]= pe2[0,1] - pe[2] + 10 * (20/2000) ;
       }
+      retornar 5;
    }
