@@ -117,10 +117,10 @@ tipo                        : TIPOEL
 cadena                      : CADENA
 identificador               : IDEN
 constante                   : CONST
-/* Regla sustituida por el token CONST
+                              |   CORIZQ ini_elementos_array CORDER
 ini_elementos_array         : ini_elementos_array PYC lista_expresiones 
                               |   lista_expresiones
-*/
+
 %%
 
 #ifdef DOSWINDOWS
