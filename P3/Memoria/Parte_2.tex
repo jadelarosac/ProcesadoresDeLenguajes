@@ -24,7 +24,7 @@
 <Cabecera_subprog>            ::= <tipo> <variable>(<argumentos>)
                               |   <tipo> <variable>()
 <argumentos>                  ::= <tipo> <variable>
-                              |   <tipo> <variable>, <argumentos>
+                              |   <argumentos>, <tipo> <variable>
 <variable>                    ::= <identificador>
                               |   <elemento_de_array>
 <elemento_de_array>           ::= <identificador>[<expresion>]
@@ -51,11 +51,11 @@
                               |   <expresion_cadena>
 <expresion_cadena>            ::= <expresion> | <cadena>
 <lista_variables>             ::= <variable>
-                              |   <variable>, <lista_variables>
+                              |   <lista_variables>, <variable>
 <lista_declaracion_variables> ::= <variable>
-                              |   <variable>, <lista_declaracion_variables>
+                              |   <lista_declaracion_variables>, <variable>
 <lista_expresiones>           ::= <expresion>
-                              |   <expresion>, <lista_expresiones>
+                              |   <lista_expresiones>, <expresion>
 <expresion>                   ::= ( <expresion> )
                               |   <op_unario> <expresion>
                               |   <expresion> <op_binario> <expresion>
