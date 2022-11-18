@@ -8,7 +8,7 @@ main.o: main.c
 	gcc -c main.c
 
 y.tab.c: analisis_sintactico.y lex.yy.c
-	bison -v -o y.tab.c analisis_sintactico.y
+	bison -t -v -o y.tab.c analisis_sintactico.y
 
 lex.yy.c: analisis_lexico.l
 	flex analisis_lexico.l

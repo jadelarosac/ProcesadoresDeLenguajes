@@ -69,6 +69,7 @@ Sentencia                   : bloque
                               |   sentencia_salida
                               |   sentencia_retornar
 sentencia_asignacion        : variable ASIG expresion PYC
+                              |   error
 sentencia_si                : SI PARIZQ expresion PARDER Sentencia
                               |   SI PARIZQ expresion PARDER Sentencia
                               SINO Sentencia
@@ -90,7 +91,7 @@ lista_expresiones           : expresion
 expresion                   : PARIZQ expresion PARDER
                               |   OPNEG expresion
                               |   OPSUMA expresion
-                              |   OPRESTA expresion
+                              |   OPRESTA expresion %prec OPNEG
                               |   expresion OPMULT expresion
                               |   expresion OPDIV expresion
                               |   expresion OPMULTM expresion
