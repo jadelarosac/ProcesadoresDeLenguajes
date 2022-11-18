@@ -12,10 +12,17 @@ int linea_actual = 1;
 //%error-verbose
 %define parse.error verbose
 
-%token CONST IDEN CADENA OPBIN OPMIX OPUN ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
-%left OPBIN
-%left OPMIX
-%left OPUN
+
+%left OPOR
+%left OPAND
+%left OPEQ OPNEQ
+%left OPLEQ OPGEQ OPLESS OPGR
+%left OPSUMA OPRESTA
+%left OPMULT OPMULTM OPDIV OPMOD
+%right OPNEG
+
+%token CONST IDEN CADENA ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
+
 
 
 %%
@@ -25,7 +32,7 @@ bloque                      : Inicio_de_bloque
                                   Declar_de_variables_locales
                                   Declar_subprogs
                                   Sentencias Fin_de_bloque
-Declar_subprogs             : Declar_subprog Declar_subprogs
+Declar_subprogs             : Declar_subprogs Declar_subprog
                               |
 Declar_subprog              : Cabecera_subprog bloque
 Declar_de_variables_locales : Marca_ini_declar_variables
@@ -40,10 +47,12 @@ Fin_de_bloque               : LLADER
 Variables_locales           : Variables_locales Cuerpo_declar_variables
                               |   Cuerpo_declar_variables
 Cuerpo_declar_variables      : tipo lista_declaracion_variables PYC
+                              | error
 Cabecera_subprog            : tipo variable PARIZQ argumentos PARDER
                               |   tipo variable PARIZQ PARDER
 argumentos                  : tipo variable
-                              |   tipo variable COMA argumentos
+                              |   argumentos COMA tipo variable
+                              |   error
 variable                    : identificador
                               |   elemento_de_array
 elemento_de_array           : identificador CORIZQ expresion CORDER
@@ -60,6 +69,7 @@ Sentencia                   : bloque
                               |   sentencia_salida
                               |   sentencia_retornar
 sentencia_asignacion        : variable ASIG expresion PYC
+                              |   error
 sentencia_si                : SI PARIZQ expresion PARDER Sentencia
                               |   SI PARIZQ expresion PARDER Sentencia
                               SINO Sentencia
@@ -72,26 +82,42 @@ lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena
                               |   expresion_cadena
 expresion_cadena            : expresion | cadena
 lista_variables             : variable
-                              |   variable COMA lista_variables
+                              |   lista_variables COMA variable
 lista_declaracion_variables :  variable
-                              |   variable COMA lista_declaracion_variables
+                              |   lista_declaracion_variables COMA variable
+                              |   error
 lista_expresiones           : expresion
-                              |   expresion COMA lista_expresiones
+                              |   lista_expresiones COMA expresion
 expresion                   : PARIZQ expresion PARDER
-                              |   OPUN expresion
-                              |   OPMIX expresion
-                              |   expresion OPBIN expresion
-                              |   expresion OPMIX expresion
+                              |   OPNEG expresion
+                              |   OPSUMA expresion
+                              |   OPRESTA expresion %prec OPNEG
+                              |   expresion OPMULT expresion
+                              |   expresion OPDIV expresion
+                              |   expresion OPMULTM expresion
+                              |   expresion OPAND expresion
+                              |   expresion OPOR expresion
+                              |   expresion OPEQ expresion
+                              |   expresion OPNEQ expresion
+                              |   expresion OPLEQ expresion
+                              |   expresion OPGEQ expresion
+                              |   expresion OPLESS expresion
+                              |   expresion OPGR expresion
+                              |   expresion OPMOD expresion
+                              |   expresion OPSUMA expresion
+                              |   expresion OPRESTA expresion
                               |   variable
                               |   constante
                               |   funcion
+                              |   error
 funcion                     : identificador PARIZQ PARDER
                               |   identificador PARIZQ lista_expresiones PARDER
 tipo                        : TIPOEL
 cadena                      : CADENA
 identificador               : IDEN
 constante                   : CONST
-ini_elementos_array         : lista_expresiones PYC ini_elementos_array
+                              |   CORIZQ ini_elementos_array CORDER
+ini_elementos_array         : ini_elementos_array PYC lista_expresiones 
                               |   lista_expresiones
 
 %%
@@ -106,5 +132,3 @@ void yyerror(char *msg)
 {
   fprintf(stderr, "[Linea %d]: %s\n", linea_actual, msg);
 }
-
-

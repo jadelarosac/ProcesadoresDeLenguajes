@@ -1,15 +1,16 @@
 programa_principal(){
 
     declarar
-        entero a, b, c;
-	    entero mat[2,2];
+      entero a b, c, d
+			booleano x y;
+			entero mat[2,2];
 	    entero mat2[2,2];
 	    real vec[+3];
 	    real vec2[3]; 
 	    booleano d;
     fin declarar
 
-	entero funcion_mientras(entero a){
+	entero funcion_mientras(entero a booleano b){
 	    declarar
     		entero b;
     	    fin declarar
@@ -21,7 +22,7 @@ programa_principal(){
 	}
 
     
-	escribir funcion_mientras(a);
+	escribir funcion_mientras(, x);
 	
 	hacer {
 		escribir "hola";
@@ -40,8 +41,6 @@ programa_principal(){
 			c=2.3;
 	}
 	
-	d = ((mat**mat)/2*3)<=(-(-5<=*3-5*6)+1) && || ((a+/1-15)%98) > 1;
-
-	mat = mat2**mat2;
+	mat = *mat2**%mat2;
 	vec = 2*vec2;
 }

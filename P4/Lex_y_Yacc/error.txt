@@ -1,0 +1,4718 @@
+[Linea 4]: syntax error, unexpected IDEN, expecting PYC or COMA
+Error: popping nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Shifting token error ()
+Entering state 44
+Reducing stack by rule 53 (line 88):
+   $1 = token error ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Entering state 46
+Next token is token IDEN ()
+Error: discarding token IDEN ()
+Error: popping nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Shifting token error ()
+Entering state 44
+Reducing stack by rule 53 (line 88):
+   $1 = token error ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Entering state 46
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 77
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 10 16 46 77
+Entering state 40
+Reading a token: Next token is token TIPOEL ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 10 16 46 77
+Entering state 111
+Reducing stack by rule 52 (line 87):
+   $1 = nterm lista_declaracion_variables ()
+   $2 = token COMA ()
+   $3 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Entering state 46
+Next token is token TIPOEL ()
+Error: popping nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Shifting token error ()
+Entering state 44
+Reducing stack by rule 53 (line 88):
+   $1 = token error ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Entering state 46
+Next token is token TIPOEL ()
+Error: discarding token TIPOEL ()
+Error: popping nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Shifting token error ()
+Entering state 44
+Reducing stack by rule 53 (line 88):
+   $1 = token error ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Entering state 46
+Reading a token: Next token is token IDEN ()
+Error: discarding token IDEN ()
+Error: popping nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Shifting token error ()
+Entering state 44
+Reducing stack by rule 53 (line 88):
+   $1 = token error ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Entering state 46
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 77
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 10 16 46 77
+Entering state 40
+Reading a token: Next token is token IDEN ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 10 16 46 77
+Entering state 111
+Reducing stack by rule 52 (line 87):
+   $1 = nterm lista_declaracion_variables ()
+   $2 = token COMA ()
+   $3 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Entering state 46
+Next token is token IDEN ()
+Error: popping nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Shifting token error ()
+Entering state 44
+Reducing stack by rule 53 (line 88):
+   $1 = token error ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Entering state 46
+Next token is token IDEN ()
+Error: discarding token IDEN ()
+Error: popping nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Shifting token error ()
+Entering state 44
+Reducing stack by rule 53 (line 88):
+   $1 = token error ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 16
+Entering state 46
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10
+Entering state 15
+Reducing stack by rule 14 (line 48):
+   $1 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 10 14
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 10 14 16
+Entering state 40
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 10 14 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 14 16
+Entering state 46
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Reading a token: Next token is token IDEN ()
+[Linea 7]: syntax error, unexpected IDEN, expecting FINDEC or TIPOEL
+Shifting token error ()
+Entering state 12
+Reducing stack by rule 16 (line 50):
+   $1 = token error ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Next token is token IDEN ()
+Error: discarding token IDEN ()
+Shifting token error ()
+Entering state 12
+Reducing stack by rule 16 (line 50):
+   $1 = token error ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Reading a token: [Linea 7]: lexical error: el o los caracteres 'Â' no forman ningÃºn token conocido
+[Linea 7]: lexical error: el o los caracteres '·' no forman ningÃºn token conocido
+[Linea 7]: lexical error: el o los caracteres 'Â' no forman ningÃºn token conocido
+[Linea 7]: lexical error: el o los caracteres '·' no forman ningÃºn token conocido
+[Linea 7]: lexical error: el o los caracteres 'Â' no forman ningÃºn token conocido
+[Linea 7]: lexical error: el o los caracteres '·' no forman ningÃºn token conocido
+Next token is token IDEN ()
+Error: discarding token IDEN ()
+Shifting token error ()
+Entering state 12
+Reducing stack by rule 16 (line 50):
+   $1 = token error ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Reading a token: Next token is token IDEN ()
+Error: discarding token IDEN ()
+Shifting token error ()
+Entering state 12
+Reducing stack by rule 16 (line 50):
+   $1 = token error ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Reading a token: Next token is token PYC ()
+Error: discarding token PYC ()
+Shifting token error ()
+Entering state 12
+Reducing stack by rule 16 (line 50):
+   $1 = token error ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 10 14
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 10 14 16
+Entering state 40
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 40 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 40 75
+Entering state 110
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 142
+Reducing stack by rule 24 (line 58):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 10 14 16
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 10 14 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 14 16
+Entering state 46
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 77
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 10 14 16 46 77
+Entering state 40
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 46 77 40 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 46 77 40 75
+Entering state 110
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 143
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 46 77 40 75 110 143
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 46 77 40 75 110 143
+Entering state 153
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 157
+Reducing stack by rule 25 (line 59):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token COMA ()
+   $5 = nterm expresion ()
+   $6 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 10 14 16 46 77
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 10 14 16 46 77
+Entering state 111
+Reducing stack by rule 52 (line 87):
+   $1 = nterm lista_declaracion_variables ()
+   $2 = token COMA ()
+   $3 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 14 16
+Entering state 46
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 10 14
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 10 14 16
+Entering state 40
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 40 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 40 75
+Entering state 110
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 142
+Reducing stack by rule 24 (line 58):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 10 14 16
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 10 14 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 14 16
+Entering state 46
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 77
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 10 14 16 46 77
+Entering state 40
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 46 77 40 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 46 77 40 75
+Entering state 110
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 143
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 46 77 40 75 110 143
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 46 77 40 75 110 143
+Entering state 153
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 157
+Reducing stack by rule 25 (line 59):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token COMA ()
+   $5 = nterm expresion ()
+   $6 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 10 14 16 46 77
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 10 14 16 46 77
+Entering state 111
+Reducing stack by rule 52 (line 87):
+   $1 = nterm lista_declaracion_variables ()
+   $2 = token COMA ()
+   $3 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 14 16
+Entering state 46
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 10 14
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 10 14 16
+Entering state 40
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 40 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 40 75
+Entering state 110
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 143
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 40 75 110 143
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 40 75 110 143
+Entering state 153
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 157
+Reducing stack by rule 25 (line 59):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token COMA ()
+   $5 = nterm expresion ()
+   $6 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 10 14 16
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 10 14 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 14 16
+Entering state 46
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 77
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 10 14 16 46 77
+Entering state 40
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 46 77 40 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 46 77 40 75
+Entering state 110
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 142
+Reducing stack by rule 24 (line 58):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 10 14 16 46 77
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 10 14 16 46 77
+Entering state 111
+Reducing stack by rule 52 (line 87):
+   $1 = nterm lista_declaracion_variables ()
+   $2 = token COMA ()
+   $3 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 14 16
+Entering state 46
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 10 14
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 10 14 16
+Entering state 40
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 40 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 40 75
+Entering state 110
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 143
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 10 14 16 40 75 110 143
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 10 14 16 40 75 110 143
+Entering state 153
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 157
+Reducing stack by rule 25 (line 59):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token COMA ()
+   $5 = nterm expresion ()
+   $6 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 10 14 16
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 10 14 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 10 14 16
+Entering state 46
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 10
+Entering state 14
+Reading a token: Next token is token FINDEC ()
+Shifting token FINDEC ()
+Entering state 41
+Reducing stack by rule 9 (line 43):
+   $1 = token FINDEC ()
+-> $$ = nterm Marca_fin_declar_variables ()
+Stack now 0 3 7 10 14
+Entering state 42
+Reducing stack by rule 6 (line 38):
+   $1 = nterm Marca_ini_declar_variables ()
+   $2 = nterm Variables_locales ()
+   $3 = nterm Marca_fin_declar_variables ()
+-> $$ = nterm Declar_de_variables_locales ()
+Stack now 0 3 7
+Entering state 9
+Reducing stack by rule 4 (line 36):
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9
+Entering state 11
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11
+Entering state 39
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 39
+Entering state 40
+Reading a token: Next token is token PARIZQ ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 39
+Entering state 74
+Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 109
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 39 74 109
+Entering state 141
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 39 74 109 141
+Entering state 40
+Reading a token: Next token is token TIPOEL ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 39 74 109 141
+Entering state 152
+Reducing stack by rule 19 (line 53):
+   $1 = nterm tipo ()
+   $2 = nterm variable ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 39 74 109
+Entering state 140
+Next token is token TIPOEL ()
+[Linea 13]: syntax error, unexpected TIPOEL, expecting PARDER or COMA
+Error: popping nterm argumentos ()
+Stack now 0 3 7 9 11 39 74 109
+Shifting token error ()
+Entering state 138
+Reducing stack by rule 21 (line 55):
+   $1 = token error ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 39 74 109
+Entering state 140
+Next token is token TIPOEL ()
+Error: discarding token TIPOEL ()
+Error: popping nterm argumentos ()
+Stack now 0 3 7 9 11 39 74 109
+Shifting token error ()
+Entering state 138
+Reducing stack by rule 21 (line 55):
+   $1 = token error ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 39 74 109
+Entering state 140
+Reading a token: Next token is token IDEN ()
+Error: discarding token IDEN ()
+Error: popping nterm argumentos ()
+Stack now 0 3 7 9 11 39 74 109
+Shifting token error ()
+Entering state 138
+Reducing stack by rule 21 (line 55):
+   $1 = token error ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 39 74 109
+Entering state 140
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 151
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 39 74 109 140 151
+Entering state 156
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 39 74 109 140 151 156
+Entering state 40
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 39 74 109 140 151 156
+Entering state 160
+Reducing stack by rule 20 (line 54):
+   $1 = nterm argumentos ()
+   $2 = token COMA ()
+   $3 = nterm tipo ()
+   $4 = nterm variable ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 39 74 109
+Entering state 140
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 150
+Reducing stack by rule 17 (line 51):
+   $1 = nterm tipo ()
+   $2 = nterm variable ()
+   $3 = token PARIZQ ()
+   $4 = nterm argumentos ()
+   $5 = token PARDER ()
+-> $$ = nterm Cabecera_subprog ()
+Stack now 0 3 7 9 11
+Entering state 27
+Reading a token: Next token is token LLAIZQ ()
+Shifting token LLAIZQ ()
+Entering state 5
+Reducing stack by rule 11 (line 45):
+   $1 = token LLAIZQ ()
+-> $$ = nterm Inicio_de_bloque ()
+Stack now 0 3 7 9 11 27
+Entering state 7
+Reading a token: Next token is token INIDEC ()
+Shifting token INIDEC ()
+Entering state 8
+Reducing stack by rule 8 (line 42):
+   $1 = token INIDEC ()
+-> $$ = nterm Marca_ini_declar_variables ()
+Stack now 0 3 7 9 11 27 7
+Entering state 10
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 10
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 10 16
+Entering state 40
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 10 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 9 11 27 7 10 16
+Entering state 46
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 77
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 10 16 46 77
+Entering state 40
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 10 16 46 77
+Entering state 111
+Reducing stack by rule 52 (line 87):
+   $1 = nterm lista_declaracion_variables ()
+   $2 = token COMA ()
+   $3 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 9 11 27 7 10 16
+Entering state 46
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 9 11 27 7 10
+Entering state 15
+Reducing stack by rule 14 (line 48):
+   $1 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 9 11 27 7 10
+Entering state 14
+Reading a token: Next token is token FINDEC ()
+Shifting token FINDEC ()
+Entering state 41
+Reducing stack by rule 9 (line 43):
+   $1 = token FINDEC ()
+-> $$ = nterm Marca_fin_declar_variables ()
+Stack now 0 3 7 9 11 27 7 10 14
+Entering state 42
+Reducing stack by rule 6 (line 38):
+   $1 = nterm Marca_ini_declar_variables ()
+   $2 = nterm Variables_locales ()
+   $3 = nterm Marca_fin_declar_variables ()
+-> $$ = nterm Declar_de_variables_locales ()
+Stack now 0 3 7 9 11 27 7
+Entering state 9
+Reducing stack by rule 4 (line 36):
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9
+Entering state 11
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 39
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 39
+Entering state 40
+Reading a token: Next token is token PARIZQ ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 39
+Entering state 74
+Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 109
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109
+Entering state 141
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109 141
+Entering state 40
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109 141
+Entering state 152
+Reducing stack by rule 19 (line 53):
+   $1 = nterm tipo ()
+   $2 = nterm variable ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109
+Entering state 140
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 151
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109 140 151
+Entering state 156
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109 140 151 156
+Entering state 40
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109 140 151 156
+Entering state 160
+Reducing stack by rule 20 (line 54):
+   $1 = nterm argumentos ()
+   $2 = token COMA ()
+   $3 = nterm tipo ()
+   $4 = nterm variable ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109
+Entering state 140
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 150
+Reducing stack by rule 17 (line 51):
+   $1 = nterm tipo ()
+   $2 = nterm variable ()
+   $3 = token PARIZQ ()
+   $4 = nterm argumentos ()
+   $5 = token PARDER ()
+-> $$ = nterm Cabecera_subprog ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 27
+Reading a token: Next token is token LLAIZQ ()
+Shifting token LLAIZQ ()
+Entering state 5
+Reducing stack by rule 11 (line 45):
+   $1 = token LLAIZQ ()
+-> $$ = nterm Inicio_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27
+Entering state 7
+Reading a token: Next token is token INIDEC ()
+Shifting token INIDEC ()
+Entering state 8
+Reducing stack by rule 8 (line 42):
+   $1 = token INIDEC ()
+-> $$ = nterm Marca_ini_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7
+Entering state 10
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 16
+Entering state 40
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 16
+Entering state 46
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 77
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 16 46 77
+Entering state 40
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 16 46 77
+Entering state 111
+Reducing stack by rule 52 (line 87):
+   $1 = nterm lista_declaracion_variables ()
+   $2 = token COMA ()
+   $3 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 16
+Entering state 46
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10
+Entering state 15
+Reducing stack by rule 14 (line 48):
+   $1 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10
+Entering state 14
+Reading a token: Next token is token FINDEC ()
+Shifting token FINDEC ()
+Entering state 41
+Reducing stack by rule 9 (line 43):
+   $1 = token FINDEC ()
+-> $$ = nterm Marca_fin_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 14
+Entering state 42
+Reducing stack by rule 6 (line 38):
+   $1 = nterm Marca_ini_declar_variables ()
+   $2 = nterm Variables_locales ()
+   $3 = nterm Marca_fin_declar_variables ()
+-> $$ = nterm Declar_de_variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7
+Entering state 9
+Reducing stack by rule 4 (line 36):
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9
+Entering state 11
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 39
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39
+Entering state 40
+Reading a token: Next token is token PARIZQ ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39
+Entering state 74
+Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 109
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109
+Entering state 141
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109 141
+Entering state 40
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109 141
+Entering state 152
+Reducing stack by rule 19 (line 53):
+   $1 = nterm tipo ()
+   $2 = nterm variable ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109
+Entering state 140
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 151
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109 140 151
+Entering state 156
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109 140 151 156
+Entering state 40
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109 140 151 156
+Entering state 160
+Reducing stack by rule 20 (line 54):
+   $1 = nterm argumentos ()
+   $2 = token COMA ()
+   $3 = nterm tipo ()
+   $4 = nterm variable ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109
+Entering state 140
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 150
+Reducing stack by rule 17 (line 51):
+   $1 = nterm tipo ()
+   $2 = nterm variable ()
+   $3 = token PARIZQ ()
+   $4 = nterm argumentos ()
+   $5 = token PARDER ()
+-> $$ = nterm Cabecera_subprog ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 27
+Reading a token: Next token is token LLAIZQ ()
+Shifting token LLAIZQ ()
+Entering state 5
+Reducing stack by rule 11 (line 45):
+   $1 = token LLAIZQ ()
+-> $$ = nterm Inicio_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27
+Entering state 7
+Reading a token: Next token is token INIDEC ()
+Shifting token INIDEC ()
+Entering state 8
+Reducing stack by rule 8 (line 42):
+   $1 = token INIDEC ()
+-> $$ = nterm Marca_ini_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7
+Entering state 10
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 10
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 10 16
+Entering state 40
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 10 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 10 16
+Entering state 46
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 10
+Entering state 15
+Reducing stack by rule 14 (line 48):
+   $1 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 10
+Entering state 14
+Reading a token: Next token is token FINDEC ()
+Shifting token FINDEC ()
+Entering state 41
+Reducing stack by rule 9 (line 43):
+   $1 = token FINDEC ()
+-> $$ = nterm Marca_fin_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 10 14
+Entering state 42
+Reducing stack by rule 6 (line 38):
+   $1 = nterm Marca_ini_declar_variables ()
+   $2 = nterm Variables_locales ()
+   $3 = nterm Marca_fin_declar_variables ()
+-> $$ = nterm Declar_de_variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7
+Entering state 9
+Reducing stack by rule 4 (line 36):
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9
+Entering state 11
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 28 70
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 28 70
+Entering state 108
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 31
+Reducing stack by rule 27 (line 62):
+   $1 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token SI ()
+Shifting token SI ()
+Entering state 19
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 47
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 64
+Reading a token: Next token is token OPGR ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 78
+Next token is token OPGR ()
+Shifting token OPGR ()
+Entering state 97
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 97
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 97
+Entering state 127
+Reading a token: Next token is token OPSUMA ()
+Shifting token OPSUMA ()
+Entering state 98
+Reading a token: Next token is token PARDER ()
+[Linea 29]: syntax error, unexpected PARDER
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 97 127 98
+Entering state 128
+Next token is token PARDER ()
+Reducing stack by rule 72 (line 107):
+   $1 = nterm expresion ()
+   $2 = token OPSUMA ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 97
+Entering state 127
+Next token is token PARDER ()
+Reducing stack by rule 70 (line 105):
+   $1 = nterm expresion ()
+   $2 = token OPGR ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 78
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 112
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70
+Entering state 64
+Reading a token: Next token is token OPRESTA ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70
+Entering state 108
+Next token is token OPRESTA ()
+Shifting token OPRESTA ()
+Entering state 99
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 57
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token PYC ()
+[Linea 30]: syntax error, unexpected PYC
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Next token is token PYC ()
+Error: discarding token PYC ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token SINO ()
+Error: discarding token SINO ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token IDEN ()
+Error: discarding token IDEN ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token ASIG ()
+Error: discarding token ASIG ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token CONST ()
+Error: discarding token CONST ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token PYC ()
+Error: discarding token PYC ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token DEVOLVER ()
+Error: discarding token DEVOLVER ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token IDEN ()
+Error: discarding token IDEN ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token PYC ()
+Error: discarding token PYC ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token LLADER ()
+Error: discarding token LLADER ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token IDEN ()
+Error: discarding token IDEN ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token ASIG ()
+Error: discarding token ASIG ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token IDEN ()
+Error: discarding token IDEN ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token PARIZQ ()
+Error: discarding token PARIZQ ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token IDEN ()
+Error: discarding token IDEN ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token COMA ()
+Error: discarding token COMA ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token CONST ()
+Error: discarding token CONST ()
+Error: popping nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Shifting token error ()
+Entering state 50
+Reducing stack by rule 77 (line 112):
+   $1 = token error ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99 57
+Entering state 87
+Reading a token: Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 118
+Reducing stack by rule 56 (line 91):
+   $1 = token PARIZQ ()
+   $2 = nterm expresion ()
+   $3 = token PARDER ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70 108 99
+Entering state 129
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 73 (line 108):
+   $1 = nterm expresion ()
+   $2 = token OPRESTA ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 28 70
+Entering state 108
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 144
+Reading a token: Next token is token IDEN ()
+Reducing stack by rule 38 (line 73):
+   $1 = token SI ()
+   $2 = token PARIZQ ()
+   $3 = nterm expresion ()
+   $4 = token PARDER ()
+   $5 = nterm Sentencia ()
+-> $$ = nterm sentencia_si ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 33
+Reducing stack by rule 30 (line 65):
+   $1 = nterm sentencia_si ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 30
+Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70
+Entering state 64
+Reading a token: Next token is token OPMULT ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70
+Entering state 108
+Next token is token OPMULT ()
+Shifting token OPMULT ()
+Entering state 100
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 57
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57
+Entering state 64
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 104
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 64 104
+Entering state 64
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 64 104
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 64 104
+Entering state 85
+Next token is token COMA ()
+Reducing stack by rule 54 (line 89):
+   $1 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 64 104
+Entering state 135
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 115
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 64 104 135 115
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 64 104 135 115
+Entering state 147
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 55 (line 90):
+   $1 = nterm lista_expresiones ()
+   $2 = token COMA ()
+   $3 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 64 104
+Entering state 135
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 149
+Reducing stack by rule 79 (line 114):
+   $1 = nterm identificador ()
+   $2 = token PARIZQ ()
+   $3 = nterm lista_expresiones ()
+   $4 = token PARDER ()
+-> $$ = nterm funcion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57
+Entering state 62
+Reducing stack by rule 76 (line 111):
+   $1 = nterm funcion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57
+Entering state 87
+Reading a token: Next token is token OPRESTA ()
+Shifting token OPRESTA ()
+Entering state 99
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 87 99
+Entering state 64
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 104
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 87 99 64 104
+Entering state 64
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 87 99 64 104
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 87 99 64 104
+Entering state 85
+Next token is token COMA ()
+Reducing stack by rule 54 (line 89):
+   $1 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 87 99 64 104
+Entering state 135
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 115
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 87 99 64 104 135 115
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 87 99 64 104 135 115
+Entering state 147
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 55 (line 90):
+   $1 = nterm lista_expresiones ()
+   $2 = token COMA ()
+   $3 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 87 99 64 104
+Entering state 135
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 149
+Reducing stack by rule 79 (line 114):
+   $1 = nterm identificador ()
+   $2 = token PARIZQ ()
+   $3 = nterm lista_expresiones ()
+   $4 = token PARDER ()
+-> $$ = nterm funcion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 87 99
+Entering state 62
+Reducing stack by rule 76 (line 111):
+   $1 = nterm funcion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57 87 99
+Entering state 129
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 73 (line 108):
+   $1 = nterm expresion ()
+   $2 = token OPRESTA ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100 57
+Entering state 87
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 118
+Reducing stack by rule 56 (line 91):
+   $1 = token PARIZQ ()
+   $2 = nterm expresion ()
+   $3 = token PARDER ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 100
+Entering state 130
+Reducing stack by rule 60 (line 95):
+   $1 = nterm expresion ()
+   $2 = token OPMULT ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70
+Entering state 108
+Reading a token: Next token is token OPDIV ()
+Shifting token OPDIV ()
+Entering state 102
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 102
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70 108 102
+Entering state 132
+Reducing stack by rule 61 (line 96):
+   $1 = nterm expresion ()
+   $2 = token OPDIV ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 28 70
+Entering state 108
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token MIENTRAS ()
+Shifting token MIENTRAS ()
+Entering state 20
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 48
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48
+Entering state 64
+Reading a token: Next token is token OPMULT ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48
+Entering state 79
+Next token is token OPMULT ()
+Shifting token OPMULT ()
+Entering state 100
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 100
+Entering state 64
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 104
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 100 64 104
+Entering state 64
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 100 64 104
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 100 64 104
+Entering state 85
+Next token is token COMA ()
+Reducing stack by rule 54 (line 89):
+   $1 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 100 64 104
+Entering state 135
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 115
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 100 64 104 135 115
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 100 64 104 135 115
+Entering state 147
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 55 (line 90):
+   $1 = nterm lista_expresiones ()
+   $2 = token COMA ()
+   $3 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 100 64 104
+Entering state 135
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 149
+Reducing stack by rule 79 (line 114):
+   $1 = nterm identificador ()
+   $2 = token PARIZQ ()
+   $3 = nterm lista_expresiones ()
+   $4 = token PARDER ()
+-> $$ = nterm funcion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 100
+Entering state 62
+Reducing stack by rule 76 (line 111):
+   $1 = nterm funcion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 100
+Entering state 130
+Reducing stack by rule 60 (line 95):
+   $1 = nterm expresion ()
+   $2 = token OPMULT ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48
+Entering state 79
+Reading a token: Next token is token OPRESTA ()
+Shifting token OPRESTA ()
+Entering state 99
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 99
+Entering state 64
+Reading a token: Next token is token OPLESS ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 99
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 99
+Entering state 129
+Next token is token OPLESS ()
+Reducing stack by rule 73 (line 108):
+   $1 = nterm expresion ()
+   $2 = token OPRESTA ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48
+Entering state 79
+Next token is token OPLESS ()
+Shifting token OPLESS ()
+Entering state 96
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 96
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 96
+Entering state 126
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 69 (line 104):
+   $1 = nterm expresion ()
+   $2 = token OPLESS ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48
+Entering state 79
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 113
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113 28 70
+Entering state 64
+Reading a token: Next token is token OPMULT ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113 28 70
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113 28 70
+Entering state 108
+Next token is token OPMULT ()
+Shifting token OPMULT ()
+Entering state 100
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113 28 70 108 100
+Entering state 64
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113 28 70 108 100
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113 28 70 108 100
+Entering state 130
+Reducing stack by rule 60 (line 95):
+   $1 = nterm expresion ()
+   $2 = token OPMULT ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113 28 70
+Entering state 108
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 20 48 79 113
+Entering state 145
+Reducing stack by rule 40 (line 76):
+   $1 = token MIENTRAS ()
+   $2 = token PARIZQ ()
+   $3 = nterm expresion ()
+   $4 = token PARDER ()
+   $5 = nterm Sentencia ()
+-> $$ = nterm sentencia_mientras ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 34
+Reducing stack by rule 31 (line 66):
+   $1 = nterm sentencia_mientras ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token LLADER ()
+Shifting token LLADER ()
+Entering state 71
+Reducing stack by rule 12 (line 46):
+   $1 = token LLADER ()
+-> $$ = nterm Fin_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 72
+Reducing stack by rule 2 (line 31):
+   $1 = nterm Inicio_de_bloque ()
+   $2 = nterm Declar_de_variables_locales ()
+   $3 = nterm Declar_subprogs ()
+   $4 = nterm Sentencias ()
+   $5 = nterm Fin_de_bloque ()
+-> $$ = nterm bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27
+Entering state 69
+Reducing stack by rule 5 (line 37):
+   $1 = nterm Cabecera_subprog ()
+   $2 = nterm bloque ()
+-> $$ = nterm Declar_subprog ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 26
+Reducing stack by rule 3 (line 35):
+   $1 = nterm Declar_subprogs ()
+   $2 = nterm Declar_subprog ()
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9
+Entering state 11
+Reading a token: Next token is token DEVOLVER ()
+Shifting token DEVOLVER ()
+Entering state 24
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 24
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 24
+Entering state 68
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 107
+Reducing stack by rule 44 (line 80):
+   $1 = token DEVOLVER ()
+   $2 = nterm expresion ()
+   $3 = token PYC ()
+-> $$ = nterm sentencia_retornar ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 38
+Reducing stack by rule 35 (line 70):
+   $1 = nterm sentencia_retornar ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 31
+Reducing stack by rule 27 (line 62):
+   $1 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token LLADER ()
+Shifting token LLADER ()
+Entering state 71
+Reducing stack by rule 12 (line 46):
+   $1 = token LLADER ()
+-> $$ = nterm Fin_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 72
+Reducing stack by rule 2 (line 31):
+   $1 = nterm Inicio_de_bloque ()
+   $2 = nterm Declar_de_variables_locales ()
+   $3 = nterm Declar_subprogs ()
+   $4 = nterm Sentencias ()
+   $5 = nterm Fin_de_bloque ()
+-> $$ = nterm bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27
+Entering state 69
+Reducing stack by rule 5 (line 37):
+   $1 = nterm Cabecera_subprog ()
+   $2 = nterm bloque ()
+-> $$ = nterm Declar_subprog ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 26
+Reducing stack by rule 3 (line 35):
+   $1 = nterm Declar_subprogs ()
+   $2 = nterm Declar_subprog ()
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9
+Entering state 11
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 39
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 39
+Entering state 40
+Reading a token: Next token is token PARIZQ ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 39
+Entering state 74
+Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 109
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109
+Entering state 141
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109 141
+Entering state 40
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109 141
+Entering state 152
+Reducing stack by rule 19 (line 53):
+   $1 = nterm tipo ()
+   $2 = nterm variable ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 27 7 9 11 39 74 109
+Entering state 140
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 150
+Reducing stack by rule 17 (line 51):
+   $1 = nterm tipo ()
+   $2 = nterm variable ()
+   $3 = token PARIZQ ()
+   $4 = nterm argumentos ()
+   $5 = token PARDER ()
+-> $$ = nterm Cabecera_subprog ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 27
+Reading a token: Next token is token LLAIZQ ()
+Shifting token LLAIZQ ()
+Entering state 5
+Reducing stack by rule 11 (line 45):
+   $1 = token LLAIZQ ()
+-> $$ = nterm Inicio_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27
+Entering state 7
+Reading a token: Next token is token INIDEC ()
+Shifting token INIDEC ()
+Entering state 8
+Reducing stack by rule 8 (line 42):
+   $1 = token INIDEC ()
+-> $$ = nterm Marca_ini_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7
+Entering state 10
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 16
+Entering state 40
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 16
+Entering state 46
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10
+Entering state 15
+Reducing stack by rule 14 (line 48):
+   $1 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10
+Entering state 14
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 14
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 14 16
+Entering state 40
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 14 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 14 16
+Entering state 46
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 14
+Entering state 43
+Reducing stack by rule 13 (line 47):
+   $1 = nterm Variables_locales ()
+   $2 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10
+Entering state 14
+Reading a token: Next token is token FINDEC ()
+Shifting token FINDEC ()
+Entering state 41
+Reducing stack by rule 9 (line 43):
+   $1 = token FINDEC ()
+-> $$ = nterm Marca_fin_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 10 14
+Entering state 42
+Reducing stack by rule 6 (line 38):
+   $1 = nterm Marca_ini_declar_variables ()
+   $2 = nterm Variables_locales ()
+   $3 = nterm Marca_fin_declar_variables ()
+-> $$ = nterm Declar_de_variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7
+Entering state 9
+Reducing stack by rule 4 (line 36):
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9
+Entering state 11
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 39
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39
+Entering state 40
+Reading a token: Next token is token PARIZQ ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39
+Entering state 74
+Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 109
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109
+Entering state 141
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109 141
+Entering state 40
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109 141
+Entering state 152
+Reducing stack by rule 19 (line 53):
+   $1 = nterm tipo ()
+   $2 = nterm variable ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109
+Entering state 140
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 151
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109 140 151
+Entering state 156
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109 140 151 156
+Entering state 40
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109 140 151 156
+Entering state 160
+Reducing stack by rule 20 (line 54):
+   $1 = nterm argumentos ()
+   $2 = token COMA ()
+   $3 = nterm tipo ()
+   $4 = nterm variable ()
+-> $$ = nterm argumentos ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 39 74 109
+Entering state 140
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 150
+Reducing stack by rule 17 (line 51):
+   $1 = nterm tipo ()
+   $2 = nterm variable ()
+   $3 = token PARIZQ ()
+   $4 = nterm argumentos ()
+   $5 = token PARDER ()
+-> $$ = nterm Cabecera_subprog ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 27
+Reading a token: Next token is token LLAIZQ ()
+Shifting token LLAIZQ ()
+Entering state 5
+Reducing stack by rule 11 (line 45):
+   $1 = token LLAIZQ ()
+-> $$ = nterm Inicio_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27
+Entering state 7
+Reading a token: Next token is token ENTRADA ()
+Reducing stack by rule 7 (line 41):
+-> $$ = nterm Declar_de_variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7
+Entering state 9
+Reducing stack by rule 4 (line 36):
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9
+Entering state 11
+Next token is token ENTRADA ()
+Shifting token ENTRADA ()
+Entering state 23
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 23
+Entering state 40
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 23
+Entering state 66
+Reducing stack by rule 49 (line 84):
+   $1 = nterm variable ()
+-> $$ = nterm lista_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 23
+Entering state 67
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 106
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 23 67 106
+Entering state 40
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 23 67 106
+Entering state 136
+Reducing stack by rule 50 (line 85):
+   $1 = nterm lista_variables ()
+   $2 = token COMA ()
+   $3 = nterm variable ()
+-> $$ = nterm lista_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 23
+Entering state 67
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 105
+Reducing stack by rule 42 (line 78):
+   $1 = token ENTRADA ()
+   $2 = nterm lista_variables ()
+   $3 = token PYC ()
+-> $$ = nterm sentencia_entrada ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 36
+Reducing stack by rule 33 (line 68):
+   $1 = nterm sentencia_entrada ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 31
+Reducing stack by rule 27 (line 62):
+   $1 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token SI ()
+Shifting token SI ()
+Entering state 19
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 47
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 64
+Reading a token: Next token is token OPEQ ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 78
+Next token is token OPEQ ()
+Shifting token OPEQ ()
+Entering state 92
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 92
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 92
+Entering state 122
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 65 (line 100):
+   $1 = nterm expresion ()
+   $2 = token OPEQ ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 78
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 112
+Reading a token: Next token is token DEVOLVER ()
+Shifting token DEVOLVER ()
+Entering state 24
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 24
+Entering state 64
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 24
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 24
+Entering state 68
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 107
+Reducing stack by rule 44 (line 80):
+   $1 = token DEVOLVER ()
+   $2 = nterm expresion ()
+   $3 = token PYC ()
+-> $$ = nterm sentencia_retornar ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 38
+Reducing stack by rule 35 (line 70):
+   $1 = nterm sentencia_retornar ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 144
+Reading a token: Next token is token SINO ()
+Shifting token SINO ()
+Entering state 154
+Reading a token: Next token is token SI ()
+Shifting token SI ()
+Entering state 19
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 47
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47
+Entering state 64
+Reading a token: Next token is token OPEQ ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47
+Entering state 78
+Next token is token OPEQ ()
+Shifting token OPEQ ()
+Entering state 92
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 92
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 92
+Entering state 122
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 65 (line 100):
+   $1 = nterm expresion ()
+   $2 = token OPEQ ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47
+Entering state 78
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 112
+Reading a token: Next token is token DEVOLVER ()
+Shifting token DEVOLVER ()
+Entering state 24
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 112 24
+Entering state 64
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 112 24
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 112 24
+Entering state 68
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 107
+Reducing stack by rule 44 (line 80):
+   $1 = token DEVOLVER ()
+   $2 = nterm expresion ()
+   $3 = token PYC ()
+-> $$ = nterm sentencia_retornar ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 112
+Entering state 38
+Reducing stack by rule 35 (line 70):
+   $1 = nterm sentencia_retornar ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 112
+Entering state 144
+Reading a token: Next token is token SINO ()
+Shifting token SINO ()
+Entering state 154
+Reading a token: Next token is token DEVOLVER ()
+Shifting token DEVOLVER ()
+Entering state 24
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 112 144 154 24
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 112 144 154 24
+Entering state 68
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 107
+Reducing stack by rule 44 (line 80):
+   $1 = token DEVOLVER ()
+   $2 = nterm expresion ()
+   $3 = token PYC ()
+-> $$ = nterm sentencia_retornar ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 112 144 154
+Entering state 38
+Reducing stack by rule 35 (line 70):
+   $1 = nterm sentencia_retornar ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 19 47 78 112 144 154
+Entering state 158
+Reducing stack by rule 39 (line 74):
+   $1 = token SI ()
+   $2 = token PARIZQ ()
+   $3 = nterm expresion ()
+   $4 = token PARDER ()
+   $5 = nterm Sentencia ()
+   $6 = token SINO ()
+   $7 = nterm Sentencia ()
+-> $$ = nterm sentencia_si ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154
+Entering state 33
+Reducing stack by rule 30 (line 65):
+   $1 = nterm sentencia_si ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154
+Entering state 158
+Reducing stack by rule 39 (line 74):
+   $1 = token SI ()
+   $2 = token PARIZQ ()
+   $3 = nterm expresion ()
+   $4 = token PARDER ()
+   $5 = nterm Sentencia ()
+   $6 = token SINO ()
+   $7 = nterm Sentencia ()
+-> $$ = nterm sentencia_si ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 33
+Reducing stack by rule 30 (line 65):
+   $1 = nterm sentencia_si ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token LLADER ()
+Shifting token LLADER ()
+Entering state 71
+Reducing stack by rule 12 (line 46):
+   $1 = token LLADER ()
+-> $$ = nterm Fin_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 72
+Reducing stack by rule 2 (line 31):
+   $1 = nterm Inicio_de_bloque ()
+   $2 = nterm Declar_de_variables_locales ()
+   $3 = nterm Declar_subprogs ()
+   $4 = nterm Sentencias ()
+   $5 = nterm Fin_de_bloque ()
+-> $$ = nterm bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 27
+Entering state 69
+Reducing stack by rule 5 (line 37):
+   $1 = nterm Cabecera_subprog ()
+   $2 = nterm bloque ()
+-> $$ = nterm Declar_subprog ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 26
+Reducing stack by rule 3 (line 35):
+   $1 = nterm Declar_subprogs ()
+   $2 = nterm Declar_subprog ()
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9
+Entering state 11
+Reading a token: Next token is token ENTRADA ()
+Shifting token ENTRADA ()
+Entering state 23
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 23
+Entering state 40
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 23
+Entering state 66
+Reducing stack by rule 49 (line 84):
+   $1 = nterm variable ()
+-> $$ = nterm lista_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 23
+Entering state 67
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 105
+Reducing stack by rule 42 (line 78):
+   $1 = token ENTRADA ()
+   $2 = nterm lista_variables ()
+   $3 = token PYC ()
+-> $$ = nterm sentencia_entrada ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 36
+Reducing stack by rule 33 (line 68):
+   $1 = nterm sentencia_entrada ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 31
+Reducing stack by rule 27 (line 62):
+   $1 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token SI ()
+Shifting token SI ()
+Entering state 19
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 47
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 64
+Reading a token: Next token is token OPGR ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 78
+Next token is token OPGR ()
+Shifting token OPGR ()
+Entering state 97
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 97
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 97
+Entering state 127
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 70 (line 105):
+   $1 = nterm expresion ()
+   $2 = token OPGR ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47
+Entering state 78
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 112
+Reading a token: Next token is token LLAIZQ ()
+Shifting token LLAIZQ ()
+Entering state 5
+Reducing stack by rule 11 (line 45):
+   $1 = token LLAIZQ ()
+-> $$ = nterm Inicio_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 7
+Reading a token: Next token is token INIDEC ()
+Shifting token INIDEC ()
+Entering state 8
+Reducing stack by rule 8 (line 42):
+   $1 = token INIDEC ()
+-> $$ = nterm Marca_ini_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7
+Entering state 10
+Reading a token: Next token is token TIPOEL ()
+Shifting token TIPOEL ()
+Entering state 13
+Reducing stack by rule 80 (line 115):
+   $1 = token TIPOEL ()
+-> $$ = nterm tipo ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 10
+Entering state 16
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 10 16
+Entering state 40
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 10 16
+Entering state 45
+Reducing stack by rule 51 (line 86):
+   $1 = nterm variable ()
+-> $$ = nterm lista_declaracion_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 10 16
+Entering state 46
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 76
+Reducing stack by rule 15 (line 49):
+   $1 = nterm tipo ()
+   $2 = nterm lista_declaracion_variables ()
+   $3 = token PYC ()
+-> $$ = nterm Cuerpo_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 10
+Entering state 15
+Reducing stack by rule 14 (line 48):
+   $1 = nterm Cuerpo_declar_variables ()
+-> $$ = nterm Variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 10
+Entering state 14
+Reading a token: Next token is token FINDEC ()
+Shifting token FINDEC ()
+Entering state 41
+Reducing stack by rule 9 (line 43):
+   $1 = token FINDEC ()
+-> $$ = nterm Marca_fin_declar_variables ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 10 14
+Entering state 42
+Reducing stack by rule 6 (line 38):
+   $1 = nterm Marca_ini_declar_variables ()
+   $2 = nterm Variables_locales ()
+   $3 = nterm Marca_fin_declar_variables ()
+-> $$ = nterm Declar_de_variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7
+Entering state 9
+Reducing stack by rule 4 (line 36):
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9
+Entering state 11
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 28 70
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 28 70
+Entering state 108
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11
+Entering state 31
+Reducing stack by rule 27 (line 62):
+   $1 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11
+Entering state 30
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30 28 70
+Entering state 64
+Reading a token: Next token is token OPMULT ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30 28 70
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30 28 70
+Entering state 108
+Next token is token OPMULT ()
+Shifting token OPMULT ()
+Entering state 100
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30 28 70 108 100
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30 28 70 108 100
+Entering state 130
+Reducing stack by rule 60 (line 95):
+   $1 = nterm expresion ()
+   $2 = token OPMULT ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30 28 70
+Entering state 108
+Reading a token: Next token is token OPDIV ()
+Shifting token OPDIV ()
+Entering state 102
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30 28 70 108 102
+Entering state 64
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30 28 70 108 102
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30 28 70 108 102
+Entering state 132
+Reducing stack by rule 61 (line 96):
+   $1 = nterm expresion ()
+   $2 = token OPDIV ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30 28 70
+Entering state 108
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11
+Entering state 30
+Reading a token: Next token is token LLADER ()
+Shifting token LLADER ()
+Entering state 71
+Reducing stack by rule 12 (line 46):
+   $1 = token LLADER ()
+-> $$ = nterm Fin_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 7 9 11 30
+Entering state 72
+Reducing stack by rule 2 (line 31):
+   $1 = nterm Inicio_de_bloque ()
+   $2 = nterm Declar_de_variables_locales ()
+   $3 = nterm Declar_subprogs ()
+   $4 = nterm Sentencias ()
+   $5 = nterm Fin_de_bloque ()
+-> $$ = nterm bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 25
+Reducing stack by rule 28 (line 63):
+   $1 = nterm bloque ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 144
+Reading a token: Next token is token SINO ()
+Shifting token SINO ()
+Entering state 154
+Reading a token: Next token is token LLAIZQ ()
+Shifting token LLAIZQ ()
+Entering state 5
+Reducing stack by rule 11 (line 45):
+   $1 = token LLAIZQ ()
+-> $$ = nterm Inicio_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154
+Entering state 7
+Reading a token: Next token is token IDEN ()
+Reducing stack by rule 7 (line 41):
+-> $$ = nterm Declar_de_variables_locales ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7
+Entering state 9
+Reducing stack by rule 4 (line 36):
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9
+Entering state 11
+Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 28 70
+Entering state 64
+Reading a token: Next token is token OPMULT ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 28 70
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 28 70
+Entering state 108
+Next token is token OPMULT ()
+Shifting token OPMULT ()
+Entering state 100
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 28 70 108 100
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 28 70 108 100
+Entering state 130
+Reducing stack by rule 60 (line 95):
+   $1 = nterm expresion ()
+   $2 = token OPMULT ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 28 70
+Entering state 108
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11
+Entering state 31
+Reducing stack by rule 27 (line 62):
+   $1 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11
+Entering state 30
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30 28 70
+Entering state 64
+Reading a token: Next token is token OPDIV ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30 28 70
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30 28 70
+Entering state 108
+Next token is token OPDIV ()
+Shifting token OPDIV ()
+Entering state 102
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30 28 70 108 102
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30 28 70 108 102
+Entering state 132
+Reducing stack by rule 61 (line 96):
+   $1 = nterm expresion ()
+   $2 = token OPDIV ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30 28 70
+Entering state 108
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11
+Entering state 30
+Reading a token: Next token is token LLADER ()
+Shifting token LLADER ()
+Entering state 71
+Reducing stack by rule 12 (line 46):
+   $1 = token LLADER ()
+-> $$ = nterm Fin_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154 7 9 11 30
+Entering state 72
+Reducing stack by rule 2 (line 31):
+   $1 = nterm Inicio_de_bloque ()
+   $2 = nterm Declar_de_variables_locales ()
+   $3 = nterm Declar_subprogs ()
+   $4 = nterm Sentencias ()
+   $5 = nterm Fin_de_bloque ()
+-> $$ = nterm bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154
+Entering state 25
+Reducing stack by rule 28 (line 63):
+   $1 = nterm bloque ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 19 47 78 112 144 154
+Entering state 158
+Reducing stack by rule 39 (line 74):
+   $1 = token SI ()
+   $2 = token PARIZQ ()
+   $3 = nterm expresion ()
+   $4 = token PARDER ()
+   $5 = nterm Sentencia ()
+   $6 = token SINO ()
+   $7 = nterm Sentencia ()
+-> $$ = nterm sentencia_si ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 33
+Reducing stack by rule 30 (line 65):
+   $1 = nterm sentencia_si ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token DEVOLVER ()
+Shifting token DEVOLVER ()
+Entering state 24
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 24
+Entering state 64
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 24
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30 24
+Entering state 68
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 107
+Reducing stack by rule 44 (line 80):
+   $1 = token DEVOLVER ()
+   $2 = nterm expresion ()
+   $3 = token PYC ()
+-> $$ = nterm sentencia_retornar ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 38
+Reducing stack by rule 35 (line 70):
+   $1 = nterm sentencia_retornar ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token LLADER ()
+Shifting token LLADER ()
+Entering state 71
+Reducing stack by rule 12 (line 46):
+   $1 = token LLADER ()
+-> $$ = nterm Fin_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27 7 9 11 30
+Entering state 72
+Reducing stack by rule 2 (line 31):
+   $1 = nterm Inicio_de_bloque ()
+   $2 = nterm Declar_de_variables_locales ()
+   $3 = nterm Declar_subprogs ()
+   $4 = nterm Sentencias ()
+   $5 = nterm Fin_de_bloque ()
+-> $$ = nterm bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 27
+Entering state 69
+Reducing stack by rule 5 (line 37):
+   $1 = nterm Cabecera_subprog ()
+   $2 = nterm bloque ()
+-> $$ = nterm Declar_subprog ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 26
+Reducing stack by rule 3 (line 35):
+   $1 = nterm Declar_subprogs ()
+   $2 = nterm Declar_subprog ()
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9 11 27 7 9
+Entering state 11
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 40
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 40 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 40 75
+Entering state 110
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 142
+Reducing stack by rule 24 (line 58):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 28
+Reading a token: Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 28 70
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 28 70
+Entering state 108
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 31
+Reducing stack by rule 27 (line 62):
+   $1 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 56
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56
+Entering state 85
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 54 (line 89):
+   $1 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56
+Entering state 84
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 115
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56 84 115
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56 84 115
+Entering state 147
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 55 (line 90):
+   $1 = nterm lista_expresiones ()
+   $2 = token COMA ()
+   $3 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56
+Entering state 84
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 115
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56 84 115
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56 84 115
+Entering state 147
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 55 (line 90):
+   $1 = nterm lista_expresiones ()
+   $2 = token COMA ()
+   $3 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56
+Entering state 84
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 115
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56 84 115
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56 84 115
+Entering state 147
+Reading a token: Next token is token COMA ()
+Reducing stack by rule 55 (line 90):
+   $1 = nterm lista_expresiones ()
+   $2 = token COMA ()
+   $3 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56
+Entering state 84
+Next token is token COMA ()
+Shifting token COMA ()
+Entering state 115
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56 84 115
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56 84 115
+Entering state 147
+Reading a token: Next token is token CORDER ()
+Reducing stack by rule 55 (line 90):
+   $1 = nterm lista_expresiones ()
+   $2 = token COMA ()
+   $3 = nterm expresion ()
+-> $$ = nterm lista_expresiones ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56
+Entering state 84
+Next token is token CORDER ()
+Reducing stack by rule 86 (line 121):
+   $1 = nterm lista_expresiones ()
+-> $$ = nterm ini_elementos_array ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 56
+Entering state 86
+Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 116
+Reducing stack by rule 84 (line 119):
+   $1 = token CORIZQ ()
+   $2 = nterm ini_elementos_array ()
+   $3 = token CORDER ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70
+Entering state 108
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 40
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 40 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 40 75
+Entering state 110
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 143
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 40 75 110 143
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 40 75 110 143
+Entering state 153
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 157
+Reducing stack by rule 25 (line 59):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token COMA ()
+   $5 = nterm expresion ()
+   $6 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 28
+Reading a token: Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70
+Entering state 108
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token SI ()
+Shifting token SI ()
+Entering state 19
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 47
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 57
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 57
+Entering state 64
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 57 64 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 57 64 75
+Entering state 110
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 142
+Reducing stack by rule 24 (line 58):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 57
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 57
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 57
+Entering state 87
+Reading a token: Next token is token OPRESTA ()
+Shifting token OPRESTA ()
+Entering state 99
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 57 87 99
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 57 87 99
+Entering state 129
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 73 (line 108):
+   $1 = nterm expresion ()
+   $2 = token OPRESTA ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 57
+Entering state 87
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 118
+Reducing stack by rule 56 (line 91):
+   $1 = token PARIZQ ()
+   $2 = nterm expresion ()
+   $3 = token PARDER ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47
+Entering state 78
+Reading a token: Next token is token OPEQ ()
+Shifting token OPEQ ()
+Entering state 92
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 92
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 92
+Entering state 122
+Reading a token: Next token is token PARDER ()
+Reducing stack by rule 65 (line 100):
+   $1 = nterm expresion ()
+   $2 = token OPEQ ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47
+Entering state 78
+Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 112
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 28 70
+Entering state 64
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 28 70 64 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 28 70 64 75
+Entering state 110
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 142
+Reducing stack by rule 24 (line 58):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 28 70
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 28 70
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 28 70
+Entering state 108
+Reading a token: Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112
+Entering state 144
+Reading a token: Next token is token SINO ()
+Shifting token SINO ()
+Entering state 154
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154
+Entering state 40
+Reading a token: Next token is token ASIG ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154
+Entering state 28
+Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154 28 70
+Entering state 64
+Reading a token: Next token is token OPMULTM ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154 28 70
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154 28 70
+Entering state 108
+Next token is token OPMULTM ()
+Shifting token OPMULTM ()
+Entering state 101
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154 28 70 108 101
+Entering state 64
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 22 (line 56):
+   $1 = nterm identificador ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154 28 70 108 101
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154 28 70 108 101
+Entering state 131
+Reducing stack by rule 62 (line 97):
+   $1 = nterm expresion ()
+   $2 = token OPMULTM ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154 28 70
+Entering state 108
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 30 19 47 78 112 144 154
+Entering state 158
+Reducing stack by rule 39 (line 74):
+   $1 = token SI ()
+   $2 = token PARIZQ ()
+   $3 = nterm expresion ()
+   $4 = token PARDER ()
+   $5 = nterm Sentencia ()
+   $6 = token SINO ()
+   $7 = nterm Sentencia ()
+-> $$ = nterm sentencia_si ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 33
+Reducing stack by rule 30 (line 65):
+   $1 = nterm sentencia_si ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 40
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 40 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 40 75
+Entering state 110
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 142
+Reducing stack by rule 24 (line 58):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 28
+Reading a token: Next token is token ASIG ()
+Shifting token ASIG ()
+Entering state 70
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70
+Entering state 64
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 64 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 64 75
+Entering state 110
+Reading a token: Next token is token COMA ()
+Shifting token COMA ()
+Entering state 143
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 64 75 110 143
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 64 75 110 143
+Entering state 153
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 157
+Reducing stack by rule 25 (line 59):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token COMA ()
+   $5 = nterm expresion ()
+   $6 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70
+Entering state 108
+Reading a token: Next token is token OPRESTA ()
+Shifting token OPRESTA ()
+Entering state 99
+Reading a token: Next token is token IDEN ()
+Shifting token IDEN ()
+Entering state 18
+Reducing stack by rule 82 (line 117):
+   $1 = token IDEN ()
+-> $$ = nterm identificador ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 99
+Entering state 64
+Reading a token: Next token is token CORIZQ ()
+Shifting token CORIZQ ()
+Entering state 75
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 99 64 75
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 99 64 75
+Entering state 110
+Reading a token: Next token is token CORDER ()
+Shifting token CORDER ()
+Entering state 142
+Reducing stack by rule 24 (line 58):
+   $1 = nterm identificador ()
+   $2 = token CORIZQ ()
+   $3 = nterm expresion ()
+   $4 = token CORDER ()
+-> $$ = nterm elemento_de_array ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 99
+Entering state 29
+Reducing stack by rule 23 (line 57):
+   $1 = nterm elemento_de_array ()
+-> $$ = nterm variable ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 99
+Entering state 58
+Reducing stack by rule 74 (line 109):
+   $1 = nterm variable ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 99
+Entering state 129
+Reading a token: Next token is token OPSUMA ()
+Reducing stack by rule 73 (line 108):
+   $1 = nterm expresion ()
+   $2 = token OPRESTA ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70
+Entering state 108
+Next token is token OPSUMA ()
+Shifting token OPSUMA ()
+Entering state 98
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 98
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 98
+Entering state 128
+Reading a token: Next token is token OPMULT ()
+Shifting token OPMULT ()
+Entering state 100
+Reading a token: Next token is token PARIZQ ()
+Shifting token PARIZQ ()
+Entering state 57
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 98 128 100 57
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 98 128 100 57
+Entering state 87
+Reading a token: Next token is token OPDIV ()
+Shifting token OPDIV ()
+Entering state 102
+Reading a token: Next token is token CONST ()
+Shifting token CONST ()
+Entering state 54
+Reducing stack by rule 83 (line 118):
+   $1 = token CONST ()
+-> $$ = nterm constante ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 98 128 100 57 87 102
+Entering state 65
+Reducing stack by rule 75 (line 110):
+   $1 = nterm constante ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 98 128 100 57 87 102
+Entering state 132
+Reducing stack by rule 61 (line 96):
+   $1 = nterm expresion ()
+   $2 = token OPDIV ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 98 128 100 57
+Entering state 87
+Reading a token: Next token is token PARDER ()
+Shifting token PARDER ()
+Entering state 118
+Reducing stack by rule 56 (line 91):
+   $1 = token PARIZQ ()
+   $2 = nterm expresion ()
+   $3 = token PARDER ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 98 128 100
+Entering state 130
+Reducing stack by rule 60 (line 95):
+   $1 = nterm expresion ()
+   $2 = token OPMULT ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70 108 98
+Entering state 128
+Reading a token: Next token is token PYC ()
+Reducing stack by rule 72 (line 107):
+   $1 = nterm expresion ()
+   $2 = token OPSUMA ()
+   $3 = nterm expresion ()
+-> $$ = nterm expresion ()
+Stack now 0 3 7 9 11 27 7 9 11 30 28 70
+Entering state 108
+Next token is token PYC ()
+Shifting token PYC ()
+Entering state 137
+Reducing stack by rule 36 (line 71):
+   $1 = nterm variable ()
+   $2 = token ASIG ()
+   $3 = nterm expresion ()
+   $4 = token PYC ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 73
+Reducing stack by rule 26 (line 61):
+   $1 = nterm Sentencias ()
+   $2 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11 27 7 9 11
+Entering state 30
+Reading a token: Next token is token LLADER ()
+Shifting token LLADER ()
+Entering state 71
+Reducing stack by rule 12 (line 46):
+   $1 = token LLADER ()
+-> $$ = nterm Fin_de_bloque ()
+Stack now 0 3 7 9 11 27 7 9 11 30
+Entering state 72
+Reducing stack by rule 2 (line 31):
+   $1 = nterm Inicio_de_bloque ()
+   $2 = nterm Declar_de_variables_locales ()
+   $3 = nterm Declar_subprogs ()
+   $4 = nterm Sentencias ()
+   $5 = nterm Fin_de_bloque ()
+-> $$ = nterm bloque ()
+Stack now 0 3 7 9 11 27
+Entering state 69
+Reducing stack by rule 5 (line 37):
+   $1 = nterm Cabecera_subprog ()
+   $2 = nterm bloque ()
+-> $$ = nterm Declar_subprog ()
+Stack now 0 3 7 9 11
+Entering state 26
+Reducing stack by rule 3 (line 35):
+   $1 = nterm Declar_subprogs ()
+   $2 = nterm Declar_subprog ()
+-> $$ = nterm Declar_subprogs ()
+Stack now 0 3 7 9
+Entering state 11
+Reading a token: Now at end of input.
+[Linea 83]: syntax error, unexpected $end
+Shifting token error ()
+Entering state 17
+Reducing stack by rule 37 (line 72):
+   $1 = token error ()
+-> $$ = nterm sentencia_asignacion ()
+Stack now 0 3 7 9 11
+Entering state 32
+Reducing stack by rule 29 (line 64):
+   $1 = nterm sentencia_asignacion ()
+-> $$ = nterm Sentencia ()
+Stack now 0 3 7 9 11
+Entering state 31
+Reducing stack by rule 27 (line 62):
+   $1 = nterm Sentencia ()
+-> $$ = nterm Sentencias ()
+Stack now 0 3 7 9 11
+Entering state 30
+Now at end of input.
+Cleanup: discarding lookahead token $end ()
+Stack now 0 3 7 9 11 30
+Cleanup: popping nterm Sentencias ()
+Cleanup: popping nterm Declar_subprogs ()
+Cleanup: popping nterm Declar_de_variables_locales ()
+Cleanup: popping nterm Inicio_de_bloque ()
+Cleanup: popping nterm Cabecera_programa ()
+leyendo el fichero 'prueba.babad'.
