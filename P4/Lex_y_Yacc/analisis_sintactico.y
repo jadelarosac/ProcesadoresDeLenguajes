@@ -15,6 +15,8 @@ unsigned int TOPE = 0; /* Tope de la pila */
 unsigned int Subprog;  /* Indicador de comienzo de bloque de subprog */
 
 entradaTS TS[MAX_TS];  /* TABLA DE SÍMBOLOS */
+entradaTS TS_aux[MAX_TS]; /* Tabla auxiliar para paramf */
+unsigned int TOPE_AUX = 0;
 
 typedef struct{
   int atrib;
@@ -26,9 +28,21 @@ typedef struct{
 
 /* Funciones y procedimientos de manejo de TS */
 
-
-
+void TS_InsertaENTRADA(entradaTS ets);
+void TSAUX_InsertaENTRADA(entradaTS ets);
+void TS_InsertaMARCA();
+void TS_InsertaIDENT(atributos atr);
+void TS_VaciarENTRADAS();
+void TS_InsertaSUBPROG(atributos atr);
+void TS_InsertaPARAMF(atributos atr);
 /* Fin de declaraciones */
+
+/*
+  Funciones para debuggear
+*/
+
+void mostrar_tabla();
+char* entrada_a_string(entradaTS);
 
 %}
 
@@ -51,10 +65,11 @@ typedef struct{
 %%
 
 Programa                    : Cabecera_programa bloque
-bloque                      : Inicio_de_bloque
+bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                                   Declar_de_variables_locales
                                   Declar_subprogs
-                                  Sentencias Fin_de_bloque
+                                  Sentencias 
+                              Fin_de_bloque { TS_VaciarENTRADAS();}
 Declar_subprogs             : Declar_subprogs Declar_subprog
                               |
 Declar_subprog              : Cabecera_subprog bloque
@@ -68,19 +83,19 @@ Cabecera_programa           : MAIN
 Inicio_de_bloque            : LLAIZQ
 Fin_de_bloque               : LLADER
 Variables_locales           : Variables_locales Cuerpo_declar_variables
-                              |   Cuerpo_declar_variables
+                              | Cuerpo_declar_variables
 Cuerpo_declar_variables      : tipo lista_declaracion_variables PYC
                               | error
-Cabecera_subprog            : tipo variable PARIZQ argumentos PARDER
-                              |   tipo variable PARIZQ PARDER
-argumentos                  : tipo variable
-                              |   argumentos COMA tipo variable
+Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {TS_InsertaSUBPROG($2);}
+                              | tipo variable PARIZQ PARDER {TS_InsertaSUBPROG($2);}
+argumentos                  : tipo variable {TS_InsertaPARAMF($2);}
+                              |   argumentos COMA tipo variable {TS_InsertaPARAMF($4);}
                               |   error
-variable                    : identificador
-                              |   elemento_de_array
-elemento_de_array           : identificador CORIZQ expresion CORDER
-                              |   identificador CORIZQ expresion
-                              COMA expresion CORDER
+variable                    : identificador {$$.lexema = $1.lexema;} 
+                              |   elemento_de_array {$$.lexema = $1.lexema;}
+elemento_de_array           : identificador CORIZQ expresion CORDER {$$.lexema = $1.lexema;}
+                              |   identificador CORIZQ expresion 
+                              COMA expresion CORDER {$$.lexema = $1.lexema;}
 Sentencias                  : Sentencias Sentencia
                               |   Sentencia
 Sentencia                   : bloque
@@ -106,8 +121,9 @@ lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena
 expresion_cadena            : expresion | cadena
 lista_variables             : variable
                               |   lista_variables COMA variable
-lista_declaracion_variables :  variable
-                              |   lista_declaracion_variables COMA variable
+lista_declaracion_variables :  variable {TS_InsertaIDENT($1);}
+                              |   lista_declaracion_variables COMA variable {TS_InsertaIDENT($3);}
+
                               |   error
 lista_expresiones           : expresion
                               |   lista_expresiones COMA expresion
@@ -154,4 +170,178 @@ ini_elementos_array         : ini_elementos_array PYC lista_expresiones
 void yyerror(char *msg)
 {
   fprintf(stderr, "[Linea %d]: %s\n", linea_actual, msg);
+}
+
+
+void TS_InsertaENTRADA(entradaTS ets){
+  
+  if (TOPE == MAX_TS){
+    fprintf(stderr, "Error: Se ha alcanzado el máximo tamaño de la tabla de símbolos.\n");
+  }else{
+    /* Introduzco el valor en la pila y cambio el tope */
+    TS[TOPE] = ets;
+    TOPE = TOPE + 1;
+  }
+
+  mostrar_tabla();
+}
+
+void TSAUX_InsertaENTRADA(entradaTS ets){
+  if (TOPE_AUX == MAX_TS){
+    fprintf(stderr, "Error: Se ha alcanzado el máximo tamaño de la tabla de símbolos.\n");
+  }else{
+    /* Introduzco el valor en la pila y cambio el tope */
+    TS_aux[TOPE_AUX] = ets;
+    TOPE_AUX = TOPE_AUX + 1;
+  }
+}
+
+void TS_InsertaMARCA(){
+
+  entradaTS ets;
+  ets.entrada = marca;
+  ets.nombre = "";
+  ets.tipoDato = no_asignado;
+  ets.parametros = 0;
+  ets.dimensiones = 0;
+  ets.TamDimen1 = 0;
+  ets.TamDimen2 = 0;
+ 
+  TS_InsertaENTRADA(ets);
+}
+
+
+void TS_InsertaIDENT(atributos atr){
+
+  entradaTS ets;
+  ets.entrada = variable;
+  ets.nombre = atr.lexema;
+  ets.tipoDato = no_asignado;
+  ets.parametros = 0;
+  ets.dimensiones = 0;
+  ets.TamDimen1 = 0;
+  ets.TamDimen2 = 0;
+
+  int tope_aux = TOPE-1;
+
+  while (tope_aux > 0 ){
+    if (strcmp(TS[tope_aux].nombre,ets.nombre) == 0){
+      fprintf(stderr, "Error semántico: Doble declaración de la variable '%s'\n",ets.nombre);
+    }
+
+    if (TS[tope_aux].entrada == marca) break;
+    tope_aux--;
+  }
+
+  TS_InsertaENTRADA(ets);
+}
+
+
+
+void TS_VaciarENTRADAS(){
+
+  if (TOPE == 0) fprintf(stderr, "Error: intenta vaciar tabla de símbolos vacía\n");
+
+  while (TS[TOPE-1].entrada != marca) TOPE--;
+
+  if (TOPE > 0)
+    TOPE--;
+  else
+    fprintf(stderr, "Error: No se encontró marca al vaciar tabla de símbolos\n");
+}
+
+
+
+void TS_InsertaSUBPROG(atributos atr){
+
+  entradaTS ets;
+  ets.entrada = funcion;
+  ets.nombre = atr.lexema;
+  ets.tipoDato = no_asignado;
+  ets.parametros = TOPE_AUX;
+  ets.dimensiones = 0;
+  ets.TamDimen1 = 0;
+  ets.TamDimen2 = 0;
+
+  unsigned int i = 0;
+
+
+  TS_InsertaENTRADA(ets);
+  
+  /* INserto parametros formales */
+  while (i < TOPE_AUX){
+    TS_InsertaENTRADA(TS_aux[i]);
+    i++;
+  }
+  TOPE_AUX = 0;
+  
+}
+
+
+void TS_InsertaPARAMF(atributos atr){
+
+  entradaTS ets;
+  ets.entrada = parametro_formal;
+  ets.nombre = atr.lexema;
+  ets.tipoDato = no_asignado;
+  ets.parametros = 0;
+  ets.dimensiones = 0;
+  ets.TamDimen1 = 0;
+  ets.TamDimen2 = 0;
+  
+
+  int tope_aux = TOPE_AUX - 1;
+
+  while ( tope_aux >= 0){
+  
+    if (TS_aux[tope_aux].nombre == ets.nombre) fprintf(stderr, "Error:se ha encontrado otro parámetro formal con el mismo identificador: '%s'\n", ets.nombre);
+    tope_aux--;
+  }
+
+  TSAUX_InsertaENTRADA(ets);
+}
+
+
+void mostrar_tabla(){
+
+  unsigned int entrada = 0;
+
+  printf("-------------------TABLA-------------------\n");
+  printf("entrada\tnombre\ttipoDato\tparametros\tdimensiones\tTamDimen1\tTamDimen2\n");
+
+  while (entrada < TOPE){
+    printf("%s\n",entrada_a_string(TS[entrada]));
+    entrada++;
+  }
+
+  printf("\n\n");
+
+}
+
+char* entrada_a_string(entradaTS es){
+
+  char salida[2000];
+  char formato[] = "%s \t%s \t%s \t%d \t%d \t%d \t%d";
+  char* c1, *c2, *c3;
+  unsigned int c4,c5,c6,c7;
+
+  if (es.entrada == marca) c1 = "marca";
+  else if (es.entrada == funcion) c1 = "funcion";
+  else if (es.entrada == variable) c1 = "variable";
+  else if (es.entrada == parametro_formal) c1 = "paramFormal";
+
+  
+  if (es.tipoDato == booleano) c3 = "booleano";
+  else if (es.tipoDato == entero) c3 = "entero";
+  else if (es.tipoDato == real) c3 = "real";
+  else if (es.tipoDato == caracter) c3 = "caracter";
+  else if (es.tipoDato == array) c3 = "array";
+  else if (es.tipoDato == desconocido) c3 = "desconocido";
+  else if (es.tipoDato == no_asignado) c3 = "no asignado";
+  c4 = es.parametros;
+  c5 = es.dimensiones;
+  c6 = es.TamDimen1;
+  c7 = es.TamDimen2;
+  sprintf(salida,formato,c1,es.nombre,c3,c4,c5,c6,c7);
+  return strdup(salida);  
 }
