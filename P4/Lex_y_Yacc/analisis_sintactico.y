@@ -12,11 +12,13 @@ int linea_actual = 1;
 #define MAX_TS 500
 
 unsigned int TOPE = 0; /* Tope de la pila */
-unsigned int Subprog;  /* Indicador de comienzo de bloque de subprog */
+unsigned int subprog;  /* Indicador de comienzo de bloque de subprog */
+dtipo tipoTmp; 
 
 entradaTS TS[MAX_TS];  /* TABLA DE SÍMBOLOS */
 entradaTS TS_aux[MAX_TS]; /* Tabla auxiliar para paramf */
 unsigned int TOPE_AUX = 0;
+
 
 typedef struct{
   int atrib;
@@ -35,6 +37,8 @@ void TS_InsertaIDENT(atributos atr);
 void TS_VaciarENTRADAS();
 void TS_InsertaSUBPROG(atributos atr);
 void TS_InsertaPARAMF(atributos atr);
+
+dtipo atributoAEnum(int atr);
 /* Fin de declaraciones */
 
 /*
@@ -72,7 +76,7 @@ bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                               Fin_de_bloque { TS_VaciarENTRADAS();}
 Declar_subprogs             : Declar_subprogs Declar_subprog
                               |
-Declar_subprog              : Cabecera_subprog bloque
+Declar_subprog              : Cabecera_subprog {subprog = 1;} bloque {subprog = 0;}
 Declar_de_variables_locales : Marca_ini_declar_variables
                                   Variables_locales
                                   Marca_fin_declar_variables
@@ -84,7 +88,7 @@ Inicio_de_bloque            : LLAIZQ
 Fin_de_bloque               : LLADER
 Variables_locales           : Variables_locales Cuerpo_declar_variables
                               | Cuerpo_declar_variables
-Cuerpo_declar_variables      : tipo lista_declaracion_variables PYC
+Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);printf("tipoTmp = %d\n",tipoTmp);} lista_declaracion_variables PYC
                               | error
 Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {TS_InsertaSUBPROG($2);}
                               | tipo variable PARIZQ PARDER {TS_InsertaSUBPROG($2);}
@@ -151,7 +155,7 @@ expresion                   : PARIZQ expresion PARDER
                               |   error
 funcion                     : identificador PARIZQ PARDER
                               |   identificador PARIZQ lista_expresiones PARDER
-tipo                        : TIPOEL
+tipo                        : TIPOEL {$$.atrib = $1.atrib;}
 cadena                      : CADENA
 identificador               : IDEN
 constante                   : CONST
@@ -208,6 +212,19 @@ void TS_InsertaMARCA(){
   ets.TamDimen2 = 0;
  
   TS_InsertaENTRADA(ets);
+
+  entradaTS ets_aux;
+  if (subprog == 1){ 
+    unsigned int i = 0;
+    /* INserto parametros formales */
+    while (i < TOPE_AUX){
+      ets_aux = TS_aux[i];
+      ets_aux.entrada = variable;
+      TS_InsertaENTRADA(ets_aux);
+      i++;
+    }
+    TOPE_AUX = 0;
+  }
 }
 
 
@@ -216,7 +233,7 @@ void TS_InsertaIDENT(atributos atr){
   entradaTS ets;
   ets.entrada = variable;
   ets.nombre = atr.lexema;
-  ets.tipoDato = no_asignado;
+  ets.tipoDato = tipoTmp;
   ets.parametros = 0;
   ets.dimensiones = 0;
   ets.TamDimen1 = 0;
@@ -273,8 +290,7 @@ void TS_InsertaSUBPROG(atributos atr){
     TS_InsertaENTRADA(TS_aux[i]);
     i++;
   }
-  TOPE_AUX = 0;
-  
+ 
 }
 
 
@@ -302,6 +318,16 @@ void TS_InsertaPARAMF(atributos atr){
 }
 
 
+dtipo atributoAEnum(int atr){
+
+  if (atr == 0) return entero;
+  if (atr == 1) return real;
+  if (atr == 2) return caracter;
+  if (atr == 3) return booleano;
+  printf("ERROR: Atributo de tipo no válido: atributo == %d\n", atr);
+}
+
+/****************************************************************************************/
 void mostrar_tabla(){
 
   unsigned int entrada = 0;
