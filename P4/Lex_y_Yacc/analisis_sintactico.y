@@ -4,9 +4,32 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "estructurasTS.h"
 void yyerror(char * msg);
 
 int linea_actual = 1;
+
+#define MAX_TS 500
+
+unsigned int TOPE = 0; /* Tope de la pila */
+unsigned int Subprog;  /* Indicador de comienzo de bloque de subprog */
+
+entradaTS TS[MAX_TS];  /* TABLA DE SÍMBOLOS */
+
+typedef struct{
+  int atrib;
+  char* lexema;
+  dtipo tipo;
+} atributos;
+
+#define YYSTYPE atributos /* Cada símbolo tiene una estructura de tipo atributos */
+
+/* Funciones y procedimientos de manejo de TS */
+
+
+
+/* Fin de declaraciones */
+
 %}
 
 //%error-verbose

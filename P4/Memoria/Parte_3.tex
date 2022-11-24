@@ -1,0 +1,25 @@
+\section{Definición de la semántica en lenguaje natural}
+
+El lenguaje BABAD tiene tipos elementales (entero, real, carácter, booleano) y compuestos, como es el caso de arrays 1D y 2D que particularmente albergará el lenguaje. Tales arrays son vectores y matrices, respectivamente, constando de elementos del mismo tipo elemental.
+
+En cuanto a las operaciones que se pueden realizar con arrays 1D y 2D en nuestro lenguaje, hemos de tener en cuenta la posibilidad de tener 5 operadores binarios, que definen forma de expresión y no forma de sentencia, es decir, se devuelve un nuevo valor del tipo base del array o un nuevo array tras realizar la operación.
+
+El primero es la suma (+), donde se pueden sumar dos arrays, un array y un valor o viceversa. En cuenta al producto (*) donde se pueden hacer las 3 posibles combinaciones como con el +. La resta (-) involucra solo entre restar 2 arrays o restar array y valor. La división (/) también involucra dividir en las 2 situaciones de la resta. Las operaciones son elemento a elemento y cuando hay valores se le aplica.
+
+En cuanto a la multiplicación de matrices, se usa el operador **.
+
+Para escribir un programa, necesitaremos la cabecera del mismo, que es \texttt{programa\_principal()} y dentro de él contendrá como mínimo un bloque, los cuales se inician y terminan con las llaves \{ y \}.
+
+Al inicio de cada bloque del programa, se habrán de declarar las variables locales correspondientes (pudiendo incluso asignar valor en la misma declaración), que irán entre 2 marcas de comienzo y final de declaración (`\texttt{declarar}' y `\texttt{fin declarar}').
+
+En cuanto a la declaración de subprogramas, cada subprograma (que en el caso  de nuestro lenguaje, se trata de funciones) consta de una cabecera aludiendo a la función, y de otro bloque interno.
+
+Otro elemento a considerar es que el lenguaje consta de sentencias, que se van componiendo recursivamente de más sentencias individuales. Una sentencia puede ser un bloque, una asignación de variables, un condicional, un bucle mientras, un bucle de hacer-hasta (específico de nuestro lenguaje), una entrada o salida, una llamada a función, una expresión o una sentencia de retorno. 
+
+En las sentencias de salida cabe la posibilidad de concatenar caracteres de forma que se formen cadenas y listas de cadenas, juntando arbitrariamente caracteres ASCII, recalcando que cadena no es un tipo de nuestro lenguaje.
+
+Una expresión en el lenguaje podrá constar de operadores unarios, binarios, identificadores, constantes, variables o funciones. Además, cabe la posibilidad de que estén entre paréntesis o no.
+
+En caso de tener una lista de argumentos para una función, deberá ir entre paréntesis y cada uno de ellos conformados por el tipo y el nombre de la variable, con separación por comas.
+
+Otro detalle refiere a la imposibilidad de empezar a nombrar un identificador con un número o dígito, sino que siempre se hace con un carácter (letras del alfabeto o el guión bajo). Por último, es importante incidir en que los identificadores han de ser declarados antes de usarlos.

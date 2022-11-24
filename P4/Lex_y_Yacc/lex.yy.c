@@ -371,8 +371,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 46
-#define YY_END_OF_BUFFER 47
+#define YY_NUM_RULES 49
+#define YY_END_OF_BUFFER 50
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -382,21 +382,21 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[163] =
     {   0,
-        0,    0,   47,   45,   44,   43,   27,   45,   39,   45,
-       45,   21,   20,   28,   25,   16,   26,   29,   42,   17,
+        0,    0,   50,   48,   47,   46,   27,   48,   39,   48,
+       48,   21,   20,   28,   25,   16,   26,   29,   42,   17,
        37,   24,   38,   41,   23,   22,   41,   41,   41,   41,
-       41,   41,   41,   41,   41,   41,   41,   19,   45,   18,
+       41,   41,   41,   41,   41,   41,   41,   19,   48,   18,
        34,    0,   31,    0,   30,    0,   42,   35,   33,   36,
        41,   41,   41,   41,   41,   41,   41,   41,   41,   41,
-       41,   41,   41,   41,   15,   32,   40,   42,   42,   41,
+       41,   41,   41,   41,   15,   32,   40,   44,   43,   41,
        41,   41,   41,   41,   41,   41,   41,   41,   41,   41,
        41,   41,   41,   41,    0,   41,   41,   41,   41,   41,
-       41,   41,    0,   41,   41,    7,   41,   41,    1,   41,
+       41,   41,    0,   41,   41,    7,   41,   41,    2,   41,
 
         0,   41,   41,   41,   41,   41,   41,   41,    0,   12,
-       41,   41,   41,   41,   14,   41,   41,   41,    4,   41,
+       41,   41,   41,   41,   14,   41,   41,   41,    1,   41,
         0,    0,   41,   41,   41,   41,   41,   41,   41,    0,
-        0,   41,   41,   41,    2,    3,   10,    8,    0,    0,
+        0,   41,   41,   41,    4,    3,   10,    8,    0,    0,
        13,   41,    6,    0,   11,   41,    0,   41,    0,   41,
         9,   41,   41,   41,   41,   41,   41,   41,    0,    0,
         5,    0
@@ -548,11 +548,11 @@ static const flex_int16_t yy_chk[239] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[47] =
+static const flex_int32_t yy_rule_can_match_eol[50] =
     {   0,
 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    1, 0, 1, 1, 1, 0, 0,     };
+    1, 0, 0, 0, 1, 0, 1, 1, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -863,22 +863,22 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 12 "analisis_lexico.l"
-{return(TIPOEL);}
+{yylval.atrib = 0;return(TIPOEL);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 13 "analisis_lexico.l"
-{return(TIPOEL);}
+{yylval.atrib = 1;return(TIPOEL);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 14 "analisis_lexico.l"
-{return(TIPOEL);}
+{yylval.atrib = 2;return(TIPOEL);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 15 "analisis_lexico.l"
-{return(TIPOEL);}
+{yylval.atrib = 3;return(TIPOEL);}
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
@@ -984,77 +984,77 @@ YY_RULE_SETUP
 case 25:
 YY_RULE_SETUP
 #line 36 "analisis_lexico.l"
-{return(OPSUMA);}      //OPMIX
+{yylval.atrib = 0;return(OPSUMA);}      //OPMIX
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 37 "analisis_lexico.l"
-{return(OPRESTA);}     //OPMIX
+{yylval.atrib = 1;return(OPRESTA);}     //OPMIX
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 38 "analisis_lexico.l"
-{return(OPNEG);}       //OPUN
+{return(OPNEG);}                       //OPUN
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 39 "analisis_lexico.l"
-{return(OPMULT);}      //OPBIN
+{yylval.atrib = 0;return(OPMULT);}      //OPBIN
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 40 "analisis_lexico.l"
-{return(OPDIV);}       //OPBIN
+{yylval.atrib = 1;return(OPDIV);}       //OPBIN
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 41 "analisis_lexico.l"
-{return(OPMULTM);}    //OPBIN
+{yylval.atrib = 2;return(OPMULTM);}    //OPBIN
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 42 "analisis_lexico.l"
-{return(OPAND);}      //OPBIN
+{yylval.atrib = 3;return(OPAND);}      //OPBIN
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 43 "analisis_lexico.l"
-{return(OPOR);}       //OPBIN
+{yylval.atrib = 4;return(OPOR);}       //OPBIN
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 44 "analisis_lexico.l"
-{return(OPEQ);}       //OPBIN
+{yylval.atrib = 5;return(OPEQ);}       //OPBIN
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 45 "analisis_lexico.l"
-{return(OPNEQ);}      //OPBIN
+{yylval.atrib = 6;return(OPNEQ);}      //OPBIN
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 46 "analisis_lexico.l"
-{return(OPLEQ);}      //OPBIN
+{yylval.atrib = 7;return(OPLEQ);}      //OPBIN
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 47 "analisis_lexico.l"
-{return(OPGEQ);}      //OPBIN
+{yylval.atrib = 8;return(OPGEQ);}      //OPBIN
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 48 "analisis_lexico.l"
-{return(OPLESS);}      //OPBIN
+{yylval.atrib = 9;return(OPLESS);}      //OPBIN
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 49 "analisis_lexico.l"
-{return(OPGR);}        //OPBIN
+{yylval.atrib = 10;return(OPGR);}       //OPBIN
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 50 "analisis_lexico.l"
-{return(OPMOD);}      //OPBIN
+{yylval.atrib = 11;return(OPMOD);}      //OPBIN
 	YY_BREAK
 case 40:
 /* rule 40 can match eol */
@@ -1065,38 +1065,54 @@ YY_RULE_SETUP
 case 41:
 YY_RULE_SETUP
 #line 52 "analisis_lexico.l"
-{return(IDEN);}
+{ yylval.lexema = strdup(yytext);
+                                           return(IDEN);}
 	YY_BREAK
 case 42:
-/* rule 42 can match eol */
-YY_RULE_SETUP
-#line 53 "analisis_lexico.l"
-{return(CONST);}
-	YY_BREAK
-case 43:
-/* rule 43 can match eol */
 YY_RULE_SETUP
 #line 54 "analisis_lexico.l"
-{linea_actual++;}
+{yylval.atrib = 0;return(CONST);}
+	YY_BREAK
+case 43:
+YY_RULE_SETUP
+#line 55 "analisis_lexico.l"
+{yylval.atrib = 1;return(CONST);}
 	YY_BREAK
 case 44:
 /* rule 44 can match eol */
 YY_RULE_SETUP
-#line 55 "analisis_lexico.l"
-{}
+#line 56 "analisis_lexico.l"
+{yylval.atrib = 2;return(CONST);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 56 "analisis_lexico.l"
+#line 57 "analisis_lexico.l"
+{yylval.atrib = 3;return(CONST);}
+	YY_BREAK
+case 46:
+/* rule 46 can match eol */
+YY_RULE_SETUP
+#line 58 "analisis_lexico.l"
+{linea_actual++;}
+	YY_BREAK
+case 47:
+/* rule 47 can match eol */
+YY_RULE_SETUP
+#line 59 "analisis_lexico.l"
+{}
+	YY_BREAK
+case 48:
+YY_RULE_SETUP
+#line 60 "analisis_lexico.l"
 {snprintf(buffer, MAXLONGBUFFER, "lexical error: el o los caracteres '%s' no forman ningún token conocido", yytext);
   yyerror(buffer);}
 	YY_BREAK
-case 46:
+case 49:
 YY_RULE_SETUP
-#line 58 "analisis_lexico.l"
+#line 62 "analisis_lexico.l"
 ECHO;
 	YY_BREAK
-#line 1100 "lex.yy.c"
+#line 1116 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2113,4 +2129,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 58 "analisis_lexico.l"
+#line 62 "analisis_lexico.l"

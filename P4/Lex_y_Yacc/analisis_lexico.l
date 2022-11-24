@@ -9,10 +9,10 @@
 
 %%
 
-"real" {return(TIPOEL);}
-"booleano" {return(TIPOEL);}
-"caracter" {return(TIPOEL);}
-"entero" {return(TIPOEL);}
+"entero" {yylval.atrib = 0;return(TIPOEL);}
+"real" {yylval.atrib = 1;return(TIPOEL);}
+"caracter" {yylval.atrib = 2;return(TIPOEL);}
+"booleano" {yylval.atrib = 3;return(TIPOEL);}
 "programa_principal("[[:space:]]*")" {return(MAIN);}
 "retornar" {return(DEVOLVER);}
 "leer" {return(ENTRADA);}
@@ -33,24 +33,28 @@
 "]" {return(CORDER);}
 "[" {return(CORIZQ);}
 "=" {return(ASIG);}
-"+" {return(OPSUMA);}      //OPMIX
-"-" {return(OPRESTA);}     //OPMIX
-"!" {return(OPNEG);}       //OPUN
-"*" {return(OPMULT);}      //OPBIN
-"/" {return(OPDIV);}       //OPBIN
-"**" {return(OPMULTM);}    //OPBIN
-"&&" {return(OPAND);}      //OPBIN
-"||" {return(OPOR);}       //OPBIN
-"==" {return(OPEQ);}       //OPBIN
-"!=" {return(OPNEQ);}      //OPBIN
-"<=" {return(OPLEQ);}      //OPBIN
-">=" {return(OPGEQ);}      //OPBIN
-"<" {return(OPLESS);}      //OPBIN
-">" {return(OPGR);}        //OPBIN
-"%" {return(OPMOD);}      //OPBIN
+"+" {yylval.atrib = 0;return(OPSUMA);}      //OPMIX
+"-" {yylval.atrib = 1;return(OPRESTA);}     //OPMIX
+"!" {return(OPNEG);}                       //OPUN
+"*" {yylval.atrib = 0;return(OPMULT);}      //OPBIN
+"/" {yylval.atrib = 1;return(OPDIV);}       //OPBIN
+"**" {yylval.atrib = 2;return(OPMULTM);}    //OPBIN
+"&&" {yylval.atrib = 3;return(OPAND);}      //OPBIN
+"||" {yylval.atrib = 4;return(OPOR);}       //OPBIN
+"==" {yylval.atrib = 5;return(OPEQ);}       //OPBIN
+"!=" {yylval.atrib = 6;return(OPNEQ);}      //OPBIN
+"<=" {yylval.atrib = 7;return(OPLEQ);}      //OPBIN
+">=" {yylval.atrib = 8;return(OPGEQ);}      //OPBIN
+"<" {yylval.atrib = 9;return(OPLESS);}      //OPBIN
+">" {yylval.atrib = 10;return(OPGR);}       //OPBIN
+"%" {yylval.atrib = 11;return(OPMOD);}      //OPBIN
 \"[^\"]+\" {return(CADENA);}
-([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* {return(IDEN);}
-(\'[^\']\'|[0-9]+|[0-9]+\.[0-9]+|"cierto"|"falso") {return(CONST);}
+([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* { yylval.lexema = strdup(yytext);
+                                           return(IDEN);}
+[0-9]+ {yylval.atrib = 0;return(CONST);}
+[0-9]+\.[0-9]+ {yylval.atrib = 1;return(CONST);}
+\'[^\']\' {yylval.atrib = 2;return(CONST);}
+("cierto"|"falso") {yylval.atrib = 3;return(CONST);}
 \n {linea_actual++;}
 [[:space:]] {}
 . {snprintf(buffer, MAXLONGBUFFER, "lexical error: el o los caracteres '%s' no forman ningún token conocido", yytext);
