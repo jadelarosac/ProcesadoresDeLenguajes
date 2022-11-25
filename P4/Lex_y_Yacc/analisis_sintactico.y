@@ -98,8 +98,13 @@ Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {tipoTmp=
 argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {TS_InsertaPARAMF($3);}
                               |   argumentos COMA tipo {tipoTmp=atributoAEnum($3.atrib);} variable {TS_InsertaPARAMF($5);}
                               |   error
-variable                    : identificador {$$.lexema = $1.lexema;} 
-                              |   elemento_de_array {$$.lexema = $1.lexema;}
+variable                    : identificador {$$.lexema = $1.lexema;}
+                              |   elemento_de_array_decl {$$.lexema = $1.lexema;}
+elemento_de_array_decl      : identificador CORIZQ CONST CORDER {$$.lexema = $1.lexema;}
+                              |   identificador CORIZQ CONST 
+                              COMA CONST CORDER {$$.lexema = $1.lexema;}
+variable_expresion          : identificador  
+                              |   elemento_de_array 
 elemento_de_array           : identificador CORIZQ expresion CORDER {$$.lexema = $1.lexema;}
                               |   identificador CORIZQ expresion 
                               COMA expresion CORDER {$$.lexema = $1.lexema;}
@@ -113,7 +118,7 @@ Sentencia                   : bloque
                               |   sentencia_entrada
                               |   sentencia_salida
                               |   sentencia_retornar
-sentencia_asignacion        : variable ASIG expresion PYC
+sentencia_asignacion        : variable_expresion ASIG expresion PYC
                               |   error
 sentencia_si                : SI PARIZQ expresion PARDER Sentencia
                               |   SI PARIZQ expresion PARDER Sentencia
@@ -152,7 +157,7 @@ expresion                   : PARIZQ expresion PARDER
                               |   expresion OPMOD expresion
                               |   expresion OPSUMA expresion
                               |   expresion OPRESTA expresion
-                              |   variable
+                              |   variable_expresion
                               |   constante
                               |   funcion
                               |   error
@@ -364,7 +369,6 @@ char* entrada_a_string(entradaTS es){
   else if (es.tipoDato == entero) c3 = "entero";
   else if (es.tipoDato == real) c3 = "real";
   else if (es.tipoDato == caracter) c3 = "caracter";
-  else if (es.tipoDato == array) c3 = "array";
   else if (es.tipoDato == desconocido) c3 = "desconocido";
   else if (es.tipoDato == no_asignado) c3 = "no asignado";
   c4 = es.parametros;
