@@ -7,7 +7,7 @@ typedef enum {
 } tipoEntrada ;
 
 typedef enum {
-	booleano, entero, real, caracter, array, desconocido, no_asignado
+	booleano, entero, real, caracter, desconocido, no_asignado
 } dtipo;
 
 typedef struct {

@@ -12,7 +12,7 @@ programa_principal()
    fin declarar
       entero funcionA (entero a1, real a2, caracter a3)
       {
-         declarar
+:::::         declarar
             entero x1, x2 ;
          fin declarar
             caracter funcionB (caracter b1, booleano b2)
@@ -53,7 +53,7 @@ programa_principal()
             si no si (e1=='b')
                retornar e2 ;
             si no
-               retornar ' ';
+               rxetornar ' ';
          }
       leer valor ;
       si (d1>0.0)

@@ -14,6 +14,9 @@ int linea_actual = 1;
 unsigned int TOPE = 0; /* Tope de la pila */
 unsigned int subprog;  /* Indicador de comienzo de bloque de subprog */
 dtipo tipoTmp; 
+unsigned int dimensionesTmp;
+int TamDimen1Tmp;
+int TamDimen2Tmp;
 
 entradaTS TS[MAX_TS];  /* TABLA DE SÍMBOLOS */
 entradaTS TS_aux[MAX_TS]; /* Tabla auxiliar para paramf */
@@ -88,12 +91,12 @@ Inicio_de_bloque            : LLAIZQ
 Fin_de_bloque               : LLADER
 Variables_locales           : Variables_locales Cuerpo_declar_variables
                               | Cuerpo_declar_variables
-Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);printf("tipoTmp = %d\n",tipoTmp);} lista_declaracion_variables PYC
+Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);} lista_declaracion_variables PYC
                               | error
-Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {TS_InsertaSUBPROG($2);}
-                              | tipo variable PARIZQ PARDER {TS_InsertaSUBPROG($2);}
-argumentos                  : tipo variable {TS_InsertaPARAMF($2);}
-                              |   argumentos COMA tipo variable {TS_InsertaPARAMF($4);}
+Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {tipoTmp=atributoAEnum($1.atrib);TS_InsertaSUBPROG($2);}
+                              | tipo variable PARIZQ PARDER {tipoTmp=atributoAEnum($1.atrib);TS_InsertaSUBPROG($2);}
+argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {TS_InsertaPARAMF($3);}
+                              |   argumentos COMA tipo {tipoTmp=atributoAEnum($3.atrib);} variable {TS_InsertaPARAMF($5);}
                               |   error
 variable                    : identificador {$$.lexema = $1.lexema;} 
                               |   elemento_de_array {$$.lexema = $1.lexema;}
@@ -274,7 +277,7 @@ void TS_InsertaSUBPROG(atributos atr){
   entradaTS ets;
   ets.entrada = funcion;
   ets.nombre = atr.lexema;
-  ets.tipoDato = no_asignado;
+  ets.tipoDato = tipoTmp;
   ets.parametros = TOPE_AUX;
   ets.dimensiones = 0;
   ets.TamDimen1 = 0;
@@ -299,7 +302,7 @@ void TS_InsertaPARAMF(atributos atr){
   entradaTS ets;
   ets.entrada = parametro_formal;
   ets.nombre = atr.lexema;
-  ets.tipoDato = no_asignado;
+  ets.tipoDato = tipoTmp;
   ets.parametros = 0;
   ets.dimensiones = 0;
   ets.TamDimen1 = 0;
@@ -308,7 +311,7 @@ void TS_InsertaPARAMF(atributos atr){
 
   int tope_aux = TOPE_AUX - 1;
 
-  while ( tope_aux >= 0){
+  while (tope_aux >= 0){
   
     if (TS_aux[tope_aux].nombre == ets.nombre) fprintf(stderr, "Error:se ha encontrado otro parámetro formal con el mismo identificador: '%s'\n", ets.nombre);
     tope_aux--;
