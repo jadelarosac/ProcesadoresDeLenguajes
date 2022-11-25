@@ -1071,23 +1071,23 @@ YY_RULE_SETUP
 case 42:
 YY_RULE_SETUP
 #line 54 "analisis_lexico.l"
-{yylval.atrib = 0;return(CONST);}
+{return(CONSTENT);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 55 "analisis_lexico.l"
-{yylval.atrib = 1;return(CONST);}
+{yylval.atrib = 0;return(CONST);}
 	YY_BREAK
 case 44:
 /* rule 44 can match eol */
 YY_RULE_SETUP
 #line 56 "analisis_lexico.l"
-{yylval.atrib = 2;return(CONST);}
+{yylval.atrib = 1;return(CONST);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
 #line 57 "analisis_lexico.l"
-{yylval.atrib = 3;return(CONST);}
+{yylval.atrib = 2;return(CONST);}
 	YY_BREAK
 case 46:
 /* rule 46 can match eol */

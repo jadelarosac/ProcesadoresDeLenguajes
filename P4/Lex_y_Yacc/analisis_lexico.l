@@ -51,10 +51,10 @@
 \"[^\"]+\" {return(CADENA);}
 ([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* { yylval.lexema = strdup(yytext);
                                            return(IDEN);}
-[0-9]+ {yylval.atrib = 0;return(CONST);}
-[0-9]+\.[0-9]+ {yylval.atrib = 1;return(CONST);}
-\'[^\']\' {yylval.atrib = 2;return(CONST);}
-("cierto"|"falso") {yylval.atrib = 3;return(CONST);}
+[0-9]+ {return(CONSTENT);}
+[0-9]+\.[0-9]+ {yylval.atrib = 0;return(CONST);}
+\'[^\']\' {yylval.atrib = 1;return(CONST);}
+("cierto"|"falso") {yylval.atrib = 2;return(CONST);}
 \n {linea_actual++;}
 [[:space:]] {}
 . {snprintf(buffer, MAXLONGBUFFER, "lexical error: el o los caracteres '%s' no forman ningún token conocido", yytext);

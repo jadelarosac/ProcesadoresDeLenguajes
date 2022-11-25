@@ -65,7 +65,7 @@ char* entrada_a_string(entradaTS);
 %left OPMULT OPMULTM OPDIV OPMOD
 %right OPNEG
 
-%token CONST IDEN CADENA ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
+%token CONST CONSTENT IDEN CADENA ASIG CORIZQ CORDER PARIZQ PARDER LLAIZQ LLADER PYC COMA SI SINO MIENTRAS HACER HASTA INIDEC FINDEC SALIDA ENTRADA DEVOLVER MAIN TIPOEL
 
 
 
@@ -100,14 +100,14 @@ argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {
                               |   error
 variable                    : identificador {$$.lexema = $1.lexema;}
                               |   elemento_de_array_decl {$$.lexema = $1.lexema;}
-elemento_de_array_decl      : identificador CORIZQ CONST CORDER {$$.lexema = $1.lexema;}
-                              |   identificador CORIZQ CONST 
-                              COMA CONST CORDER {$$.lexema = $1.lexema;}
+elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {$$.lexema = $1.lexema;}
+                              |   identificador CORIZQ CONSTENT 
+                              COMA CONSTENT CORDER {$$.lexema = $1.lexema;}
 variable_expresion          : identificador  
                               |   elemento_de_array 
-elemento_de_array           : identificador CORIZQ expresion CORDER {$$.lexema = $1.lexema;}
+elemento_de_array           : identificador CORIZQ expresion CORDER 
                               |   identificador CORIZQ expresion 
-                              COMA expresion CORDER {$$.lexema = $1.lexema;}
+                              COMA expresion CORDER 
 Sentencias                  : Sentencias Sentencia
                               |   Sentencia
 Sentencia                   : bloque
@@ -166,7 +166,8 @@ funcion                     : identificador PARIZQ PARDER
 tipo                        : TIPOEL {$$.atrib = $1.atrib;}
 cadena                      : CADENA
 identificador               : IDEN
-constante                   : CONST
+constante                   : CONST 
+                              | CONSTENT
                               |   CORIZQ ini_elementos_array CORDER
 ini_elementos_array         : ini_elementos_array PYC lista_expresiones 
                               |   lista_expresiones

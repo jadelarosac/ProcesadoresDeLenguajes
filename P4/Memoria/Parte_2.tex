@@ -26,9 +26,13 @@
 <argumentos>                  ::= <tipo> <variable>
                               |   <argumentos>, <tipo> <variable>
 <variable>                    ::= <identificador>
-                              |   <elemento_de_array>
+                              |   <elemento_de_array_decl>
 <elemento_de_array>           ::= <identificador>[<expresion>]
                               |   <identificador>[<expresion>, <expresion>]
+<variable_expresion>          ::= <identificador>
+                              |   <elemento_de_array>
+<elemento_de_array_decl>      ::= <identificador>[<numero>]
+                              |   <identificador>[<numero>, <numero>]
 <Sentencias>                  ::= <Sentencias> <Sentencia>
                               |   <Sentencia>
 <Sentencia>                   ::= <bloque>
@@ -39,7 +43,7 @@
                               |   <sentencia_entrada>
                               |   <sentencia_salida>
                               |   <sentencia_retornar>
-<sentencia_asignacion>        ::= <variable> = <expresion>;
+<sentencia_asignacion>        ::= <variable_expresion> = <expresion>;
 <sentencia_si>                ::= si (<expresion>) <Sentencia>
                               |   si (<expresion>) <Sentencia> si no <Sentencia>
 <sentencia_mientras>          ::= mientras (<expresion>) <sentencia>
@@ -59,7 +63,7 @@
 <expresion>                   ::= ( <expresion> )
                               |   <op_unario> <expresion>
                               |   <expresion> <op_binario> <expresion>
-                              |   <variable>
+                              |   <variable_expresion>
                               |   <constante>
                               |   <funcion>
 <funcion>                     ::= <identificador>()
