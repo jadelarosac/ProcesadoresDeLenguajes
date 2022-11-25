@@ -14,9 +14,6 @@ int linea_actual = 1;
 unsigned int TOPE = 0; /* Tope de la pila */
 unsigned int subprog;  /* Indicador de comienzo de bloque de subprog */
 dtipo tipoTmp; 
-unsigned int dimensionesTmp;
-int TamDimen1Tmp;
-int TamDimen2Tmp;
 
 entradaTS TS[MAX_TS];  /* TABLA DE SÍMBOLOS */
 entradaTS TS_aux[MAX_TS]; /* Tabla auxiliar para paramf */
@@ -27,6 +24,9 @@ typedef struct{
   int atrib;
   char* lexema;
   dtipo tipo;
+  unsigned int dimensiones;
+  int TamDimen1;
+  int TamDimen2;
 } atributos;
 
 #define YYSTYPE atributos /* Cada símbolo tiene una estructura de tipo atributos */
@@ -99,18 +99,18 @@ argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {
                               |   argumentos COMA tipo {tipoTmp=atributoAEnum($3.atrib);} variable {TS_InsertaPARAMF($5);}
                               |   error
 variable                    : identificador {$$.lexema = $1.lexema;
-                                             dimensionesTmp=0; TamDimen1Tmp=0; TamDimen2Tmp=0;
+                                             $$.dimensiones=0; $$.TamDimen1=0; $$.TamDimen2=0;
                                             }
                               |   elemento_de_array_decl {$$.lexema = $1.lexema;}
 elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {$$.lexema = $1.lexema; 
-                                                                    dimensionesTmp=1;
-                                                                    TamDimen1Tmp=atoi($3.lexema);
-                                                                    TamDimen2Tmp=0;}
+                                                                    $$.dimensiones=1;
+                                                                    $$.TamDimen1=atoi($3.lexema);
+                                                                    $$.TamDimen2=0;}
                               |   identificador CORIZQ CONSTENT 
                               COMA CONSTENT CORDER {$$.lexema = $1.lexema;
-                                                    dimensionesTmp=2;
-                                                    TamDimen1Tmp=atoi($3.lexema);
-                                                    TamDimen2Tmp=atoi($5.lexema);}
+                                                    $$.dimensiones=2;
+                                                    $$.TamDimen1=atoi($3.lexema);
+                                                    $$.TamDimen2=atoi($5.lexema);}
 
 variable_expresion          : identificador  
                               |   elemento_de_array 
@@ -253,9 +253,9 @@ void TS_InsertaIDENT(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = 0;
-  ets.dimensiones = dimensionesTmp;
-  ets.TamDimen1 = TamDimen1Tmp;
-  ets.TamDimen2 = TamDimen2Tmp;
+  ets.dimensiones = atr.dimensiones;
+  ets.TamDimen1 = atr.TamDimen1;
+  ets.TamDimen2 = atr.TamDimen2;
 
   int tope_aux = TOPE-1;
 
@@ -294,9 +294,9 @@ void TS_InsertaSUBPROG(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = TOPE_AUX;
-  ets.dimensiones = dimensionesTmp;
-  ets.TamDimen1 = TamDimen1Tmp;
-  ets.TamDimen2 = TamDimen2Tmp;
+  ets.dimensiones = atr.dimensiones;
+  ets.TamDimen1 = atr.TamDimen1;
+  ets.TamDimen2 = atr.TamDimen2;
 
   unsigned int i = 0;
 
@@ -319,9 +319,9 @@ void TS_InsertaPARAMF(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = 0;
-  ets.dimensiones = dimensionesTmp;
-  ets.TamDimen1 = TamDimen1Tmp;
-  ets.TamDimen2 = TamDimen2Tmp;
+  ets.dimensiones = atr.dimensiones;
+  ets.TamDimen1 = atr.TamDimen1;
+  ets.TamDimen2 = atr.TamDimen2;
   
 
   int tope_aux = TOPE_AUX - 1;

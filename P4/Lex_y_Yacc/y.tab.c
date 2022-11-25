@@ -83,9 +83,6 @@ int linea_actual = 1;
 unsigned int TOPE = 0; /* Tope de la pila */
 unsigned int subprog;  /* Indicador de comienzo de bloque de subprog */
 dtipo tipoTmp; 
-unsigned int dimensionesTmp;
-int TamDimen1Tmp;
-int TamDimen2Tmp;
 
 entradaTS TS[MAX_TS];  /* TABLA DE SÍMBOLOS */
 entradaTS TS_aux[MAX_TS]; /* Tabla auxiliar para paramf */
@@ -96,6 +93,9 @@ typedef struct{
   int atrib;
   char* lexema;
   dtipo tipo;
+  unsigned int dimensiones;
+  int TamDimen1;
+  int TamDimen2;
 } atributos;
 
 #define YYSTYPE atributos /* Cada símbolo tiene una estructura de tipo atributos */
@@ -1635,7 +1635,7 @@ yyreduce:
   case 28:
 #line 101 "analisis_sintactico.y"
                                             {yyval.lexema = yyvsp[0].lexema;
-                                             dimensionesTmp=0; TamDimen1Tmp=0; TamDimen2Tmp=0;
+                                             yyval.dimensiones=0; yyval.TamDimen1=0; yyval.TamDimen2=0;
                                             }
 #line 1641 "y.tab.c"
     break;
@@ -1649,18 +1649,18 @@ yyreduce:
   case 30:
 #line 105 "analisis_sintactico.y"
                                                                    {yyval.lexema = yyvsp[-3].lexema; 
-                                                                    dimensionesTmp=1;
-                                                                    TamDimen1Tmp=atoi(yyvsp[-1].lexema);
-                                                                    TamDimen2Tmp=0;}
+                                                                    yyval.dimensiones=1;
+                                                                    yyval.TamDimen1=atoi(yyvsp[-1].lexema);
+                                                                    yyval.TamDimen2=0;}
 #line 1656 "y.tab.c"
     break;
 
   case 31:
 #line 110 "analisis_sintactico.y"
                                                    {yyval.lexema = yyvsp[-5].lexema;
-                                                    dimensionesTmp=2;
-                                                    TamDimen1Tmp=atoi(yyvsp[-3].lexema);
-                                                    TamDimen2Tmp=atoi(yyvsp[-1].lexema);}
+                                                    yyval.dimensiones=2;
+                                                    yyval.TamDimen1=atoi(yyvsp[-3].lexema);
+                                                    yyval.TamDimen2=atoi(yyvsp[-1].lexema);}
 #line 1665 "y.tab.c"
     break;
 
@@ -1988,9 +1988,9 @@ void TS_InsertaIDENT(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = 0;
-  ets.dimensiones = dimensionesTmp;
-  ets.TamDimen1 = TamDimen1Tmp;
-  ets.TamDimen2 = TamDimen2Tmp;
+  ets.dimensiones = atr.dimensiones;
+  ets.TamDimen1 = atr.TamDimen1;
+  ets.TamDimen2 = atr.TamDimen2;
 
   int tope_aux = TOPE-1;
 
@@ -2029,9 +2029,9 @@ void TS_InsertaSUBPROG(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = TOPE_AUX;
-  ets.dimensiones = dimensionesTmp;
-  ets.TamDimen1 = TamDimen1Tmp;
-  ets.TamDimen2 = TamDimen2Tmp;
+  ets.dimensiones = atr.dimensiones;
+  ets.TamDimen1 = atr.TamDimen1;
+  ets.TamDimen2 = atr.TamDimen2;
 
   unsigned int i = 0;
 
@@ -2054,9 +2054,9 @@ void TS_InsertaPARAMF(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = 0;
-  ets.dimensiones = dimensionesTmp;
-  ets.TamDimen1 = TamDimen1Tmp;
-  ets.TamDimen2 = TamDimen2Tmp;
+  ets.dimensiones = atr.dimensiones;
+  ets.TamDimen1 = atr.TamDimen1;
+  ets.TamDimen2 = atr.TamDimen2;
   
 
   int tope_aux = TOPE_AUX - 1;
