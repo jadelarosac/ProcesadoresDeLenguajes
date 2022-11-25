@@ -589,14 +589,14 @@ static const yytype_uint8 yyrline[] =
 {
        0,    74,    74,    75,    75,    80,    81,    82,    82,    83,
       86,    87,    88,    89,    90,    91,    92,    93,    94,    94,
-      95,    96,    97,    98,    98,    99,    99,   100,   101,   102,
-     103,   104,   106,   107,   108,   109,   111,   112,   113,   114,
-     115,   116,   117,   118,   119,   120,   121,   122,   123,   124,
-     126,   127,   128,   129,   130,   131,   132,   133,   133,   134,
-     135,   136,   137,   139,   140,   141,   142,   143,   144,   145,
-     146,   147,   148,   149,   150,   151,   152,   153,   154,   155,
-     156,   157,   158,   159,   160,   161,   162,   163,   164,   165,
-     166,   167,   168,   169,   170,   171,   172,   173
+      95,    96,    97,    98,    98,    99,    99,   100,   101,   104,
+     105,   109,   115,   116,   117,   118,   120,   121,   122,   123,
+     124,   125,   126,   127,   128,   129,   130,   131,   132,   133,
+     135,   136,   137,   138,   139,   140,   141,   142,   142,   143,
+     144,   145,   146,   148,   149,   150,   151,   152,   153,   154,
+     155,   156,   157,   158,   159,   160,   161,   162,   163,   164,
+     165,   166,   167,   168,   169,   170,   171,   172,   173,   174,
+     175,   176,   177,   178,   179,   180,   181,   182
 };
 #endif
 
@@ -1634,48 +1634,56 @@ yyreduce:
 
   case 28:
 #line 101 "analisis_sintactico.y"
-                                            {yyval.lexema = yyvsp[0].lexema;}
-#line 1639 "y.tab.c"
+                                            {yyval.lexema = yyvsp[0].lexema;
+                                             dimensionesTmp=0; TamDimen1Tmp=0; TamDimen2Tmp=0;
+                                            }
+#line 1641 "y.tab.c"
     break;
 
   case 29:
-#line 102 "analisis_sintactico.y"
+#line 104 "analisis_sintactico.y"
                                                          {yyval.lexema = yyvsp[0].lexema;}
-#line 1645 "y.tab.c"
+#line 1647 "y.tab.c"
     break;
 
   case 30:
-#line 103 "analisis_sintactico.y"
-                                                                   {yyval.lexema = yyvsp[-3].lexema;}
-#line 1651 "y.tab.c"
+#line 105 "analisis_sintactico.y"
+                                                                   {yyval.lexema = yyvsp[-3].lexema; 
+                                                                    dimensionesTmp=1;
+                                                                    TamDimen1Tmp=atoi(yyvsp[-1].lexema);
+                                                                    TamDimen2Tmp=0;}
+#line 1656 "y.tab.c"
     break;
 
   case 31:
-#line 105 "analisis_sintactico.y"
-                                                   {yyval.lexema = yyvsp[-5].lexema;}
-#line 1657 "y.tab.c"
+#line 110 "analisis_sintactico.y"
+                                                   {yyval.lexema = yyvsp[-5].lexema;
+                                                    dimensionesTmp=2;
+                                                    TamDimen1Tmp=atoi(yyvsp[-3].lexema);
+                                                    TamDimen2Tmp=atoi(yyvsp[-1].lexema);}
+#line 1665 "y.tab.c"
     break;
 
   case 61:
-#line 136 "analisis_sintactico.y"
+#line 145 "analisis_sintactico.y"
                                         {TS_InsertaIDENT(yyvsp[0]);}
-#line 1663 "y.tab.c"
+#line 1671 "y.tab.c"
     break;
 
   case 62:
-#line 137 "analisis_sintactico.y"
+#line 146 "analisis_sintactico.y"
                                                                             {TS_InsertaIDENT(yyvsp[0]);}
-#line 1669 "y.tab.c"
+#line 1677 "y.tab.c"
     break;
 
   case 90:
-#line 166 "analisis_sintactico.y"
+#line 175 "analisis_sintactico.y"
                                      {yyval.atrib = yyvsp[0].atrib;}
-#line 1675 "y.tab.c"
+#line 1683 "y.tab.c"
     break;
 
 
-#line 1679 "y.tab.c"
+#line 1687 "y.tab.c"
 
       default: break;
     }
@@ -1907,7 +1915,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 175 "analisis_sintactico.y"
+#line 184 "analisis_sintactico.y"
 
 
 #ifdef DOSWINDOWS
@@ -1980,9 +1988,9 @@ void TS_InsertaIDENT(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = 0;
-  ets.dimensiones = 0;
-  ets.TamDimen1 = 0;
-  ets.TamDimen2 = 0;
+  ets.dimensiones = dimensionesTmp;
+  ets.TamDimen1 = TamDimen1Tmp;
+  ets.TamDimen2 = TamDimen2Tmp;
 
   int tope_aux = TOPE-1;
 
@@ -2021,9 +2029,9 @@ void TS_InsertaSUBPROG(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = TOPE_AUX;
-  ets.dimensiones = 0;
-  ets.TamDimen1 = 0;
-  ets.TamDimen2 = 0;
+  ets.dimensiones = dimensionesTmp;
+  ets.TamDimen1 = TamDimen1Tmp;
+  ets.TamDimen2 = TamDimen2Tmp;
 
   unsigned int i = 0;
 
@@ -2046,9 +2054,9 @@ void TS_InsertaPARAMF(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = 0;
-  ets.dimensiones = 0;
-  ets.TamDimen1 = 0;
-  ets.TamDimen2 = 0;
+  ets.dimensiones = dimensionesTmp;
+  ets.TamDimen1 = TamDimen1Tmp;
+  ets.TamDimen2 = TamDimen2Tmp;
   
 
   int tope_aux = TOPE_AUX - 1;

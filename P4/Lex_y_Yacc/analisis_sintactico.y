@@ -98,11 +98,20 @@ Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {tipoTmp=
 argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {TS_InsertaPARAMF($3);}
                               |   argumentos COMA tipo {tipoTmp=atributoAEnum($3.atrib);} variable {TS_InsertaPARAMF($5);}
                               |   error
-variable                    : identificador {$$.lexema = $1.lexema;}
+variable                    : identificador {$$.lexema = $1.lexema;
+                                             dimensionesTmp=0; TamDimen1Tmp=0; TamDimen2Tmp=0;
+                                            }
                               |   elemento_de_array_decl {$$.lexema = $1.lexema;}
-elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {$$.lexema = $1.lexema;}
+elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {$$.lexema = $1.lexema; 
+                                                                    dimensionesTmp=1;
+                                                                    TamDimen1Tmp=atoi($3.lexema);
+                                                                    TamDimen2Tmp=0;}
                               |   identificador CORIZQ CONSTENT 
-                              COMA CONSTENT CORDER {$$.lexema = $1.lexema;}
+                              COMA CONSTENT CORDER {$$.lexema = $1.lexema;
+                                                    dimensionesTmp=2;
+                                                    TamDimen1Tmp=atoi($3.lexema);
+                                                    TamDimen2Tmp=atoi($5.lexema);}
+
 variable_expresion          : identificador  
                               |   elemento_de_array 
 elemento_de_array           : identificador CORIZQ expresion CORDER 
@@ -167,7 +176,7 @@ tipo                        : TIPOEL {$$.atrib = $1.atrib;}
 cadena                      : CADENA
 identificador               : IDEN
 constante                   : CONST 
-                              | CONSTENT
+                              | CONSTENT  
                               |   CORIZQ ini_elementos_array CORDER
 ini_elementos_array         : ini_elementos_array PYC lista_expresiones 
                               |   lista_expresiones
@@ -244,9 +253,9 @@ void TS_InsertaIDENT(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = 0;
-  ets.dimensiones = 0;
-  ets.TamDimen1 = 0;
-  ets.TamDimen2 = 0;
+  ets.dimensiones = dimensionesTmp;
+  ets.TamDimen1 = TamDimen1Tmp;
+  ets.TamDimen2 = TamDimen2Tmp;
 
   int tope_aux = TOPE-1;
 
@@ -285,9 +294,9 @@ void TS_InsertaSUBPROG(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = TOPE_AUX;
-  ets.dimensiones = 0;
-  ets.TamDimen1 = 0;
-  ets.TamDimen2 = 0;
+  ets.dimensiones = dimensionesTmp;
+  ets.TamDimen1 = TamDimen1Tmp;
+  ets.TamDimen2 = TamDimen2Tmp;
 
   unsigned int i = 0;
 
@@ -310,9 +319,9 @@ void TS_InsertaPARAMF(atributos atr){
   ets.nombre = atr.lexema;
   ets.tipoDato = tipoTmp;
   ets.parametros = 0;
-  ets.dimensiones = 0;
-  ets.TamDimen1 = 0;
-  ets.TamDimen2 = 0;
+  ets.dimensiones = dimensionesTmp;
+  ets.TamDimen1 = TamDimen1Tmp;
+  ets.TamDimen2 = TamDimen2Tmp;
   
 
   int tope_aux = TOPE_AUX - 1;

@@ -1071,7 +1071,7 @@ YY_RULE_SETUP
 case 42:
 YY_RULE_SETUP
 #line 54 "analisis_lexico.l"
-{return(CONSTENT);}
+{yylval.lexema=strdup(yytext);return(CONSTENT);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
