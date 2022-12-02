@@ -17,8 +17,10 @@ dtipo tipoTmp;
 
 entradaTS TS[MAX_TS];  /* TABLA DE SÍMBOLOS */
 entradaTS TS_aux[MAX_TS]; /* Tabla auxiliar para paramf */
-unsigned int TOPE_AUX = 0;
+int TOPE_AUX = 0;
+int TOPE_ARG = 0;
 
+entradaTS PILA_ARG[MAX_TS];
 
 typedef struct{
   int atrib;
@@ -41,6 +43,10 @@ void TS_VaciarENTRADAS();
 void TS_InsertaSUBPROG(atributos atr);
 void TS_InsertaPARAMF(atributos atr);
 
+void PILARG_insertaENTRADA(entradaTS ets);
+void PILARG_insertaMARCA();
+void PILARG_insertaARG(atributos arg);
+
 dtipo atributoAEnum(int atr);
 /* Fin de declaraciones */
 
@@ -54,6 +60,8 @@ atributos procesaOperacionMixtaCuandoUnaria(atributos op1);
 atributos procesaOperacionNegacion(atributos op1);
 void procesaSentenciaAsignacion(atributos op1, atributos op2);
 void procesaSentenciaControl(atributos exp);
+void procesaLlamadaFuncionConArgumentos(entradaTS ets);
+void procesaLlamadaFuncionSinArgumentos(entradaTS ets);
 
 /*
   Funciones para debuggear
@@ -162,8 +170,8 @@ lista_declaracion_variables :  variable {TS_InsertaIDENT($1);}
                               |   lista_declaracion_variables COMA variable {TS_InsertaIDENT($3);}
 
                               |   error
-lista_expresiones           : expresion 
-                              |   lista_expresiones COMA expresion 
+lista_expresiones           : expresion {PILARG_insertaARG($1);}
+                              |   lista_expresiones COMA expresion {PILARG_insertaARG($3);}
 expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               |   OPNEG expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);}
                               |   OPSUMA expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);}
@@ -187,17 +195,40 @@ expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               |   funcion {$$ = $1;}
                               |   error
 funcion                     : identificador PARIZQ PARDER {entradaTS ets = buscarEntrada($1.lexema);
+                                                           procesaLlamadaFuncionSinArgumentos(ets);
                                                            $$ = entradaAAtributos(ets);}
-                              |   identificador PARIZQ lista_expresiones PARDER {entradaTS ets = buscarEntrada($1.lexema);
-                                                                                 $$ = entradaAAtributos(ets);}
+                              |   identificador PARIZQ {PILARG_insertaMARCA();} lista_expresiones PARDER {entradaTS ets = buscarEntrada($1.lexema);
+                                                                                                          procesaLlamadaFuncionConArgumentos(ets);
+                                                                                                           $$ = entradaAAtributos(ets);}
 tipo                        : TIPOEL {$$.atrib = $1.atrib;}
 cadena                      : CADENA 
 identificador               : IDEN   
 constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);}
                               | CONSTENT  {$$.tipo = entero;}
-                              |   CORIZQ ini_elementos_array CORDER
-ini_elementos_array         : ini_elementos_array PYC lista_expresiones 
-                              |   lista_expresiones
+                              |   CORIZQ ini_elementos_array CORDER { $$.tipo = $2.tipo;
+                                                                    if ($2.TamDimen2==1){$$.TamDimen2 = 0; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 1;}
+                                                                    else{$$.TamDimen2 = $2.TamDimen2; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 2;}}
+ini_elementos_array         : ini_elementos_array PYC lista_expresiones_array {$$.TamDimen2 = $1.TamDimen2 + 1; 
+
+                                                                              if ($1.tipo != $3.tipo){
+                                                                                printf("[Linea %d]",linea_actual);  
+                                                                                printf("ERROR SEMÁNTICO: Matriz con distintos tipos en distintas columnas.\n");
+                                                                              }
+                                                                              if ($1.TamDimen1 != $3.TamDimen1){
+                                                                                printf("[Linea %d]",linea_actual);  
+                                                                                printf("ERROR SEMÁNTICO: La matriz tiene distinto número de filas en distintas columnas.\n");
+                                                                              }else{
+                                                                                $$.TamDimen1 = $1.TamDimen1;
+                                                                              }} 
+                              |   lista_expresiones_array {$$.TamDimen2 = 1;$$.TamDimen1 = $1.TamDimen1;$$.tipo = $1.tipo;}
+
+lista_expresiones_array       : expresion {$$.TamDimen1 = 1; $$.tipo = $1.tipo;}
+                              |   lista_expresiones_array COMA expresion {$$.TamDimen1 = $1.TamDimen1 + 1;
+                                                                          if ($1.tipo != $3.tipo){
+                                                                                printf("[Linea %d]",linea_actual);  
+                                                                                printf("ERROR SEMÁNTICO: Array con distintos tipos.\n");
+                                                                          }}
+
 
 %%
 
@@ -212,6 +243,43 @@ void yyerror(char *msg)
   fprintf(stderr, "[Linea %d]: %s\n", linea_actual, msg);
 }
 
+
+
+void PILARG_insertaENTRADA(entradaTS ets){
+  
+  if (TOPE_ARG == MAX_TS){
+    fprintf(stderr, "Error: Se ha alcanzado el máximo tamaño de la pila argumentos. \n ABORTANDO\n");
+    exit(-1);
+  }else{
+    /* Introduzco el valor en la pila y cambio el tope */
+    PILA_ARG[TOPE_ARG] = ets;
+    TOPE_ARG = TOPE_ARG + 1;
+  }
+}
+
+void PILARG_insertaMARCA(){
+
+  entradaTS ets;
+  ets.entrada = marca;
+  ets.nombre = "";
+  ets.tipoDato = no_asignado;
+  ets.parametros = 0;
+  ets.dimensiones = 0;
+  ets.TamDimen1 = 0;
+  ets.TamDimen2 = 0;
+ 
+  PILARG_insertaENTRADA(ets);
+}
+
+void PILARG_insertaARG(atributos arg){
+  entradaTS ets;
+  ets.tipoDato = arg.tipo;
+  ets.dimensiones = arg.dimensiones;
+  ets.TamDimen1 = arg.TamDimen1;
+  ets.TamDimen2 = arg.TamDimen2;
+
+PILARG_insertaENTRADA(ets);
+}
 
 void TS_InsertaENTRADA(entradaTS ets){
   
@@ -355,6 +423,8 @@ void TS_InsertaPARAMF(atributos atr){
 }
 
 
+
+
 entradaTS buscarEntrada(char* nombre){
   entradaTS ets;
 
@@ -492,7 +562,7 @@ atributos procesaOperacionBinariaOMixta(atributos op1, atributos op2, int opdor)
     }
   }
 
-
+  // Caso == y !=
   if (opdor == 5 || opdor == 6){
     if (op1.dimensiones != 0 || op2.dimensiones != 0){
       printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: No se puede comparar arrays/matrices.\n");
@@ -573,6 +643,80 @@ atributos procesaOperacionNegacion(atributos op1){
 
   return atr;
 }
+
+
+
+
+void procesaLlamadaFuncionConArgumentos(entradaTS ets){
+
+  int i = TOPE-1;
+  int indice_args;
+  int n_params = 0;
+  int indice_borrado;
+  while (i>=0){
+    if (strcmp(TS[i].nombre,ets.nombre) == 0) break;
+    i--;
+  }
+
+  if (i >= 0){
+    indice_args = TOPE_ARG-1;
+
+    while (PILA_ARG[indice_args].entrada != marca){indice_args--;}
+    indice_borrado = indice_args;
+    indice_args++;
+  
+    if (indice_args == 0){
+      printf("ERROR: No hay argumentos en la llamada de la función %s.\n",ets.nombre);
+    }else{
+      i = i + 1;
+      while (TS[i].entrada == parametro_formal && i < TOPE && indice_args < TOPE_ARG){
+        if (TS[i].tipoDato != PILA_ARG[indice_args].tipoDato){
+          printf("[Linea %d]",linea_actual); printf("ERROR SEMÁNTICO: Argumento de la llamada a %s numero %d es de tipo distinto al esperado.\n",ets.nombre,n_params+1);
+        }
+        if (TS[i].dimensiones != PILA_ARG[indice_args].dimensiones){
+          printf("[Linea %d]",linea_actual); printf("ERROR SEMÁNTICO: Argumento de la llamada a %s numero %d tiene dimensiones distintas a las esperadas.\n",ets.nombre,n_params+1);
+        }else{
+          if (TS[i].dimensiones == 1){
+            if (TS[i].TamDimen1 != PILA_ARG[indice_args].TamDimen1){
+              printf("[Linea %d]",linea_actual); printf("ERROR SEMÁNTICO: Argumento de la llamada a %s numero %d tiene dimension 1 distinta al esperado.\n",ets.nombre,n_params+1);
+            }
+          }
+
+          if (TS[i].dimensiones == 2){
+            if (TS[i].TamDimen1 != PILA_ARG[indice_args].TamDimen1){
+              printf("[Linea %d]",linea_actual); printf("ERROR SEMÁNTICO: Argumento de la llamada a %s numero %d tiene dimension 1 distinta al esperado.\n",ets.nombre,n_params+1);
+            }
+
+            if (TS[i].TamDimen2 != PILA_ARG[indice_args].TamDimen2){
+              printf("[Linea %d]",linea_actual); printf("ERROR SEMÁNTICO: Argumento de la llamada a %s numero %d tiene dimension 2 distinta al esperado.\n",ets.nombre,n_params+1);
+            }
+          }
+
+        }
+        
+        i = i + 1;
+        indice_args = indice_args + 1;
+        n_params = n_params + 1;
+      }
+      if (indice_args != TOPE_ARG){
+          printf("[Linea %d]",linea_actual); printf("ERROR SEMÁNTICO: Se han pasado más argumentos de los esperados a la funcion %s.\n",ets.nombre); 
+      }
+      if (ets.parametros > n_params){
+          printf("[Linea %d]",linea_actual); printf("ERROR SEMÁNTICO: Se han pasado menos argumentos de los esperados a la funcion %s.\n",ets.nombre);  
+      }
+    }
+  }
+
+  TOPE_ARG = indice_borrado;
+}
+
+void procesaLlamadaFuncionSinArgumentos(entradaTS ets){
+  if (ets.parametros > 0){
+      printf("[Linea %d]",linea_actual); printf("ERROR SEMÁNTICO: Se han pasado 0 argmuentos a la funcion %s, se esperan más.\n",ets.nombre);  
+  }
+}
+
+
 
 
 void procesaSentenciaAsignacion(atributos op1, atributos op2){

@@ -131,20 +131,26 @@ Gramática
    86          | error
 
    87 funcion: identificador PARIZQ PARDER
-   88        | identificador PARIZQ lista_expresiones PARDER
 
-   89 tipo: TIPOEL
+   88 $@6: %empty
 
-   90 cadena: CADENA
+   89 funcion: identificador PARIZQ $@6 lista_expresiones PARDER
 
-   91 identificador: IDEN
+   90 tipo: TIPOEL
 
-   92 constante: CONST
-   93          | CONSTENT
-   94          | CORIZQ ini_elementos_array CORDER
+   91 cadena: CADENA
 
-   95 ini_elementos_array: ini_elementos_array PYC lista_expresiones
-   96                    | lista_expresiones
+   92 identificador: IDEN
+
+   93 constante: CONST
+   94          | CONSTENT
+   95          | CORIZQ ini_elementos_array CORDER
+
+   96 ini_elementos_array: ini_elementos_array PYC lista_expresiones_array
+   97                    | lista_expresiones_array
+
+   98 lista_expresiones_array: expresion
+   99                        | lista_expresiones_array COMA expresion
 
 
 Terminales con las reglas donde aparecen
@@ -166,19 +172,19 @@ Terminales con las reglas donde aparecen
     OPDIV (270) 70
     OPMOD (271) 80
     OPNEG (272) 66
-    CONST (273) 92
-    CONSTENT (274) 29 30 93
-    IDEN (275) 91
-    CADENA (276) 90
+    CONST (273) 93
+    CONSTENT (274) 29 30 94
+    IDEN (275) 92
+    CADENA (276) 91
     ASIG (277) 45
-    CORIZQ (278) 29 30 33 34 94
-    CORDER (279) 29 30 33 34 94
-    PARIZQ (280) 20 21 47 48 49 50 65 87 88
-    PARDER (281) 20 21 47 48 49 50 65 87 88
+    CORIZQ (278) 29 30 33 34 95
+    CORDER (279) 29 30 33 34 95
+    PARIZQ (280) 20 21 47 48 49 50 65 87 89
+    PARDER (281) 20 21 47 48 49 50 65 87 89
     LLAIZQ (282) 13
     LLADER (283) 14
-    PYC (284) 18 45 50 51 52 53 95
-    COMA (285) 25 30 34 54 59 61 64
+    PYC (284) 18 45 50 51 52 53 96
+    COMA (285) 25 30 34 54 59 61 64 99
     SI (286) 47 48
     SINO (287) 48
     MIENTRAS (288) 49
@@ -190,7 +196,7 @@ Terminales con las reglas donde aparecen
     ENTRADA (294) 51
     DEVOLVER (295) 53
     MAIN (296) 12
-    TIPOEL (297) 89
+    TIPOEL (297) 90
 
 
 No terminales con las reglas donde aparecen
@@ -307,28 +313,34 @@ No terminales con las reglas donde aparecen
         on right: 18 61
     lista_expresiones (80)
         on left: 63 64
-        on right: 64 88 95 96
+        on right: 64 89
     expresion (81)
         on left: 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86
-        on right: 33 34 45 47 48 49 50 53 56 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82
+        on right: 33 34 45 47 48 49 50 53 56 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 98 99
     funcion (82)
-        on left: 87 88
+        on left: 87 89
         on right: 85
-    tipo (83)
-        on left: 89
-        on right: 18 20 21 23 25
-    cadena (84)
+    $@6 (83)
+        on left: 88
+        on right: 89
+    tipo (84)
         on left: 90
-        on right: 57
-    identificador (85)
+        on right: 18 20 21 23 25
+    cadena (85)
         on left: 91
-        on right: 27 29 30 31 33 34 87 88
-    constante (86)
-        on left: 92 93 94
+        on right: 57
+    identificador (86)
+        on left: 92
+        on right: 27 29 30 31 33 34 87 89
+    constante (87)
+        on left: 93 94 95
         on right: 84
-    ini_elementos_array (87)
-        on left: 95 96
-        on right: 94 95
+    ini_elementos_array (88)
+        on left: 96 97
+        on right: 95 96
+    lista_expresiones_array (89)
+        on left: 98 99
+        on right: 96 97 99
 
 
 Estado 0
@@ -479,9 +491,9 @@ Estado 13
 
 Estado 14
 
-   89 tipo: TIPOEL .
+   90 tipo: TIPOEL .
 
-    $default  reduce usando la regla 89 (tipo)
+    $default  reduce usando la regla 90 (tipo)
 
 
 Estado 15
@@ -523,9 +535,9 @@ Estado 18
 
 Estado 19
 
-   91 identificador: IDEN .
+   92 identificador: IDEN .
 
-    $default  reduce usando la regla 91 (identificador)
+    $default  reduce usando la regla 92 (identificador)
 
 
 Estado 20
@@ -941,28 +953,28 @@ Estado 52
 
 Estado 53
 
-   92 constante: CONST .
-
-    $default  reduce usando la regla 92 (constante)
-
-
-Estado 54
-
-   93 constante: CONSTENT .
+   93 constante: CONST .
 
     $default  reduce usando la regla 93 (constante)
 
 
+Estado 54
+
+   94 constante: CONSTENT .
+
+    $default  reduce usando la regla 94 (constante)
+
+
 Estado 55
 
-   90 cadena: CADENA .
+   91 cadena: CADENA .
 
-    $default  reduce usando la regla 90 (cadena)
+    $default  reduce usando la regla 91 (cadena)
 
 
 Estado 56
 
-   94 constante: CORIZQ . ini_elementos_array CORDER
+   95 constante: CORIZQ . ini_elementos_array CORDER
 
     error     desplazar e ir al estado 49
     OPSUMA    desplazar e ir al estado 50
@@ -974,14 +986,14 @@ Estado 56
     CORIZQ    desplazar e ir al estado 56
     PARIZQ    desplazar e ir al estado 57
 
-    variable_expresion   ir al estado 58
-    elemento_de_array    ir al estado 30
-    lista_expresiones    ir al estado 87
-    expresion            ir al estado 88
-    funcion              ir al estado 62
-    identificador        ir al estado 64
-    constante            ir al estado 65
-    ini_elementos_array  ir al estado 89
+    variable_expresion       ir al estado 58
+    elemento_de_array        ir al estado 30
+    expresion                ir al estado 87
+    funcion                  ir al estado 62
+    identificador            ir al estado 64
+    constante                ir al estado 65
+    ini_elementos_array      ir al estado 88
+    lista_expresiones_array  ir al estado 89
 
 
 Estado 57
@@ -1085,7 +1097,7 @@ Estado 64
    33 elemento_de_array: identificador . CORIZQ expresion CORDER
    34                  | identificador . CORIZQ expresion COMA expresion CORDER
    87 funcion: identificador . PARIZQ PARDER
-   88        | identificador . PARIZQ lista_expresiones PARDER
+   89        | identificador . PARIZQ $@6 lista_expresiones PARDER
 
     CORIZQ  desplazar e ir al estado 77
     PARIZQ  desplazar e ir al estado 107
@@ -1424,17 +1436,6 @@ Estado 86
 
 Estado 87
 
-   64 lista_expresiones: lista_expresiones . COMA expresion
-   96 ini_elementos_array: lista_expresiones .
-
-    COMA  desplazar e ir al estado 121
-
-    $default  reduce usando la regla 96 (ini_elementos_array)
-
-
-Estado 88
-
-   63 lista_expresiones: expresion .
    69 expresion: expresion . OPMULT expresion
    70          | expresion . OPDIV expresion
    71          | expresion . OPMULTM expresion
@@ -1449,6 +1450,7 @@ Estado 88
    80          | expresion . OPMOD expresion
    81          | expresion . OPSUMA expresion
    82          | expresion . OPRESTA expresion
+   98 lista_expresiones_array: expresion .
 
     OPOR     desplazar e ir al estado 93
     OPAND    desplazar e ir al estado 94
@@ -1465,16 +1467,26 @@ Estado 88
     OPDIV    desplazar e ir al estado 105
     OPMOD    desplazar e ir al estado 106
 
-    $default  reduce usando la regla 63 (lista_expresiones)
+    $default  reduce usando la regla 98 (lista_expresiones_array)
+
+
+Estado 88
+
+   95 constante: CORIZQ ini_elementos_array . CORDER
+   96 ini_elementos_array: ini_elementos_array . PYC lista_expresiones_array
+
+    CORDER  desplazar e ir al estado 121
+    PYC     desplazar e ir al estado 122
 
 
 Estado 89
 
-   94 constante: CORIZQ ini_elementos_array . CORDER
-   95 ini_elementos_array: ini_elementos_array . PYC lista_expresiones
+   97 ini_elementos_array: lista_expresiones_array .
+   99 lista_expresiones_array: lista_expresiones_array . COMA expresion
 
-    CORDER  desplazar e ir al estado 122
-    PYC     desplazar e ir al estado 123
+    COMA  desplazar e ir al estado 123
+
+    $default  reduce usando la regla 97 (ini_elementos_array)
 
 
 Estado 90
@@ -1855,26 +1867,13 @@ Estado 106
 Estado 107
 
    87 funcion: identificador PARIZQ . PARDER
-   88        | identificador PARIZQ . lista_expresiones PARDER
+   89        | identificador PARIZQ . $@6 lista_expresiones PARDER
 
-    error     desplazar e ir al estado 49
-    OPSUMA    desplazar e ir al estado 50
-    OPRESTA   desplazar e ir al estado 51
-    OPNEG     desplazar e ir al estado 52
-    CONST     desplazar e ir al estado 53
-    CONSTENT  desplazar e ir al estado 54
-    IDEN      desplazar e ir al estado 19
-    CORIZQ    desplazar e ir al estado 56
-    PARIZQ    desplazar e ir al estado 57
-    PARDER    desplazar e ir al estado 140
+    PARDER  desplazar e ir al estado 140
 
-    variable_expresion  ir al estado 58
-    elemento_de_array   ir al estado 30
-    lista_expresiones   ir al estado 141
-    expresion           ir al estado 88
-    funcion             ir al estado 62
-    identificador       ir al estado 64
-    constante           ir al estado 65
+    $default  reduce usando la regla 88 ($@6)
+
+    $@6  ir al estado 141
 
 
 Estado 108
@@ -2103,36 +2102,37 @@ Estado 120
 
 Estado 121
 
-   64 lista_expresiones: lista_expresiones COMA . expresion
+   95 constante: CORIZQ ini_elementos_array CORDER .
 
-    error     desplazar e ir al estado 49
-    OPSUMA    desplazar e ir al estado 50
-    OPRESTA   desplazar e ir al estado 51
-    OPNEG     desplazar e ir al estado 52
-    CONST     desplazar e ir al estado 53
-    CONSTENT  desplazar e ir al estado 54
-    IDEN      desplazar e ir al estado 19
-    CORIZQ    desplazar e ir al estado 56
-    PARIZQ    desplazar e ir al estado 57
-
-    variable_expresion  ir al estado 58
-    elemento_de_array   ir al estado 30
-    expresion           ir al estado 155
-    funcion             ir al estado 62
-    identificador       ir al estado 64
-    constante           ir al estado 65
+    $default  reduce usando la regla 95 (constante)
 
 
 Estado 122
 
-   94 constante: CORIZQ ini_elementos_array CORDER .
+   96 ini_elementos_array: ini_elementos_array PYC . lista_expresiones_array
 
-    $default  reduce usando la regla 94 (constante)
+    error     desplazar e ir al estado 49
+    OPSUMA    desplazar e ir al estado 50
+    OPRESTA   desplazar e ir al estado 51
+    OPNEG     desplazar e ir al estado 52
+    CONST     desplazar e ir al estado 53
+    CONSTENT  desplazar e ir al estado 54
+    IDEN      desplazar e ir al estado 19
+    CORIZQ    desplazar e ir al estado 56
+    PARIZQ    desplazar e ir al estado 57
+
+    variable_expresion       ir al estado 58
+    elemento_de_array        ir al estado 30
+    expresion                ir al estado 87
+    funcion                  ir al estado 62
+    identificador            ir al estado 64
+    constante                ir al estado 65
+    lista_expresiones_array  ir al estado 155
 
 
 Estado 123
 
-   95 ini_elementos_array: ini_elementos_array PYC . lista_expresiones
+   99 lista_expresiones_array: lista_expresiones_array COMA . expresion
 
     error     desplazar e ir al estado 49
     OPSUMA    desplazar e ir al estado 50
@@ -2146,8 +2146,7 @@ Estado 123
 
     variable_expresion  ir al estado 58
     elemento_de_array   ir al estado 30
-    lista_expresiones   ir al estado 156
-    expresion           ir al estado 88
+    expresion           ir al estado 156
     funcion             ir al estado 62
     identificador       ir al estado 64
     constante           ir al estado 65
@@ -2557,11 +2556,25 @@ Estado 140
 
 Estado 141
 
-   64 lista_expresiones: lista_expresiones . COMA expresion
-   88 funcion: identificador PARIZQ lista_expresiones . PARDER
+   89 funcion: identificador PARIZQ $@6 . lista_expresiones PARDER
 
-    PARDER  desplazar e ir al estado 157
-    COMA    desplazar e ir al estado 121
+    error     desplazar e ir al estado 49
+    OPSUMA    desplazar e ir al estado 50
+    OPRESTA   desplazar e ir al estado 51
+    OPNEG     desplazar e ir al estado 52
+    CONST     desplazar e ir al estado 53
+    CONSTENT  desplazar e ir al estado 54
+    IDEN      desplazar e ir al estado 19
+    CORIZQ    desplazar e ir al estado 56
+    PARIZQ    desplazar e ir al estado 57
+
+    variable_expresion  ir al estado 58
+    elemento_de_array   ir al estado 30
+    lista_expresiones   ir al estado 157
+    expresion           ir al estado 158
+    funcion             ir al estado 62
+    identificador       ir al estado 64
+    constante           ir al estado 65
 
 
 Estado 142
@@ -2576,8 +2589,8 @@ Estado 143
    29 elemento_de_array_decl: identificador CORIZQ CONSTENT . CORDER
    30                       | identificador CORIZQ CONSTENT . COMA CONSTENT CORDER
 
-    CORDER  desplazar e ir al estado 158
-    COMA    desplazar e ir al estado 159
+    CORDER  desplazar e ir al estado 159
+    COMA    desplazar e ir al estado 160
 
 
 Estado 144
@@ -2606,8 +2619,8 @@ Estado 147
    20 Cabecera_subprog: tipo variable PARIZQ argumentos . PARDER
    25 argumentos: argumentos . COMA tipo $@5 variable
 
-    PARDER  desplazar e ir al estado 160
-    COMA    desplazar e ir al estado 161
+    PARDER  desplazar e ir al estado 161
+    COMA    desplazar e ir al estado 162
 
 
 Estado 148
@@ -2616,7 +2629,7 @@ Estado 148
 
     $default  reduce usando la regla 22 ($@4)
 
-    $@4  ir al estado 162
+    $@4  ir al estado 163
 
 
 Estado 149
@@ -2642,7 +2655,7 @@ Estado 150
 
     variable_expresion  ir al estado 58
     elemento_de_array   ir al estado 30
-    expresion           ir al estado 163
+    expresion           ir al estado 164
     funcion             ir al estado 62
     identificador       ir al estado 64
     constante           ir al estado 65
@@ -2660,7 +2673,7 @@ Estado 152
    47 sentencia_si: SI PARIZQ expresion PARDER Sentencia .
    48             | SI PARIZQ expresion PARDER Sentencia . SINO Sentencia
 
-    SINO  desplazar e ir al estado 164
+    SINO  desplazar e ir al estado 165
 
     SINO      [reduce usando la regla 47 (sentencia_si)]
     $default  reduce usando la regla 47 (sentencia_si)
@@ -2705,10 +2718,286 @@ Estado 154
     OPMULTM  desplazar e ir al estado 104
     OPDIV    desplazar e ir al estado 105
     OPMOD    desplazar e ir al estado 106
-    PARDER   desplazar e ir al estado 165
+    PARDER   desplazar e ir al estado 166
 
 
 Estado 155
+
+   96 ini_elementos_array: ini_elementos_array PYC lista_expresiones_array .
+   99 lista_expresiones_array: lista_expresiones_array . COMA expresion
+
+    COMA  desplazar e ir al estado 123
+
+    $default  reduce usando la regla 96 (ini_elementos_array)
+
+
+Estado 156
+
+   69 expresion: expresion . OPMULT expresion
+   70          | expresion . OPDIV expresion
+   71          | expresion . OPMULTM expresion
+   72          | expresion . OPAND expresion
+   73          | expresion . OPOR expresion
+   74          | expresion . OPEQ expresion
+   75          | expresion . OPNEQ expresion
+   76          | expresion . OPLEQ expresion
+   77          | expresion . OPGEQ expresion
+   78          | expresion . OPLESS expresion
+   79          | expresion . OPGR expresion
+   80          | expresion . OPMOD expresion
+   81          | expresion . OPSUMA expresion
+   82          | expresion . OPRESTA expresion
+   99 lista_expresiones_array: lista_expresiones_array COMA expresion .
+
+    OPOR     desplazar e ir al estado 93
+    OPAND    desplazar e ir al estado 94
+    OPEQ     desplazar e ir al estado 95
+    OPNEQ    desplazar e ir al estado 96
+    OPLEQ    desplazar e ir al estado 97
+    OPGEQ    desplazar e ir al estado 98
+    OPLESS   desplazar e ir al estado 99
+    OPGR     desplazar e ir al estado 100
+    OPSUMA   desplazar e ir al estado 101
+    OPRESTA  desplazar e ir al estado 102
+    OPMULT   desplazar e ir al estado 103
+    OPMULTM  desplazar e ir al estado 104
+    OPDIV    desplazar e ir al estado 105
+    OPMOD    desplazar e ir al estado 106
+
+    $default  reduce usando la regla 99 (lista_expresiones_array)
+
+
+Estado 157
+
+   64 lista_expresiones: lista_expresiones . COMA expresion
+   89 funcion: identificador PARIZQ $@6 lista_expresiones . PARDER
+
+    PARDER  desplazar e ir al estado 167
+    COMA    desplazar e ir al estado 168
+
+
+Estado 158
+
+   63 lista_expresiones: expresion .
+   69 expresion: expresion . OPMULT expresion
+   70          | expresion . OPDIV expresion
+   71          | expresion . OPMULTM expresion
+   72          | expresion . OPAND expresion
+   73          | expresion . OPOR expresion
+   74          | expresion . OPEQ expresion
+   75          | expresion . OPNEQ expresion
+   76          | expresion . OPLEQ expresion
+   77          | expresion . OPGEQ expresion
+   78          | expresion . OPLESS expresion
+   79          | expresion . OPGR expresion
+   80          | expresion . OPMOD expresion
+   81          | expresion . OPSUMA expresion
+   82          | expresion . OPRESTA expresion
+
+    OPOR     desplazar e ir al estado 93
+    OPAND    desplazar e ir al estado 94
+    OPEQ     desplazar e ir al estado 95
+    OPNEQ    desplazar e ir al estado 96
+    OPLEQ    desplazar e ir al estado 97
+    OPGEQ    desplazar e ir al estado 98
+    OPLESS   desplazar e ir al estado 99
+    OPGR     desplazar e ir al estado 100
+    OPSUMA   desplazar e ir al estado 101
+    OPRESTA  desplazar e ir al estado 102
+    OPMULT   desplazar e ir al estado 103
+    OPMULTM  desplazar e ir al estado 104
+    OPDIV    desplazar e ir al estado 105
+    OPMOD    desplazar e ir al estado 106
+
+    $default  reduce usando la regla 63 (lista_expresiones)
+
+
+Estado 159
+
+   29 elemento_de_array_decl: identificador CORIZQ CONSTENT CORDER .
+
+    $default  reduce usando la regla 29 (elemento_de_array_decl)
+
+
+Estado 160
+
+   30 elemento_de_array_decl: identificador CORIZQ CONSTENT COMA . CONSTENT CORDER
+
+    CONSTENT  desplazar e ir al estado 169
+
+
+Estado 161
+
+   20 Cabecera_subprog: tipo variable PARIZQ argumentos PARDER .
+
+    $default  reduce usando la regla 20 (Cabecera_subprog)
+
+
+Estado 162
+
+   25 argumentos: argumentos COMA . tipo $@5 variable
+
+    TIPOEL  desplazar e ir al estado 14
+
+    tipo  ir al estado 170
+
+
+Estado 163
+
+   23 argumentos: tipo $@4 . variable
+
+    IDEN  desplazar e ir al estado 19
+
+    variable                ir al estado 171
+    elemento_de_array_decl  ir al estado 67
+    identificador           ir al estado 69
+
+
+Estado 164
+
+   34 elemento_de_array: identificador CORIZQ expresion COMA expresion . CORDER
+   69 expresion: expresion . OPMULT expresion
+   70          | expresion . OPDIV expresion
+   71          | expresion . OPMULTM expresion
+   72          | expresion . OPAND expresion
+   73          | expresion . OPOR expresion
+   74          | expresion . OPEQ expresion
+   75          | expresion . OPNEQ expresion
+   76          | expresion . OPLEQ expresion
+   77          | expresion . OPGEQ expresion
+   78          | expresion . OPLESS expresion
+   79          | expresion . OPGR expresion
+   80          | expresion . OPMOD expresion
+   81          | expresion . OPSUMA expresion
+   82          | expresion . OPRESTA expresion
+
+    OPOR     desplazar e ir al estado 93
+    OPAND    desplazar e ir al estado 94
+    OPEQ     desplazar e ir al estado 95
+    OPNEQ    desplazar e ir al estado 96
+    OPLEQ    desplazar e ir al estado 97
+    OPGEQ    desplazar e ir al estado 98
+    OPLESS   desplazar e ir al estado 99
+    OPGR     desplazar e ir al estado 100
+    OPSUMA   desplazar e ir al estado 101
+    OPRESTA  desplazar e ir al estado 102
+    OPMULT   desplazar e ir al estado 103
+    OPMULTM  desplazar e ir al estado 104
+    OPDIV    desplazar e ir al estado 105
+    OPMOD    desplazar e ir al estado 106
+    CORDER   desplazar e ir al estado 172
+
+
+Estado 165
+
+   48 sentencia_si: SI PARIZQ expresion PARDER Sentencia SINO . Sentencia
+
+    error     desplazar e ir al estado 18
+    IDEN      desplazar e ir al estado 19
+    LLAIZQ    desplazar e ir al estado 5
+    SI        desplazar e ir al estado 20
+    MIENTRAS  desplazar e ir al estado 21
+    HACER     desplazar e ir al estado 22
+    SALIDA    desplazar e ir al estado 23
+    ENTRADA   desplazar e ir al estado 24
+    DEVOLVER  desplazar e ir al estado 25
+
+    bloque                 ir al estado 26
+    Inicio_de_bloque       ir al estado 7
+    variable_expresion     ir al estado 29
+    elemento_de_array      ir al estado 30
+    Sentencia              ir al estado 173
+    sentencia_asignacion   ir al estado 33
+    sentencia_si           ir al estado 34
+    sentencia_mientras     ir al estado 35
+    sentencia_hacer_hasta  ir al estado 36
+    sentencia_entrada      ir al estado 37
+    sentencia_salida       ir al estado 38
+    sentencia_retornar     ir al estado 39
+    identificador          ir al estado 41
+
+
+Estado 166
+
+   50 sentencia_hacer_hasta: HACER Sentencia HASTA PARIZQ expresion PARDER . PYC
+
+    PYC  desplazar e ir al estado 174
+
+
+Estado 167
+
+   89 funcion: identificador PARIZQ $@6 lista_expresiones PARDER .
+
+    $default  reduce usando la regla 89 (funcion)
+
+
+Estado 168
+
+   64 lista_expresiones: lista_expresiones COMA . expresion
+
+    error     desplazar e ir al estado 49
+    OPSUMA    desplazar e ir al estado 50
+    OPRESTA   desplazar e ir al estado 51
+    OPNEG     desplazar e ir al estado 52
+    CONST     desplazar e ir al estado 53
+    CONSTENT  desplazar e ir al estado 54
+    IDEN      desplazar e ir al estado 19
+    CORIZQ    desplazar e ir al estado 56
+    PARIZQ    desplazar e ir al estado 57
+
+    variable_expresion  ir al estado 58
+    elemento_de_array   ir al estado 30
+    expresion           ir al estado 175
+    funcion             ir al estado 62
+    identificador       ir al estado 64
+    constante           ir al estado 65
+
+
+Estado 169
+
+   30 elemento_de_array_decl: identificador CORIZQ CONSTENT COMA CONSTENT . CORDER
+
+    CORDER  desplazar e ir al estado 176
+
+
+Estado 170
+
+   25 argumentos: argumentos COMA tipo . $@5 variable
+
+    $default  reduce usando la regla 24 ($@5)
+
+    $@5  ir al estado 177
+
+
+Estado 171
+
+   23 argumentos: tipo $@4 variable .
+
+    $default  reduce usando la regla 23 (argumentos)
+
+
+Estado 172
+
+   34 elemento_de_array: identificador CORIZQ expresion COMA expresion CORDER .
+
+    $default  reduce usando la regla 34 (elemento_de_array)
+
+
+Estado 173
+
+   48 sentencia_si: SI PARIZQ expresion PARDER Sentencia SINO Sentencia .
+
+    $default  reduce usando la regla 48 (sentencia_si)
+
+
+Estado 174
+
+   50 sentencia_hacer_hasta: HACER Sentencia HASTA PARIZQ expresion PARDER PYC .
+
+    $default  reduce usando la regla 50 (sentencia_hacer_hasta)
+
+
+Estado 175
 
    64 lista_expresiones: lista_expresiones COMA expresion .
    69 expresion: expresion . OPMULT expresion
@@ -2744,198 +3033,25 @@ Estado 155
     $default  reduce usando la regla 64 (lista_expresiones)
 
 
-Estado 156
-
-   64 lista_expresiones: lista_expresiones . COMA expresion
-   95 ini_elementos_array: ini_elementos_array PYC lista_expresiones .
-
-    COMA  desplazar e ir al estado 121
-
-    $default  reduce usando la regla 95 (ini_elementos_array)
-
-
-Estado 157
-
-   88 funcion: identificador PARIZQ lista_expresiones PARDER .
-
-    $default  reduce usando la regla 88 (funcion)
-
-
-Estado 158
-
-   29 elemento_de_array_decl: identificador CORIZQ CONSTENT CORDER .
-
-    $default  reduce usando la regla 29 (elemento_de_array_decl)
-
-
-Estado 159
-
-   30 elemento_de_array_decl: identificador CORIZQ CONSTENT COMA . CONSTENT CORDER
-
-    CONSTENT  desplazar e ir al estado 166
-
-
-Estado 160
-
-   20 Cabecera_subprog: tipo variable PARIZQ argumentos PARDER .
-
-    $default  reduce usando la regla 20 (Cabecera_subprog)
-
-
-Estado 161
-
-   25 argumentos: argumentos COMA . tipo $@5 variable
-
-    TIPOEL  desplazar e ir al estado 14
-
-    tipo  ir al estado 167
-
-
-Estado 162
-
-   23 argumentos: tipo $@4 . variable
-
-    IDEN  desplazar e ir al estado 19
-
-    variable                ir al estado 168
-    elemento_de_array_decl  ir al estado 67
-    identificador           ir al estado 69
-
-
-Estado 163
-
-   34 elemento_de_array: identificador CORIZQ expresion COMA expresion . CORDER
-   69 expresion: expresion . OPMULT expresion
-   70          | expresion . OPDIV expresion
-   71          | expresion . OPMULTM expresion
-   72          | expresion . OPAND expresion
-   73          | expresion . OPOR expresion
-   74          | expresion . OPEQ expresion
-   75          | expresion . OPNEQ expresion
-   76          | expresion . OPLEQ expresion
-   77          | expresion . OPGEQ expresion
-   78          | expresion . OPLESS expresion
-   79          | expresion . OPGR expresion
-   80          | expresion . OPMOD expresion
-   81          | expresion . OPSUMA expresion
-   82          | expresion . OPRESTA expresion
-
-    OPOR     desplazar e ir al estado 93
-    OPAND    desplazar e ir al estado 94
-    OPEQ     desplazar e ir al estado 95
-    OPNEQ    desplazar e ir al estado 96
-    OPLEQ    desplazar e ir al estado 97
-    OPGEQ    desplazar e ir al estado 98
-    OPLESS   desplazar e ir al estado 99
-    OPGR     desplazar e ir al estado 100
-    OPSUMA   desplazar e ir al estado 101
-    OPRESTA  desplazar e ir al estado 102
-    OPMULT   desplazar e ir al estado 103
-    OPMULTM  desplazar e ir al estado 104
-    OPDIV    desplazar e ir al estado 105
-    OPMOD    desplazar e ir al estado 106
-    CORDER   desplazar e ir al estado 169
-
-
-Estado 164
-
-   48 sentencia_si: SI PARIZQ expresion PARDER Sentencia SINO . Sentencia
-
-    error     desplazar e ir al estado 18
-    IDEN      desplazar e ir al estado 19
-    LLAIZQ    desplazar e ir al estado 5
-    SI        desplazar e ir al estado 20
-    MIENTRAS  desplazar e ir al estado 21
-    HACER     desplazar e ir al estado 22
-    SALIDA    desplazar e ir al estado 23
-    ENTRADA   desplazar e ir al estado 24
-    DEVOLVER  desplazar e ir al estado 25
-
-    bloque                 ir al estado 26
-    Inicio_de_bloque       ir al estado 7
-    variable_expresion     ir al estado 29
-    elemento_de_array      ir al estado 30
-    Sentencia              ir al estado 170
-    sentencia_asignacion   ir al estado 33
-    sentencia_si           ir al estado 34
-    sentencia_mientras     ir al estado 35
-    sentencia_hacer_hasta  ir al estado 36
-    sentencia_entrada      ir al estado 37
-    sentencia_salida       ir al estado 38
-    sentencia_retornar     ir al estado 39
-    identificador          ir al estado 41
-
-
-Estado 165
-
-   50 sentencia_hacer_hasta: HACER Sentencia HASTA PARIZQ expresion PARDER . PYC
-
-    PYC  desplazar e ir al estado 171
-
-
-Estado 166
-
-   30 elemento_de_array_decl: identificador CORIZQ CONSTENT COMA CONSTENT . CORDER
-
-    CORDER  desplazar e ir al estado 172
-
-
-Estado 167
-
-   25 argumentos: argumentos COMA tipo . $@5 variable
-
-    $default  reduce usando la regla 24 ($@5)
-
-    $@5  ir al estado 173
-
-
-Estado 168
-
-   23 argumentos: tipo $@4 variable .
-
-    $default  reduce usando la regla 23 (argumentos)
-
-
-Estado 169
-
-   34 elemento_de_array: identificador CORIZQ expresion COMA expresion CORDER .
-
-    $default  reduce usando la regla 34 (elemento_de_array)
-
-
-Estado 170
-
-   48 sentencia_si: SI PARIZQ expresion PARDER Sentencia SINO Sentencia .
-
-    $default  reduce usando la regla 48 (sentencia_si)
-
-
-Estado 171
-
-   50 sentencia_hacer_hasta: HACER Sentencia HASTA PARIZQ expresion PARDER PYC .
-
-    $default  reduce usando la regla 50 (sentencia_hacer_hasta)
-
-
-Estado 172
+Estado 176
 
    30 elemento_de_array_decl: identificador CORIZQ CONSTENT COMA CONSTENT CORDER .
 
     $default  reduce usando la regla 30 (elemento_de_array_decl)
 
 
-Estado 173
+Estado 177
 
    25 argumentos: argumentos COMA tipo $@5 . variable
 
     IDEN  desplazar e ir al estado 19
 
-    variable                ir al estado 174
+    variable                ir al estado 178
     elemento_de_array_decl  ir al estado 67
     identificador           ir al estado 69
 
 
-Estado 174
+Estado 178
 
    25 argumentos: argumentos COMA tipo $@5 variable .
 

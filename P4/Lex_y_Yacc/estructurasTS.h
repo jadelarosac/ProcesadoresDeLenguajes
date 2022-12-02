@@ -20,4 +20,10 @@ typedef struct {
 	int TamDimen2;
 } entradaTS;
 
+// Entrada para llamada a funcione
+typedef struct{
+	int indiceTS;
+	int n_param;
+} entradaFuncion;
+
 #endif
