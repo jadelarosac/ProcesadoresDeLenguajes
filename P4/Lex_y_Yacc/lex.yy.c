@@ -384,21 +384,21 @@ static const flex_int16_t yy_accept[163] =
     {   0,
         0,    0,   50,   48,   47,   46,   27,   48,   39,   48,
        48,   21,   20,   28,   25,   16,   26,   29,   42,   17,
-       37,   24,   38,   41,   23,   22,   41,   41,   41,   41,
-       41,   41,   41,   41,   41,   41,   41,   19,   48,   18,
+       37,   24,   38,   45,   23,   22,   45,   45,   45,   45,
+       45,   45,   45,   45,   45,   45,   45,   19,   48,   18,
        34,    0,   31,    0,   30,    0,   42,   35,   33,   36,
-       41,   41,   41,   41,   41,   41,   41,   41,   41,   41,
-       41,   41,   41,   41,   15,   32,   40,   44,   43,   41,
-       41,   41,   41,   41,   41,   41,   41,   41,   41,   41,
-       41,   41,   41,   41,    0,   41,   41,   41,   41,   41,
-       41,   41,    0,   41,   41,    7,   41,   41,    2,   41,
+       45,   45,   45,   45,   45,   45,   45,   45,   45,   45,
+       45,   45,   45,   45,   15,   32,   40,   43,   41,   45,
+       45,   45,   45,   45,   45,   45,   45,   45,   45,   45,
+       45,   45,   45,   45,    0,   45,   45,   45,   45,   45,
+       45,   45,    0,   45,   45,    7,   45,   45,    2,   45,
 
-        0,   41,   41,   41,   41,   41,   41,   41,    0,   12,
-       41,   41,   41,   41,   14,   41,   41,   41,    1,   41,
-        0,    0,   41,   41,   41,   41,   41,   41,   41,    0,
-        0,   41,   41,   41,    4,    3,   10,    8,    0,    0,
-       13,   41,    6,    0,   11,   41,    0,   41,    0,   41,
-        9,   41,   41,   41,   41,   41,   41,   41,    0,    0,
+        0,   45,   45,   45,   45,   45,   45,   44,    0,   12,
+       45,   45,   45,   45,   14,   45,   45,   45,    1,   45,
+        0,    0,   45,   45,   45,   45,   45,   45,   45,    0,
+        0,   45,   45,   45,    4,    3,   10,    8,    0,    0,
+       13,   45,    6,    0,   11,   45,    0,   45,    0,   45,
+        9,   45,   45,   45,   45,   45,   45,   45,    0,    0,
         5,    0
     } ;
 
@@ -552,7 +552,7 @@ static const flex_int32_t yy_rule_can_match_eol[50] =
     {   0,
 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    1, 0, 0, 0, 1, 0, 1, 1, 0, 0,     };
+    1, 0, 0, 1, 0, 0, 1, 1, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -1065,29 +1065,29 @@ YY_RULE_SETUP
 case 41:
 YY_RULE_SETUP
 #line 52 "analisis_lexico.l"
-{ yylval.lexema = strdup(yytext);
-                                           return(IDEN);}
+{yylval.atrib = 0;return(CONST);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 54 "analisis_lexico.l"
+#line 53 "analisis_lexico.l"
 {yylval.lexema=strdup(yytext);return(CONSTENT);}
 	YY_BREAK
 case 43:
+/* rule 43 can match eol */
 YY_RULE_SETUP
-#line 55 "analisis_lexico.l"
-{yylval.atrib = 0;return(CONST);}
+#line 54 "analisis_lexico.l"
+{yylval.atrib = 1;return(CONST);}
 	YY_BREAK
 case 44:
-/* rule 44 can match eol */
 YY_RULE_SETUP
-#line 56 "analisis_lexico.l"
-{yylval.atrib = 1;return(CONST);}
+#line 55 "analisis_lexico.l"
+{yylval.atrib = 2;return(CONST);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 57 "analisis_lexico.l"
-{yylval.atrib = 2;return(CONST);}
+#line 56 "analisis_lexico.l"
+{ yylval.lexema = strdup(yytext);
+                                           return(IDEN);}
 	YY_BREAK
 case 46:
 /* rule 46 can match eol */

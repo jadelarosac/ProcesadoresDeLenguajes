@@ -5,20 +5,21 @@ programa_principal()
    real vf;
    caracter vc ;
    booleano vl ;
-   entero pe[5], pe2[2,2];
-   real pf[5], pf2[2,10];
+   entero pl;
+   entero pe[5], pe2[2,2] ;
+   real pf[5], pf2[2,10] ;
    caracter pc[2,2], pc2[5];
    booleano pl[300,1000];
    fin declarar
-      entero funcionA (entero a1, real a2, caracter a3)
+      entero funcionA (entero a1, real a2, caracter a3, booleano a1)
       {
          declarar
-            entero x1, x2 ;
+            entero x1, x2;
          fin declarar
             caracter funcionB (caracter b1, booleano b2)
             {
                declarar
-                  real xf, x2 ;
+                  real xf, x2, b2 ;
                fin declarar
                   real funcionC (booleano c1, entero c2)
                   {
@@ -32,7 +33,7 @@ programa_principal()
                         x1= 3.1 ;
                      retornar x1 ;
                   }
-               xf= funcionC(cierto, 10);
+               xf= functionC(cierto, 10);
                x2= xf*(funcionC(falso,1)-funcionC(cierto,23)) / 10.0;
                mientras (x2*funcionC(falso,1)-xf<10.0)
                   x2= x2*xf ;
@@ -61,7 +62,8 @@ programa_principal()
          declarar
             entero dato ;
          fin declarar
-         dato= 2 ;
+
+            dato= 2 ;
          dato= valor*20/dato ;
       }
       si no {

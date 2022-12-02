@@ -113,15 +113,27 @@ void TS_InsertaPARAMF(atributos atr);
 dtipo atributoAEnum(int atr);
 /* Fin de declaraciones */
 
+/* 
+  Funciones para hacer comprobaciones semánticas
+*/
+entradaTS buscarEntrada(char* nombre);
+atributos entradaAAtributos(entradaTS ets);
+atributos procesaOperacionBinariaOMixta(atributos op1, atributos op2, int opdor);
+atributos procesaOperacionMixtaCuandoUnaria(atributos op1);
+atributos procesaOperacionNegacion(atributos op1);
+void procesaSentenciaAsignacion(atributos op1, atributos op2);
+void procesaSentenciaControl(atributos exp);
+
 /*
   Funciones para debuggear
 */
 
 void mostrar_tabla();
 char* entrada_a_string(entradaTS);
+char* enumAChar(dtipo t);
 
 
-#line 125 "y.tab.c"
+#line 137 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -587,16 +599,16 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    74,    74,    75,    75,    80,    81,    82,    82,    83,
-      86,    87,    88,    89,    90,    91,    92,    93,    94,    94,
-      95,    96,    97,    98,    98,    99,    99,   100,   101,   104,
-     105,   109,   115,   116,   117,   118,   120,   121,   122,   123,
-     124,   125,   126,   127,   128,   129,   130,   131,   132,   133,
-     135,   136,   137,   138,   139,   140,   141,   142,   142,   143,
-     144,   145,   146,   148,   149,   150,   151,   152,   153,   154,
-     155,   156,   157,   158,   159,   160,   161,   162,   163,   164,
-     165,   166,   167,   168,   169,   170,   171,   172,   173,   174,
-     175,   176,   177,   178,   179,   180,   181,   182
+       0,    86,    86,    87,    87,    92,    93,    94,    94,    95,
+      98,    99,   100,   101,   102,   103,   104,   105,   106,   106,
+     107,   108,   109,   110,   110,   111,   111,   112,   113,   116,
+     117,   121,   127,   128,   129,   132,   136,   137,   138,   139,
+     140,   141,   142,   143,   144,   145,   146,   147,   148,   149,
+     151,   152,   153,   154,   155,   156,   157,   158,   158,   159,
+     160,   161,   162,   164,   165,   166,   167,   168,   169,   170,
+     171,   172,   173,   174,   175,   176,   177,   178,   179,   180,
+     181,   182,   183,   184,   185,   186,   187,   188,   189,   191,
+     193,   194,   195,   196,   197,   198,   199,   200
 };
 #endif
 
@@ -1567,123 +1579,333 @@ yyreduce:
   switch (yyn)
     {
   case 3:
-#line 75 "analisis_sintactico.y"
+#line 87 "analisis_sintactico.y"
                                                {TS_InsertaMARCA();}
-#line 1573 "y.tab.c"
-    break;
-
-  case 4:
-#line 79 "analisis_sintactico.y"
-                                            { TS_VaciarENTRADAS();}
-#line 1579 "y.tab.c"
-    break;
-
-  case 7:
-#line 82 "analisis_sintactico.y"
-                                               {subprog = 1;}
 #line 1585 "y.tab.c"
     break;
 
-  case 8:
-#line 82 "analisis_sintactico.y"
-                                                                     {subprog = 0;}
+  case 4:
+#line 91 "analisis_sintactico.y"
+                                            { TS_VaciarENTRADAS();}
 #line 1591 "y.tab.c"
     break;
 
-  case 18:
+  case 7:
 #line 94 "analisis_sintactico.y"
-                                    {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
+                                               {subprog = 1;}
 #line 1597 "y.tab.c"
     break;
 
-  case 21:
-#line 96 "analisis_sintactico.y"
-                                                                       {tipoTmp=atributoAEnum(yyvsp[-4].atrib);TS_InsertaSUBPROG(yyvsp[-3]);}
+  case 8:
+#line 94 "analisis_sintactico.y"
+                                                                     {subprog = 0;}
 #line 1603 "y.tab.c"
     break;
 
-  case 22:
-#line 97 "analisis_sintactico.y"
-                                                            {tipoTmp=atributoAEnum(yyvsp[-3].atrib);TS_InsertaSUBPROG(yyvsp[-2]);}
+  case 18:
+#line 106 "analisis_sintactico.y"
+                                    {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
 #line 1609 "y.tab.c"
     break;
 
-  case 23:
-#line 98 "analisis_sintactico.y"
-                                   {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
+  case 21:
+#line 108 "analisis_sintactico.y"
+                                                                       {tipoTmp=atributoAEnum(yyvsp[-4].atrib);TS_InsertaSUBPROG(yyvsp[-3]);}
 #line 1615 "y.tab.c"
     break;
 
-  case 24:
-#line 98 "analisis_sintactico.y"
-                                                                               {TS_InsertaPARAMF(yyvsp[0]);}
+  case 22:
+#line 109 "analisis_sintactico.y"
+                                                            {tipoTmp=atributoAEnum(yyvsp[-3].atrib);TS_InsertaSUBPROG(yyvsp[-2]);}
 #line 1621 "y.tab.c"
     break;
 
-  case 25:
-#line 99 "analisis_sintactico.y"
-                                                       {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
+  case 23:
+#line 110 "analisis_sintactico.y"
+                                   {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
 #line 1627 "y.tab.c"
     break;
 
-  case 26:
-#line 99 "analisis_sintactico.y"
-                                                                                                   {TS_InsertaPARAMF(yyvsp[0]);}
+  case 24:
+#line 110 "analisis_sintactico.y"
+                                                                               {TS_InsertaPARAMF(yyvsp[0]);}
 #line 1633 "y.tab.c"
     break;
 
+  case 25:
+#line 111 "analisis_sintactico.y"
+                                                       {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
+#line 1639 "y.tab.c"
+    break;
+
+  case 26:
+#line 111 "analisis_sintactico.y"
+                                                                                                   {TS_InsertaPARAMF(yyvsp[0]);}
+#line 1645 "y.tab.c"
+    break;
+
   case 28:
-#line 101 "analisis_sintactico.y"
+#line 113 "analisis_sintactico.y"
                                             {yyval.lexema = yyvsp[0].lexema;
                                              yyval.dimensiones=0; yyval.TamDimen1=0; yyval.TamDimen2=0;
                                             }
-#line 1641 "y.tab.c"
+#line 1653 "y.tab.c"
     break;
 
   case 29:
-#line 104 "analisis_sintactico.y"
+#line 116 "analisis_sintactico.y"
                                                          {yyval.lexema = yyvsp[0].lexema;}
-#line 1647 "y.tab.c"
+#line 1659 "y.tab.c"
     break;
 
   case 30:
-#line 105 "analisis_sintactico.y"
+#line 117 "analisis_sintactico.y"
                                                                    {yyval.lexema = yyvsp[-3].lexema; 
                                                                     yyval.dimensiones=1;
                                                                     yyval.TamDimen1=atoi(yyvsp[-1].lexema);
                                                                     yyval.TamDimen2=0;}
-#line 1656 "y.tab.c"
+#line 1668 "y.tab.c"
     break;
 
   case 31:
-#line 110 "analisis_sintactico.y"
+#line 122 "analisis_sintactico.y"
                                                    {yyval.lexema = yyvsp[-5].lexema;
                                                     yyval.dimensiones=2;
                                                     yyval.TamDimen1=atoi(yyvsp[-3].lexema);
                                                     yyval.TamDimen2=atoi(yyvsp[-1].lexema);}
-#line 1665 "y.tab.c"
-    break;
-
-  case 61:
-#line 145 "analisis_sintactico.y"
-                                        {TS_InsertaIDENT(yyvsp[0]);}
-#line 1671 "y.tab.c"
-    break;
-
-  case 62:
-#line 146 "analisis_sintactico.y"
-                                                                            {TS_InsertaIDENT(yyvsp[0]);}
 #line 1677 "y.tab.c"
     break;
 
-  case 90:
-#line 175 "analisis_sintactico.y"
-                                     {yyval.atrib = yyvsp[0].atrib;}
+  case 32:
+#line 127 "analisis_sintactico.y"
+                                             {entradaTS ets = buscarEntrada(yyvsp[0].lexema); yyval = entradaAAtributos(ets);}
 #line 1683 "y.tab.c"
     break;
 
+  case 33:
+#line 128 "analisis_sintactico.y"
+                                                     {yyval = yyvsp[0];}
+#line 1689 "y.tab.c"
+    break;
 
-#line 1687 "y.tab.c"
+  case 34:
+#line 129 "analisis_sintactico.y"
+                                                                    {entradaTS ets = buscarEntrada(yyvsp[-3].lexema);
+                                                                     ets.dimensiones = 0;
+                                                                     yyval = entradaAAtributos(ets);}
+#line 1697 "y.tab.c"
+    break;
+
+  case 35:
+#line 133 "analisis_sintactico.y"
+                                                    {entradaTS ets = buscarEntrada(yyvsp[-5].lexema);
+                                                     ets.dimensiones = 0;
+                                                     yyval = entradaAAtributos(ets);}
+#line 1705 "y.tab.c"
+    break;
+
+  case 46:
+#line 146 "analisis_sintactico.y"
+                                                                    {procesaSentenciaAsignacion(yyvsp[-3],yyvsp[-1]);}
+#line 1711 "y.tab.c"
+    break;
+
+  case 48:
+#line 148 "analisis_sintactico.y"
+                                                                   {procesaSentenciaControl(yyvsp[-2]);}
+#line 1717 "y.tab.c"
+    break;
+
+  case 49:
+#line 150 "analisis_sintactico.y"
+                                             {procesaSentenciaControl(yyvsp[-4]);}
+#line 1723 "y.tab.c"
+    break;
+
+  case 50:
+#line 151 "analisis_sintactico.y"
+                                                                         {procesaSentenciaControl(yyvsp[-2]);}
+#line 1729 "y.tab.c"
+    break;
+
+  case 51:
+#line 152 "analisis_sintactico.y"
+                                                                                {procesaSentenciaControl(yyvsp[-2]);}
+#line 1735 "y.tab.c"
+    break;
+
+  case 61:
+#line 161 "analisis_sintactico.y"
+                                        {TS_InsertaIDENT(yyvsp[0]);}
+#line 1741 "y.tab.c"
+    break;
+
+  case 62:
+#line 162 "analisis_sintactico.y"
+                                                                            {TS_InsertaIDENT(yyvsp[0]);}
+#line 1747 "y.tab.c"
+    break;
+
+  case 66:
+#line 167 "analisis_sintactico.y"
+                                                      {yyval = yyvsp[-1];}
+#line 1753 "y.tab.c"
+    break;
+
+  case 67:
+#line 168 "analisis_sintactico.y"
+                                                  {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);}
+#line 1759 "y.tab.c"
+    break;
+
+  case 68:
+#line 169 "analisis_sintactico.y"
+                                                   {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);}
+#line 1765 "y.tab.c"
+    break;
+
+  case 69:
+#line 170 "analisis_sintactico.y"
+                                                                {yyval = procesaOperacionNegacion(yyvsp[0]);}
+#line 1771 "y.tab.c"
+    break;
+
+  case 70:
+#line 171 "analisis_sintactico.y"
+                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1777 "y.tab.c"
+    break;
+
+  case 71:
+#line 172 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1783 "y.tab.c"
+    break;
+
+  case 72:
+#line 173 "analisis_sintactico.y"
+                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1789 "y.tab.c"
+    break;
+
+  case 73:
+#line 174 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1795 "y.tab.c"
+    break;
+
+  case 74:
+#line 175 "analisis_sintactico.y"
+                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1801 "y.tab.c"
+    break;
+
+  case 75:
+#line 176 "analisis_sintactico.y"
+                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1807 "y.tab.c"
+    break;
+
+  case 76:
+#line 177 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1813 "y.tab.c"
+    break;
+
+  case 77:
+#line 178 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1819 "y.tab.c"
+    break;
+
+  case 78:
+#line 179 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1825 "y.tab.c"
+    break;
+
+  case 79:
+#line 180 "analisis_sintactico.y"
+                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1831 "y.tab.c"
+    break;
+
+  case 80:
+#line 181 "analisis_sintactico.y"
+                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1837 "y.tab.c"
+    break;
+
+  case 81:
+#line 182 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1843 "y.tab.c"
+    break;
+
+  case 82:
+#line 183 "analisis_sintactico.y"
+                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1849 "y.tab.c"
+    break;
+
+  case 83:
+#line 184 "analisis_sintactico.y"
+                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1855 "y.tab.c"
+    break;
+
+  case 84:
+#line 185 "analisis_sintactico.y"
+                                                     {yyval = yyvsp[0];}
+#line 1861 "y.tab.c"
+    break;
+
+  case 85:
+#line 186 "analisis_sintactico.y"
+                                            {yyval = yyvsp[0];}
+#line 1867 "y.tab.c"
+    break;
+
+  case 86:
+#line 187 "analisis_sintactico.y"
+                                          {yyval = yyvsp[0];}
+#line 1873 "y.tab.c"
+    break;
+
+  case 88:
+#line 189 "analisis_sintactico.y"
+                                                          {entradaTS ets = buscarEntrada(yyvsp[-2].lexema);
+                                                           yyval = entradaAAtributos(ets);}
+#line 1880 "y.tab.c"
+    break;
+
+  case 89:
+#line 191 "analisis_sintactico.y"
+                                                                                {entradaTS ets = buscarEntrada(yyvsp[-3].lexema);
+                                                                                 yyval = entradaAAtributos(ets);}
+#line 1887 "y.tab.c"
+    break;
+
+  case 90:
+#line 193 "analisis_sintactico.y"
+                                     {yyval.atrib = yyvsp[0].atrib;}
+#line 1893 "y.tab.c"
+    break;
+
+  case 93:
+#line 196 "analisis_sintactico.y"
+                                    {yyval.tipo = atributoAEnum(yyvsp[0].atrib+1);}
+#line 1899 "y.tab.c"
+    break;
+
+  case 94:
+#line 197 "analisis_sintactico.y"
+                                          {yyval.tipo = entero;}
+#line 1905 "y.tab.c"
+    break;
+
+
+#line 1909 "y.tab.c"
 
       default: break;
     }
@@ -1915,7 +2137,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 184 "analisis_sintactico.y"
+#line 202 "analisis_sintactico.y"
 
 
 #ifdef DOSWINDOWS
@@ -1933,19 +2155,21 @@ void yyerror(char *msg)
 void TS_InsertaENTRADA(entradaTS ets){
   
   if (TOPE == MAX_TS){
-    fprintf(stderr, "Error: Se ha alcanzado el máximo tamaño de la tabla de símbolos.\n");
+    fprintf(stderr, "Error: Se ha alcanzado el máximo tamaño de la tabla de símbolos.\n ABORTANDO\n");
+    exit(-1);
   }else{
     /* Introduzco el valor en la pila y cambio el tope */
     TS[TOPE] = ets;
     TOPE = TOPE + 1;
   }
 
-  mostrar_tabla();
+ // mostrar_tabla();
 }
 
 void TSAUX_InsertaENTRADA(entradaTS ets){
   if (TOPE_AUX == MAX_TS){
-    fprintf(stderr, "Error: Se ha alcanzado el máximo tamaño de la tabla de símbolos.\n");
+    fprintf(stderr, "Error: Se ha alcanzado el máximo tamaño de la tabla de símbolos.\n ABORTANDO\n");
+    exit(-1);
   }else{
     /* Introduzco el valor en la pila y cambio el tope */
     TS_aux[TOPE_AUX] = ets;
@@ -2062,14 +2286,259 @@ void TS_InsertaPARAMF(atributos atr){
   int tope_aux = TOPE_AUX - 1;
 
   while (tope_aux >= 0){
-  
-    if (TS_aux[tope_aux].nombre == ets.nombre) fprintf(stderr, "Error:se ha encontrado otro parámetro formal con el mismo identificador: '%s'\n", ets.nombre);
+    if (strcmp(TS_aux[tope_aux].nombre,ets.nombre) == 0) fprintf(stderr, "Error semántico:se ha encontrado otro parámetro formal con el mismo identificador: '%s'\n", ets.nombre);
     tope_aux--;
   }
 
   TSAUX_InsertaENTRADA(ets);
 }
 
+
+entradaTS buscarEntrada(char* nombre){
+  entradaTS ets;
+
+  int i = TOPE-1;
+  
+  while (i>=0){
+    if (strcmp(TS[i].nombre,nombre) == 0) break;
+    i--;
+  }
+
+  if (i == -1){
+    fprintf(stderr, "Error semántico: se utiliza un identificador no declarado: '%s'\n", nombre);
+    ets.nombre = strdup("");
+  }else{
+    ets = TS[i];
+  }
+
+  return ets;
+}
+
+
+atributos entradaAAtributos(entradaTS ets){
+  atributos atr; 
+  atr.tipo = ets.tipoDato; 
+  atr.dimensiones = ets.dimensiones;
+  atr.TamDimen1 = ets.TamDimen1;
+  atr.TamDimen2 = ets.TamDimen2;
+
+  return atr;
+}
+
+
+
+atributos procesaOperacionBinariaOMixta(atributos op1, atributos op2, int opdor){
+
+  atributos atr;
+
+  //printf("[Linea %d]",linea_actual);
+  //printf("OP1: tipo:%s dim:%d t1:%d t2:%d  OP2: tipo:%s dim:%d t1:%d t2:%d\n",enumAChar(op1.tipo),op1.dimensiones,op1.TamDimen1,op1.TamDimen2,enumAChar(op2.tipo),op2.dimensiones,op2.TamDimen1,op2.TamDimen2);
+
+  // Caso (+,*)
+  if (opdor == 0){
+    if ((op1.tipo != entero && op1.tipo != real) || (op2.tipo != entero && op2.tipo != real)){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador (+|*) espera tipo entero/real\n");
+    }
+    
+    if (op1.tipo != op2.tipo){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Se intenta operar con expresiones de distinto tipo.\n");
+    }
+    if( (op1.dimensiones==1 && op2.dimensiones==2) ||
+              (op1.dimensiones==2 && op2.dimensiones==1)){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Se intenta operar con una array y una matriz.\n");
+    }
+    if (op1.dimensiones==0){
+      atr = op2;
+    }else if (op2.dimensiones==0){
+      atr = op1;
+    }
+    if (op1.dimensiones==1 && op2.dimensiones==1){
+      if (op1.TamDimen1 == op2.TamDimen1) atr = op1;
+      else {
+        printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Se intenta operar con arrays de distintos tamaños.\n");
+      }
+    }else if(op1.dimensiones==2 && op2.dimensiones==2){
+      if (op1.TamDimen1 == op2.TamDimen1 && op1.TamDimen2 == op2.TamDimen2) atr = op1;
+      else {
+        printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Se intenta operar con matrices de distintos tamaños.\n");
+      }
+    }
+  }
+  
+  // Caso (-,/)
+  if (opdor == 1){
+    if ((op1.tipo != entero && op1.tipo != real) || (op2.tipo != entero && op2.tipo != real)){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador (-|/) espera tipo entero/real\n");
+    }
+    
+    if (op1.tipo != op2.tipo){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Se intenta operar con expresiones de distinto tipo.\n");
+    }
+    if( (op1.dimensiones==1 && op2.dimensiones==2) ||
+              (op1.dimensiones==2 && op2.dimensiones==1)){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Se intenta operar con una array y una matriz.\n");
+    }
+    if (op1.dimensiones==0 && op2.dimensiones != 0){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: No se puede restar/dividir un array/matriz a un valor.\n");
+    }else if (op2.dimensiones==0){
+      atr = op1;
+    }
+    if (op1.dimensiones==1 && op2.dimensiones==1){
+      if (op1.TamDimen1 == op2.TamDimen1) atr = op1;
+      else{
+        printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Se intenta operar con arrays de distintos tamaños.\n");
+      }
+    }else if(op1.dimensiones==2 && op2.dimensiones==2){
+      if (op1.TamDimen1 == op2.TamDimen1 && op1.TamDimen2 == op2.TamDimen2) atr = op1;
+      else {
+        printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Se intenta operar con matrices de distintos tamaños.\n");
+      }
+    }
+  }
+
+  // Caso **
+  if (opdor == 2){
+    if ((op1.tipo != entero && op1.tipo != real) || (op2.tipo != entero && op2.tipo != real)){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador ** espera tipo entero/real\n");
+    }
+    if (op1.tipo != op2.tipo){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Se intenta operar con expresiones de distinto tipo.\n");
+    }
+    if (op1.dimensiones == 1 || op1.dimensiones == 0){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador ** espera matrices\n");
+    }
+    if (op2.dimensiones == 1 || op2.dimensiones == 0){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador ** espera matrices\n");
+    }
+    if (op1.dimensiones == 2 && op2.dimensiones ==2){
+      if (op1.TamDimen2 != op2.TamDimen1){
+        printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Multiplicación de matrices inválida. No se puede multiplicar dimensiones (%dX%d)**(%dX%d)\n",op1.TamDimen1,op1.TamDimen2,op2.TamDimen1,op2.TamDimen2);
+      }else{
+        atr = op1;
+        atr.TamDimen2 = op2.TamDimen2;
+      }
+    }
+  }
+
+  // Caso (&&,||)
+  if (opdor == 3  || opdor == 4){
+    if (op1.dimensiones != 0 || op2.dimensiones != 0){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: No se puede utilizar el operador (&&,||) con arrays/matrices.\n");
+    }else if (op1.tipo != booleano || op2.tipo != booleano){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador (&&,||) espera tipo booleano\n");
+    }else{
+      atr = op1;
+    }
+  }
+
+
+  if (opdor == 5 || opdor == 6){
+    if (op1.dimensiones != 0 || op2.dimensiones != 0){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: No se puede comparar arrays/matrices.\n");
+    }else if(op1.tipo != op2.tipo){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: No se puede comparar expresiones de distinto tipo\n");
+    }else{
+      atr = op1;
+      atr.tipo = booleano;
+    }
+  }
+
+  // Caso operador relacional >,<,>=,...
+  if (opdor >= 7 && opdor <= 10){
+    if (op1.dimensiones != 0 || op2.dimensiones != 0){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: No se puede utilizar un operador relacional con arrays/matrices.\n");
+    }
+    if ((op1.tipo != entero && op1.tipo != real) || (op2.tipo != entero && op2.tipo != real)){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador ** espera tipo entero/real\n");
+    }
+
+    if (op1.tipo != op2.tipo){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Se intenta operar con expresiones de distinto tipo.\n");
+    }else if(op1.dimensiones == 0 && op2.dimensiones == 0){
+      atr = op1;
+      atr.tipo = booleano;
+    }
+  }
+
+  // Caso módulo %
+  if (opdor == 11){
+    if (op1.dimensiones != 0 || op2.dimensiones != 0){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: No se puede hacer módulo de arrays/matrices.\n");
+    }else if(op1.tipo != entero || op2.tipo != entero){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador módulo espera dos enteros.\n");
+    }else{
+      atr = op1;
+    }
+  }
+
+  //printf("RES: tipo:%s dim:%d t1:%d t2:%d\n",enumAChar(atr.tipo),atr.dimensiones,atr.TamDimen1,atr.TamDimen2);
+  return atr;
+}
+
+atributos procesaOperacionMixtaCuandoUnaria(atributos op1){
+
+  atributos atr;
+
+  if (op1.dimensiones != 0){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador unario (+ | -) no espera un array o matriz.\n");
+  }
+
+  if (op1.tipo != entero && op1.tipo != real){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador unario (+ | -) espera tipo real o entero.\n");
+  }
+  
+  if ((op1.tipo == entero || op1.tipo == real) && op1.dimensiones == 0){
+    atr = op1;
+  }
+
+  return atr;
+}
+
+atributos procesaOperacionNegacion(atributos op1){
+
+  atributos atr;
+
+  if (op1.tipo != booleano){
+    printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador de negación espera un booleano.\n");
+  }
+
+  if (op1.dimensiones != 0){ 
+    printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El operador de negación no espera un array o matriz.\n");
+  }
+
+  if (op1.dimensiones == 0 && op1.tipo == booleano){
+    atr = op1;
+  }
+
+  return atr;
+}
+
+
+void procesaSentenciaAsignacion(atributos op1, atributos op2){
+  if (op1.tipo != op2.tipo){
+    printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Asignacion de tipos distintos.\n");
+  }
+  if (op1.dimensiones != op2.dimensiones){
+    printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Asignacion variables con dimensiones distintas.\n");
+  }else{
+    if (op1.dimensiones == 1){
+      if (op1.TamDimen1 != op2.TamDimen1){
+        printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Asignacion de arrays de distinto tamaño.\n");
+      }
+    }
+    if (op1.dimensiones == 2){
+      if ((op1.TamDimen1 != op2.TamDimen1) || (op1.TamDimen2 != op2.TamDimen2)){
+        printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Asignacion de matrices de distintos tamaños.\n");
+      }
+    }
+  }
+}
+
+void procesaSentenciaControl(atributos exp){
+  if (exp.tipo != booleano){
+    printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: La sentencia de control (si|mientras|hasta) espera una expresión booleana.\n");
+  }
+}
 
 dtipo atributoAEnum(int atr){
 
@@ -2122,4 +2591,15 @@ char* entrada_a_string(entradaTS es){
   c7 = es.TamDimen2;
   sprintf(salida,formato,c1,es.nombre,c3,c4,c5,c6,c7);
   return strdup(salida);  
+}
+
+
+char* enumAChar(dtipo t){
+
+  if (t == entero)return strdup("entero");
+  if (t == booleano)return strdup("booleano");
+  if (t == real)return strdup("real");
+  if (t == caracter)return strdup("char");
+
+  return strdup("Ninguno");
 }

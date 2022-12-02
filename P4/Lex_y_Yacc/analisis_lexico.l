@@ -49,12 +49,12 @@
 ">" {yylval.atrib = 10;return(OPGR);}       //OPBIN
 "%" {yylval.atrib = 11;return(OPMOD);}      //OPBIN
 \"[^\"]+\" {return(CADENA);}
-([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* { yylval.lexema = strdup(yytext);
-                                           return(IDEN);}
-[0-9]+ {yylval.lexema=strdup(yytext);return(CONSTENT);}
 [0-9]+\.[0-9]+ {yylval.atrib = 0;return(CONST);}
+[0-9]+ {yylval.lexema=strdup(yytext);return(CONSTENT);}
 \'[^\']\' {yylval.atrib = 1;return(CONST);}
 ("cierto"|"falso") {yylval.atrib = 2;return(CONST);}
+([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* { yylval.lexema = strdup(yytext);
+                                           return(IDEN);}
 \n {linea_actual++;}
 [[:space:]] {}
 . {snprintf(buffer, MAXLONGBUFFER, "lexical error: el o los caracteres '%s' no forman ningún token conocido", yytext);
