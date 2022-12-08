@@ -1,0 +1,95 @@
+\section{Descripcion formal de la sintaxis del lenguaje}
+
+\begin{lstlisting}[breaklines=true, basicstyle=\tiny]
+<Programa>                    ::= <Cabecera_programa> <bloque>
+<bloque>                      ::= <Inicio_de_bloque>
+                                  <Declar_de_variables_locales>
+                                  <Declar_subprogs>
+                                  <Sentencias> <Fin_de_bloque>
+<Declar_subprogs>             ::= <Declar_subprogs> <Declar_subprog>
+                              |
+<Declar_subprog>              ::= <Cabecera_subprog> <bloque>
+<Declar_de_variables_locales> ::= <Marca_ini_declar_variables>
+                                  <Variables_locales>
+                                  <Marca_fin_declar_variables>
+                              |
+<Marca_ini_declar_variables>  ::= declarar
+<Marca_fin_declar_variables>  ::= fin declarar
+<Cabecera_programa>           ::= programa_principal()
+<Inicio_de_bloque>            ::= {
+<Fin_de_bloque>               ::= }
+<Variables_locales>           ::= <Variables_locales> <Cuerpo_declar_variables>
+                              |   <Cuerpo_declar_variables>
+<Cuerpo_declar_variables>     ::= <tipo> <lista_declaracion_variables>;
+<Cabecera_subprog>            ::= <tipo> <variable>(<argumentos>)
+                              |   <tipo> <variable>()
+<argumentos>                  ::= <tipo> <variable>
+                              |   <argumentos>, <tipo> <variable>
+<variable>                    ::= <identificador>
+                              |   <elemento_de_array_decl>
+<elemento_de_array>           ::= <identificador>[<expresion>]
+                              |   <identificador>[<expresion>, <expresion>]
+<variable_expresion>          ::= <identificador>
+                              |   <elemento_de_array>
+<elemento_de_array_decl>      ::= <identificador>[<numero>]
+                              |   <identificador>[<numero>, <numero>]
+<Sentencias>                  ::= <Sentencias> <Sentencia>
+                              |   <Sentencia>
+<Sentencia>                   ::= <bloque>
+                              |   <sentencia_asignacion>
+                              |   <sentencia_si>
+                              |   <sentencia_mientras>
+                              |   <sentencia_hacer_hasta>
+                              |   <sentencia_entrada>
+                              |   <sentencia_salida>
+                              |   <sentencia_retornar>
+<sentencia_asignacion>        ::= <variable_expresion> = <expresion>;
+<sentencia_si>                ::= si (<expresion>) <Sentencia>
+                              |   si (<expresion>) <Sentencia> si no <Sentencia>
+<sentencia_mientras>          ::= mientras (<expresion>) <sentencia>
+<sentencia_hacer_hasta>       ::= hacer <Sentencia> hasta que (<expresion>);
+<sentencia_entrada>           ::= leer <lista_variables>;
+<sentencia_salida>            ::= escribir <lista_expresiones_cadena>;
+<sentencia_retornar>          ::= retornar <expresion>;
+<lista_expresiones_cadena>    ::= <lista_expresiones_cadena>, <expresion_cadena>
+                              |   <expresion_cadena>
+<expresion_cadena>            ::= <expresion> | <cadena>
+<lista_variables>             ::= <variable>
+                              |   <lista_variables>, <variable>
+<lista_declaracion_variables> ::= <variable>
+                              |   <lista_declaracion_variables>, <variable>
+<lista_expresiones>           ::= <expresion>
+                              |   <lista_expresiones>, <expresion>
+<expresion>                   ::= ( <expresion> )
+                              |   <op_unario> <expresion>
+                              |   <expresion> <op_binario> <expresion>
+                              |   <variable_expresion>
+                              |   <constante>
+                              |   <funcion>
+<funcion>                     ::= <identificador>()
+                              |   <identificador>(<lista_expresiones>)
+<tipo>                        ::= entero | real | caracter | booleano
+<op_binario>                  ::= + | - | * | / | ** | && | || | == | !=
+                              |   <= | >= | < | > | %
+<op_unario>                   ::= - | ! | +
+<caracter>                    ::= [a-z] | [A-Z] | _
+<digito>                      ::= [0-9]
+<numero>                      ::= <digito> | <digito><numero>
+<numero_en_coma_flotante>     ::= <numero>.<numero>
+<cadena_identificador>        ::= <caracter> | <caracter><cadena_identificador>
+<cadena>                      ::= \``{^\``}+\`` 
+<identificador>               ::= <identificador><numero>
+                              |   <identificador><cadena_identificador>
+                              |   <cadena_identificador>
+<constante>                   ::= <numero>
+                              |   <numero_en_coma_flotante>
+                              |    '<digito>'
+                              |    \`{ ^\`}\`
+                              |   cierto
+                              |   falso
+                              |   [<ini_elementos_array>]
+<ini_elementos_array>         ::= <ini_elementos_array>; <lista_expresiones>
+                              |   <lista_expresiones>
+\end{lstlisting}
+
+
