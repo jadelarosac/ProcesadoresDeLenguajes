@@ -91,6 +91,21 @@ int TOPE_ARG = 0;
 
 entradaTS PILA_ARG[MAX_TS];
 
+
+/* GENERACIÓN DE CÓDIGO */
+
+
+FILE* intermain;
+
+
+/*                      */
+int Ntmp = 0;
+int bloqueMain = 0; //True
+
+
+
+
+
 typedef struct{
   int atrib;
   char* lexema;
@@ -98,6 +113,8 @@ typedef struct{
   unsigned int dimensiones;
   int TamDimen1;
   int TamDimen2;
+  
+  char codigo[5000];
 } atributos;
 
 #define YYSTYPE atributos /* Cada símbolo tiene una estructura de tipo atributos */
@@ -140,8 +157,18 @@ void mostrar_tabla();
 char* entrada_a_string(entradaTS);
 char* enumAChar(dtipo t);
 
+/*
+  FUNCIONES PARA GENERAR CODIGO
+*/ 
+void empezarGEN();
+void finalizarGEN();
+char* temporal();
 
-#line 145 "y.tab.c"
+char* enumAString();
+char* strconcat(char*,char*);
+char* strmycpy(char* c1);
+
+#line 172 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -547,16 +574,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   419
+#define YYLAST   439
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  43
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  47
+#define YYNNTS  49
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  100
+#define YYNRULES  102
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  179
+#define YYNSTATES  181
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   297
@@ -605,19 +632,19 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int16 yyrline[] =
 {
-       0,    94,    94,    95,    95,   100,   101,   102,   102,   103,
-     106,   107,   108,   109,   110,   111,   112,   113,   114,   114,
-     115,   116,   117,   118,   118,   119,   119,   120,   121,   124,
-     125,   129,   135,   136,   137,   140,   144,   145,   146,   147,
-     148,   149,   150,   151,   152,   153,   154,   155,   156,   157,
-     159,   160,   161,   162,   163,   164,   165,   166,   166,   167,
-     168,   169,   170,   172,   173,   174,   175,   176,   177,   178,
-     179,   180,   181,   182,   183,   184,   185,   186,   187,   188,
-     189,   190,   191,   192,   193,   194,   195,   196,   197,   200,
-     200,   203,   204,   205,   206,   207,   208,   211,   223,   225,
-     226
+       0,   121,   121,   121,   122,   123,   122,   142,   143,   144,
+     144,   145,   148,   149,   150,   151,   152,   153,   154,   157,
+     158,   158,   163,   164,   165,   166,   166,   167,   167,   168,
+     169,   173,   174,   178,   184,   185,   186,   189,   193,   194,
+     195,   196,   197,   198,   199,   200,   201,   202,   203,   204,
+     205,   206,   208,   209,   210,   211,   212,   213,   214,   215,
+     215,   216,   217,   218,   219,   224,   225,   226,   227,   228,
+     229,   230,   231,   232,   233,   234,   235,   236,   237,   238,
+     239,   240,   241,   242,   243,   244,   245,   246,   247,   248,
+     249,   252,   252,   255,   256,   257,   258,   259,   260,   263,
+     275,   277,   278
 };
 #endif
 
@@ -632,18 +659,18 @@ static const char *const yytname[] =
   "CADENA", "ASIG", "CORIZQ", "CORDER", "PARIZQ", "PARDER", "LLAIZQ",
   "LLADER", "PYC", "COMA", "SI", "SINO", "MIENTRAS", "HACER", "HASTA",
   "INIDEC", "FINDEC", "SALIDA", "ENTRADA", "DEVOLVER", "MAIN", "TIPOEL",
-  "$accept", "Programa", "bloque", "$@1", "Declar_subprogs",
-  "Declar_subprog", "$@2", "Declar_de_variables_locales",
+  "$accept", "Programa", "$@1", "bloque", "$@2", "$@3", "Declar_subprogs",
+  "Declar_subprog", "$@4", "Declar_de_variables_locales",
   "Marca_ini_declar_variables", "Marca_fin_declar_variables",
   "Cabecera_programa", "Inicio_de_bloque", "Fin_de_bloque",
-  "Variables_locales", "Cuerpo_declar_variables", "$@3",
-  "Cabecera_subprog", "argumentos", "$@4", "$@5", "variable",
+  "Variables_locales", "Cuerpo_declar_variables", "$@5",
+  "Cabecera_subprog", "argumentos", "$@6", "$@7", "variable",
   "elemento_de_array_decl", "variable_expresion", "elemento_de_array",
   "Sentencias", "Sentencia", "sentencia_asignacion", "sentencia_si",
   "sentencia_mientras", "sentencia_hacer_hasta", "sentencia_entrada",
   "sentencia_salida", "sentencia_retornar", "lista_expresiones_cadena",
   "expresion_cadena", "lista_variables", "lista_declaracion_variables",
-  "lista_expresiones", "expresion", "funcion", "$@6", "tipo", "cadena",
+  "lista_expresiones", "expresion", "funcion", "$@8", "tipo", "cadena",
   "identificador", "constante", "ini_elementos_array",
   "lista_expresiones_array", YY_NULLPTR
 };
@@ -662,7 +689,7 @@ static const yytype_int16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF (-36)
+#define YYPACT_NINF (-35)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -676,24 +703,25 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-     -35,   -36,    17,     5,   -36,   -36,   -36,   -36,   -16,   -36,
-     -36,     8,     7,   -36,   -36,     6,   -36,   -36,   -36,   -36,
-      12,    29,   130,    41,    37,   239,   -36,   -36,   -36,    46,
-     -36,    88,   -36,   -36,   -36,   -36,   -36,   -36,   -36,   -36,
-      37,    47,   -36,   -36,   -36,    43,   239,   239,    36,   -36,
-     239,   239,   239,   -36,   -36,   -36,   239,   239,   -36,    64,
-     -36,   380,   -36,   -36,    42,   -36,   -36,   -36,    84,    68,
-     196,     5,   239,   -36,   -36,   -36,    71,   239,   -36,   -36,
-      94,   262,   286,    73,   129,   -36,   -36,   380,    -8,    70,
-     310,   -36,    41,   239,   239,   239,   239,   239,   239,   239,
-     239,   239,   239,   239,   239,   239,   239,    77,   -36,    37,
-      98,   -36,   -36,   223,    13,   168,   -36,    37,   130,   130,
-     239,   -36,   239,   239,   -36,   -36,   393,   208,   403,   403,
-     121,   121,   121,   121,   129,   129,   -36,   -36,   -36,   -36,
-     -36,   239,   -36,   -19,   -36,   -36,   -36,    60,   -36,   -36,
-     239,   -36,    86,   -36,   334,    70,   380,    62,   380,   -36,
-     106,   -36,    96,    37,   358,   130,   101,   -36,   239,   115,
-     -36,   -36,   -36,   -36,   -36,   380,   -36,    37,   -36
+     -34,   -35,    22,   -35,   -35,   -12,   -35,   -35,   -35,    17,
+     -35,   -35,    18,   -35,   -35,   -35,    15,   -35,   -35,     9,
+     -35,   -35,   -35,     5,   -35,   -35,    31,    36,    49,   254,
+       4,   269,   -35,   -35,   -35,    37,   -35,   138,   -35,   -35,
+     -35,   -35,   -35,   -35,   -35,   -35,     4,    16,   -35,   -35,
+     -35,    34,    43,   269,   269,    35,   -35,   269,   269,   269,
+     -35,   -35,   -35,   269,   269,   -35,    45,   -35,   410,   -35,
+     -35,    21,   -35,   -35,    63,   211,   -12,   269,   -35,   -35,
+     -35,    56,   269,   -35,     4,    65,   292,   316,    61,    95,
+     -35,   -35,   410,    -1,    60,   340,   -35,   254,   269,   269,
+     269,   269,   269,   269,   269,   269,   269,   269,   269,   269,
+     269,   269,    68,   -35,     4,   -35,   -35,   238,    12,   183,
+     -35,    -4,    49,    49,   269,   -35,   269,   269,   -35,   -35,
+     423,   223,   119,   119,    19,    19,    19,    19,    95,    95,
+     -35,   -35,   -35,   -35,   -35,   269,   -35,   -35,   -35,   -35,
+      11,   -35,   -35,   269,   -35,    78,    66,   -35,   364,    60,
+     410,    32,   410,   -35,   100,     4,   388,    81,    49,    73,
+     -35,   269,   -35,   -35,   -35,   -35,   -35,   -35,   410,     4,
+     -35
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -701,44 +729,45 @@ static const yytype_int16 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,    13,     0,     0,     1,    14,     2,     3,    10,    11,
-       6,     0,     0,    20,    91,     0,    17,    18,    47,    93,
-       0,     0,     0,     0,     0,     0,    38,     5,     7,     0,
-      33,     0,    37,    39,    40,    41,    42,    43,    44,    45,
-       0,    32,    12,     9,    16,     0,     0,     0,     0,    87,
-       0,     0,     0,    94,    95,    92,     0,     0,    84,     0,
-      56,    57,    86,    58,    32,    85,    59,    29,     0,    28,
-       0,     0,     0,    15,     4,    36,     0,     0,    63,    61,
-       0,     0,     0,     0,    68,    69,    67,    99,     0,    98,
-       0,    53,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    89,    52,     0,
-       0,    54,     8,     0,     0,     0,    19,     0,     0,     0,
-       0,    96,     0,     0,    66,    55,    74,    73,    75,    76,
-      77,    78,    79,    80,    82,    83,    70,    72,    71,    81,
-      88,     0,    60,     0,    46,    27,    22,     0,    23,    34,
-       0,    62,    48,    50,     0,    97,   100,     0,    64,    30,
-       0,    21,     0,     0,     0,     0,     0,    90,     0,     0,
-      25,    24,    35,    49,    51,    65,    31,     0,    26
+       0,    15,     0,     2,     1,     0,    16,     3,     4,    12,
+      13,     5,     0,     8,    22,    93,     0,    19,    20,     0,
+      14,    11,    18,     0,    49,    95,     0,     0,     0,     0,
+       0,     0,    40,     7,     9,     0,    35,     0,    39,    41,
+      42,    43,    44,    45,    46,    47,     0,    34,    65,    63,
+      31,     0,    30,     0,     0,     0,    89,     0,     0,     0,
+      96,    97,    94,     0,     0,    86,     0,    58,    59,    88,
+      60,    34,    87,    61,     0,     0,     0,     0,    17,     6,
+      38,     0,     0,    21,     0,     0,     0,     0,     0,    70,
+      71,    69,   101,     0,   100,     0,    55,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,    91,    54,     0,    56,    10,     0,     0,     0,
+      64,     0,     0,     0,     0,    98,     0,     0,    68,    57,
+      76,    75,    77,    78,    79,    80,    81,    82,    84,    85,
+      72,    74,    73,    83,    90,     0,    62,    48,    29,    24,
+       0,    25,    36,     0,    32,     0,    50,    52,     0,    99,
+     102,     0,    66,    23,     0,     0,     0,     0,     0,     0,
+      92,     0,    27,    26,    37,    33,    51,    53,    67,     0,
+      28
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -36,   -36,    -2,   -36,   -36,   -36,   -36,   -36,   -36,   -36,
-     -36,   -36,   -36,   -36,   125,   -36,   -36,   -36,   -36,   -36,
-     -22,   -36,    -9,   -36,   -36,    -7,   -36,   -36,   -36,   -36,
-     -36,   -36,   -36,   -36,    54,   -36,   -36,   -36,   -21,   -36,
-     -36,   -10,   -36,   -12,   -36,   -36,    26
+     -35,   -35,   -35,     3,   -35,   -35,   -35,   -35,   -35,   -35,
+     -35,   -35,   -35,   -35,   -35,   -35,   121,   -35,   -35,   -35,
+     -35,   -35,   -29,   -35,   -16,   -35,   -35,   -23,   -35,   -35,
+     -35,   -35,   -35,   -35,   -35,   -35,    46,   -35,   -35,   -35,
+      14,   -35,   -35,   -17,   -35,   -19,   -35,   -35,    25
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
-      -1,     2,    26,     8,    12,    27,    71,    10,    11,    43,
-       3,     7,    74,    15,    16,    45,    28,   147,   163,   177,
-      66,    67,    58,    30,    31,    32,    33,    34,    35,    36,
-      37,    38,    39,    59,    60,    68,    80,   157,    61,    62,
-     141,    17,    63,    64,    65,    88,    89
+      -1,     2,     5,    32,     9,    13,    19,    33,    76,    11,
+      12,    21,     3,     8,    79,    16,    17,    23,    34,   150,
+     165,   179,    49,    50,    65,    36,    37,    38,    39,    40,
+      41,    42,    43,    44,    45,    66,    67,    74,    51,   161,
+      68,    69,   145,    18,    70,    71,    72,    93,    94
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -746,78 +775,83 @@ static const yytype_int16 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      41,     6,    40,    29,    70,   159,     1,    13,    18,    13,
-      41,   160,    69,    29,   145,    48,   121,     4,    76,    41,
-       9,   122,    29,    79,    75,    81,    82,    19,    69,    84,
-      85,    86,     5,    69,     5,    87,    90,    46,    20,   146,
-      21,    22,    49,    42,    78,    23,    24,    25,    14,    14,
-      14,   113,    50,    51,    47,    14,   115,    19,    52,    53,
-      54,    19,    55,    19,    56,    77,    57,   107,    72,   112,
-      77,    83,   126,   127,   128,   129,   130,   131,   132,   133,
-     134,   135,   136,   137,   138,   139,   161,   142,   167,    18,
-     162,   110,   168,    91,    92,   151,   114,    69,   120,   154,
-     123,    87,   156,   140,   148,    69,    41,    41,    19,    29,
-      29,   152,   153,   108,   109,     5,    73,   143,   165,    20,
-     158,    21,    22,   116,   117,   169,    23,    24,    25,   164,
-     174,    18,   101,   102,   103,   104,   105,   106,    14,   176,
-      44,   171,   103,   104,   105,   106,   125,   175,   155,     0,
-      19,    69,   170,    41,     0,   178,    29,     5,   173,     0,
-       0,    20,     0,    21,    22,    69,     0,     0,    23,    24,
-      25,    93,    94,    95,    96,    97,    98,    99,   100,   101,
-     102,   103,   104,   105,   106,     0,     0,     0,     0,     0,
-       0,     0,   149,     0,     0,     0,     0,     0,   150,    93,
-      94,    95,    96,    97,    98,    99,   100,   101,   102,   103,
-     104,   105,   106,    95,    96,    97,    98,    99,   100,   101,
-     102,   103,   104,   105,   106,   111,    93,    94,    95,    96,
-      97,    98,    99,   100,   101,   102,   103,   104,   105,   106,
-      49,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      50,    51,   144,     0,     0,     0,    52,    53,    54,    19,
-       0,     0,    56,     0,    57,    93,    94,    95,    96,    97,
-      98,    99,   100,   101,   102,   103,   104,   105,   106,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,   118,    93,
-      94,    95,    96,    97,    98,    99,   100,   101,   102,   103,
-     104,   105,   106,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   119,    93,    94,    95,    96,    97,    98,    99,
-     100,   101,   102,   103,   104,   105,   106,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,   124,    93,    94,    95,
-      96,    97,    98,    99,   100,   101,   102,   103,   104,   105,
-     106,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     166,    93,    94,    95,    96,    97,    98,    99,   100,   101,
-     102,   103,   104,   105,   106,     0,     0,     0,     0,     0,
-       0,     0,   172,    93,    94,    95,    96,    97,    98,    99,
-     100,   101,   102,   103,   104,   105,   106,    94,    95,    96,
-      97,    98,    99,   100,   101,   102,   103,   104,   105,   106,
-      97,    98,    99,   100,   101,   102,   103,   104,   105,   106
+      47,    73,    46,    35,    52,    55,    48,     1,     7,    47,
+      24,    52,    35,   148,    80,     6,    14,    81,    47,    14,
+     154,    35,     4,   125,    25,    25,   155,    52,   126,    25,
+     106,   107,   108,   109,   110,   111,     6,   163,   149,    82,
+      26,   164,    27,    28,    82,    75,   112,    29,    30,    31,
+      24,    15,    20,    10,    15,   120,    53,    15,   170,    77,
+      15,    54,   171,    83,    84,    52,    85,    86,    87,    25,
+      88,    89,    90,    91,    96,    97,     6,    92,    95,   116,
+      26,   118,    27,    28,   121,   146,   124,    29,    30,    31,
+     127,   117,   113,   114,   144,    52,   119,   167,   168,   156,
+     157,   151,   177,    47,    47,   175,    35,    35,   108,   109,
+     110,   111,   130,   131,   132,   133,   134,   135,   136,   137,
+     138,   139,   140,   141,   142,   143,   102,   103,   104,   105,
+     106,   107,   108,   109,   110,   111,   173,    22,   158,    24,
+      92,   160,    15,   129,     0,   176,    52,   172,     0,    47,
+     180,   159,    35,     0,     0,     0,     0,     0,    25,   162,
+      52,     0,     0,     0,     0,     6,    78,   166,     0,    26,
+       0,    27,    28,     0,     0,     0,    29,    30,    31,     0,
+       0,     0,     0,     0,     0,   178,    98,    99,   100,   101,
+     102,   103,   104,   105,   106,   107,   108,   109,   110,   111,
+       0,     0,     0,     0,     0,     0,     0,   152,     0,     0,
+       0,     0,     0,   153,    98,    99,   100,   101,   102,   103,
+     104,   105,   106,   107,   108,   109,   110,   111,   100,   101,
+     102,   103,   104,   105,   106,   107,   108,   109,   110,   111,
+     115,    98,    99,   100,   101,   102,   103,   104,   105,   106,
+     107,   108,   109,   110,   111,    56,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    57,    58,   147,     0,     0,
+      56,    59,    60,    61,    25,    62,     0,    63,     0,    64,
+      57,    58,     0,     0,     0,     0,    59,    60,    61,    25,
+       0,     0,    63,     0,    64,    98,    99,   100,   101,   102,
+     103,   104,   105,   106,   107,   108,   109,   110,   111,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,   122,    98,
+      99,   100,   101,   102,   103,   104,   105,   106,   107,   108,
+     109,   110,   111,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,   123,    98,    99,   100,   101,   102,   103,   104,
+     105,   106,   107,   108,   109,   110,   111,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,   128,    98,    99,   100,
+     101,   102,   103,   104,   105,   106,   107,   108,   109,   110,
+     111,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     169,    98,    99,   100,   101,   102,   103,   104,   105,   106,
+     107,   108,   109,   110,   111,     0,     0,     0,     0,     0,
+       0,     0,   174,    98,    99,   100,   101,   102,   103,   104,
+     105,   106,   107,   108,   109,   110,   111,    99,   100,   101,
+     102,   103,   104,   105,   106,   107,   108,   109,   110,   111
 };
 
 static const yytype_int16 yycheck[] =
 {
-      12,     3,    12,    12,    25,    24,    41,     1,     1,     1,
-      22,    30,    24,    22,     1,    22,    24,     0,    40,    31,
-      36,    29,    31,    45,    31,    46,    47,    20,    40,    50,
-      51,    52,    27,    45,    27,    56,    57,    25,    31,    26,
-      33,    34,     1,    37,     1,    38,    39,    40,    42,    42,
-      42,    72,    11,    12,    25,    42,    77,    20,    17,    18,
-      19,    20,    21,    20,    23,    23,    25,    25,    22,    71,
-      23,    35,    93,    94,    95,    96,    97,    98,    99,   100,
-     101,   102,   103,   104,   105,   106,    26,   109,    26,     1,
-      30,    23,    30,    29,    30,   117,    25,   109,    25,   120,
-      30,   122,   123,    26,   114,   117,   118,   119,    20,   118,
-     119,   118,   119,    29,    30,    27,    28,    19,    32,    31,
-     141,    33,    34,    29,    30,    19,    38,    39,    40,   150,
-      29,     1,    11,    12,    13,    14,    15,    16,    42,    24,
-      15,   163,    13,    14,    15,    16,    92,   168,   122,    -1,
-      20,   163,   162,   165,    -1,   177,   165,    27,   165,    -1,
-      -1,    31,    -1,    33,    34,   177,    -1,    -1,    38,    39,
-      40,     3,     4,     5,     6,     7,     8,     9,    10,    11,
-      12,    13,    14,    15,    16,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    24,    -1,    -1,    -1,    -1,    -1,    30,     3,
-       4,     5,     6,     7,     8,     9,    10,    11,    12,    13,
-      14,    15,    16,     5,     6,     7,     8,     9,    10,    11,
-      12,    13,    14,    15,    16,    29,     3,     4,     5,     6,
+      19,    30,    19,    19,    23,    28,     1,    41,     5,    28,
+       1,    30,    28,     1,    37,    27,     1,    46,    37,     1,
+      24,    37,     0,    24,    20,    20,    30,    46,    29,    20,
+      11,    12,    13,    14,    15,    16,    27,    26,    26,    23,
+      31,    30,    33,    34,    23,    31,    25,    38,    39,    40,
+       1,    42,    37,    36,    42,    84,    25,    42,    26,    22,
+      42,    25,    30,    29,    30,    84,    23,    53,    54,    20,
+      35,    57,    58,    59,    29,    30,    27,    63,    64,    76,
+      31,    25,    33,    34,    19,   114,    25,    38,    39,    40,
+      30,    77,    29,    30,    26,   114,    82,    19,    32,   122,
+     123,   118,    29,   122,   123,    24,   122,   123,    13,    14,
+      15,    16,    98,    99,   100,   101,   102,   103,   104,   105,
+     106,   107,   108,   109,   110,   111,     7,     8,     9,    10,
+      11,    12,    13,    14,    15,    16,   165,    16,   124,     1,
+     126,   127,    42,    97,    -1,   168,   165,   164,    -1,   168,
+     179,   126,   168,    -1,    -1,    -1,    -1,    -1,    20,   145,
+     179,    -1,    -1,    -1,    -1,    27,    28,   153,    -1,    31,
+      -1,    33,    34,    -1,    -1,    -1,    38,    39,    40,    -1,
+      -1,    -1,    -1,    -1,    -1,   171,     3,     4,     5,     6,
        7,     8,     9,    10,    11,    12,    13,    14,    15,    16,
-       1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      11,    12,    29,    -1,    -1,    -1,    17,    18,    19,    20,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    24,    -1,    -1,
+      -1,    -1,    -1,    30,     3,     4,     5,     6,     7,     8,
+       9,    10,    11,    12,    13,    14,    15,    16,     5,     6,
+       7,     8,     9,    10,    11,    12,    13,    14,    15,    16,
+      29,     3,     4,     5,     6,     7,     8,     9,    10,    11,
+      12,    13,    14,    15,    16,     1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    11,    12,    29,    -1,    -1,
+       1,    17,    18,    19,    20,    21,    -1,    23,    -1,    25,
+      11,    12,    -1,    -1,    -1,    -1,    17,    18,    19,    20,
       -1,    -1,    23,    -1,    25,     3,     4,     5,     6,     7,
        8,     9,    10,    11,    12,    13,    14,    15,    16,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    26,     3,
@@ -832,7 +866,6 @@ static const yytype_int16 yycheck[] =
       12,    13,    14,    15,    16,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    24,     3,     4,     5,     6,     7,     8,     9,
       10,    11,    12,    13,    14,    15,    16,     4,     5,     6,
-       7,     8,     9,    10,    11,    12,    13,    14,    15,    16,
        7,     8,     9,    10,    11,    12,    13,    14,    15,    16
 };
 
@@ -840,56 +873,57 @@ static const yytype_int16 yycheck[] =
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    41,    44,    53,     0,    27,    45,    54,    46,    36,
-      50,    51,    47,     1,    42,    56,    57,    84,     1,    20,
-      31,    33,    34,    38,    39,    40,    45,    48,    59,    65,
-      66,    67,    68,    69,    70,    71,    72,    73,    74,    75,
-      84,    86,    37,    52,    57,    58,    25,    25,    68,     1,
-      11,    12,    17,    18,    19,    21,    23,    25,    65,    76,
-      77,    81,    82,    85,    86,    87,    63,    64,    78,    86,
-      81,    49,    22,    28,    55,    68,    63,    23,     1,    63,
-      79,    81,    81,    35,    81,    81,    81,    81,    88,    89,
-      81,    29,    30,     3,     4,     5,     6,     7,     8,     9,
-      10,    11,    12,    13,    14,    15,    16,    25,    29,    30,
-      23,    29,    45,    81,    25,    81,    29,    30,    26,    26,
-      25,    24,    29,    30,    26,    77,    81,    81,    81,    81,
-      81,    81,    81,    81,    81,    81,    81,    81,    81,    81,
-      26,    83,    63,    19,    29,     1,    26,    60,    84,    24,
-      30,    63,    68,    68,    81,    89,    81,    80,    81,    24,
-      30,    26,    30,    61,    81,    32,    26,    26,    30,    19,
-      84,    63,    24,    68,    29,    81,    24,    62,    63
+       0,    41,    44,    55,     0,    45,    27,    46,    56,    47,
+      36,    52,    53,    48,     1,    42,    58,    59,    86,    49,
+      37,    54,    59,    60,     1,    20,    31,    33,    34,    38,
+      39,    40,    46,    50,    61,    67,    68,    69,    70,    71,
+      72,    73,    74,    75,    76,    77,    86,    88,     1,    65,
+      66,    81,    88,    25,    25,    70,     1,    11,    12,    17,
+      18,    19,    21,    23,    25,    67,    78,    79,    83,    84,
+      87,    88,    89,    65,    80,    83,    51,    22,    28,    57,
+      70,    65,    23,    29,    30,    23,    83,    83,    35,    83,
+      83,    83,    83,    90,    91,    83,    29,    30,     3,     4,
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    25,    29,    30,    29,    46,    83,    25,    83,
+      65,    19,    26,    26,    25,    24,    29,    30,    26,    79,
+      83,    83,    83,    83,    83,    83,    83,    83,    83,    83,
+      83,    83,    83,    83,    26,    85,    65,    29,     1,    26,
+      62,    86,    24,    30,    24,    30,    70,    70,    83,    91,
+      83,    82,    83,    26,    30,    63,    83,    19,    32,    26,
+      26,    30,    86,    65,    24,    24,    70,    29,    83,    64,
+      65
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    43,    44,    46,    45,    47,    47,    49,    48,    50,
-      50,    51,    52,    53,    54,    55,    56,    56,    58,    57,
-      57,    59,    59,    61,    60,    62,    60,    60,    63,    63,
-      64,    64,    65,    65,    66,    66,    67,    67,    68,    68,
-      68,    68,    68,    68,    68,    68,    69,    69,    70,    70,
-      71,    72,    73,    74,    75,    76,    76,    77,    77,    78,
-      78,    79,    79,    79,    80,    80,    81,    81,    81,    81,
-      81,    81,    81,    81,    81,    81,    81,    81,    81,    81,
-      81,    81,    81,    81,    81,    81,    81,    81,    82,    83,
-      82,    84,    85,    86,    87,    87,    87,    88,    88,    89,
-      89
+       0,    43,    45,    44,    47,    48,    46,    49,    49,    51,
+      50,    52,    52,    53,    54,    55,    56,    57,    58,    58,
+      60,    59,    59,    61,    61,    63,    62,    64,    62,    62,
+      65,    65,    66,    66,    67,    67,    68,    68,    69,    69,
+      70,    70,    70,    70,    70,    70,    70,    70,    71,    71,
+      72,    72,    73,    74,    75,    76,    77,    78,    78,    79,
+      79,    80,    80,    81,    81,    81,    82,    82,    83,    83,
+      83,    83,    83,    83,    83,    83,    83,    83,    83,    83,
+      83,    83,    83,    83,    83,    83,    83,    83,    83,    83,
+      84,    85,    84,    86,    87,    88,    89,    89,    89,    90,
+      90,    91,    91
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     2,     0,     6,     2,     0,     0,     3,     3,
-       0,     1,     1,     1,     1,     1,     2,     1,     0,     4,
-       1,     5,     4,     0,     3,     0,     5,     1,     1,     1,
-       4,     6,     1,     1,     4,     6,     2,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     4,     1,     5,     7,
-       5,     7,     3,     3,     3,     3,     1,     1,     1,     1,
-       3,     1,     3,     1,     1,     3,     3,     2,     2,     2,
-       3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
-       3,     3,     3,     3,     1,     1,     1,     1,     3,     0,
-       5,     1,     1,     1,     1,     1,     3,     3,     1,     1,
-       3
+       0,     2,     0,     3,     0,     0,     7,     2,     0,     0,
+       3,     3,     0,     1,     1,     1,     1,     1,     2,     1,
+       0,     4,     1,     5,     4,     0,     3,     0,     5,     1,
+       1,     1,     4,     6,     1,     1,     4,     6,     2,     1,
+       1,     1,     1,     1,     1,     1,     1,     1,     4,     1,
+       5,     7,     5,     7,     3,     3,     3,     3,     1,     1,
+       1,     1,     3,     1,     3,     1,     1,     3,     3,     2,
+       2,     2,     3,     3,     3,     3,     3,     3,     3,     3,
+       3,     3,     3,     3,     3,     3,     1,     1,     1,     1,
+       3,     0,     5,     1,     1,     1,     1,     1,     3,     3,
+       1,     1,     3
 };
 
 
@@ -1584,362 +1618,430 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2:
+#line 121 "analisis_sintactico.y"
+                                                {empezarGEN();}
+#line 1625 "y.tab.c"
+    break;
+
   case 3:
-#line 95 "analisis_sintactico.y"
-                                               {TS_InsertaMARCA();}
-#line 1591 "y.tab.c"
+#line 121 "analisis_sintactico.y"
+                                                                       {fputs(yyvsp[0].codigo,intermain);finalizarGEN();}
+#line 1631 "y.tab.c"
     break;
 
   case 4:
-#line 99 "analisis_sintactico.y"
-                                            { TS_VaciarENTRADAS();}
-#line 1597 "y.tab.c"
+#line 122 "analisis_sintactico.y"
+                                               {TS_InsertaMARCA();}
+#line 1637 "y.tab.c"
     break;
 
-  case 7:
-#line 102 "analisis_sintactico.y"
+  case 5:
+#line 123 "analisis_sintactico.y"
+                                                              {
+                                                                if (bloqueMain == 0){
+                                                                 
+                                                                  bloqueMain = 1;
+                                                                  strcat(yyvsp[0].codigo,"\n");
+                                                                  strcat(yyvsp[0].codigo,"int main(){\n");
+                                                                }else{
+                                                                  char tmp[50000] = "{\n";
+                                                                  strcat(tmp,yyvsp[0].codigo);
+                                                                  strcpy(yyvsp[0].codigo,strdup(tmp));
+                                                                }
+                                                                }
+#line 1654 "y.tab.c"
+    break;
+
+  case 6:
+#line 137 "analisis_sintactico.y"
+                                            { TS_VaciarENTRADAS(); 
+                                                                   //strcat($3.codigo,$5.codigo); 
+                                                                   //strcat($3.codigo,$6.codigo); 
+                                                                   strcat(yyvsp[-4].codigo,"\n}\n");
+                                                                   strcpy(yyval.codigo,strdup(yyvsp[-4].codigo));}
+#line 1664 "y.tab.c"
+    break;
+
+  case 9:
+#line 144 "analisis_sintactico.y"
                                                {subprog = 1;}
-#line 1603 "y.tab.c"
+#line 1670 "y.tab.c"
     break;
 
-  case 8:
-#line 102 "analisis_sintactico.y"
+  case 10:
+#line 144 "analisis_sintactico.y"
                                                                      {subprog = 0;}
-#line 1609 "y.tab.c"
+#line 1676 "y.tab.c"
+    break;
+
+  case 11:
+#line 147 "analisis_sintactico.y"
+                                                             {strcpy(yyval.codigo,strdup(yyvsp[-1].codigo));}
+#line 1682 "y.tab.c"
     break;
 
   case 18:
-#line 114 "analisis_sintactico.y"
+#line 154 "analisis_sintactico.y"
+                                                                        {strcat(yyvsp[-1].codigo,"\n");
+                                                                         strcat(yyvsp[-1].codigo,yyvsp[0].codigo);
+                                                                         strcpy(yyval.codigo,strdup(yyvsp[-1].codigo));}
+#line 1690 "y.tab.c"
+    break;
+
+  case 19:
+#line 157 "analisis_sintactico.y"
+                                                        {strcpy(yyval.codigo,strdup(yyvsp[0].codigo));}
+#line 1696 "y.tab.c"
+    break;
+
+  case 20:
+#line 158 "analisis_sintactico.y"
                                     {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
-#line 1615 "y.tab.c"
+#line 1702 "y.tab.c"
     break;
 
   case 21:
-#line 116 "analisis_sintactico.y"
-                                                                       {tipoTmp=atributoAEnum(yyvsp[-4].atrib);TS_InsertaSUBPROG(yyvsp[-3]);}
-#line 1621 "y.tab.c"
-    break;
-
-  case 22:
-#line 117 "analisis_sintactico.y"
-                                                            {tipoTmp=atributoAEnum(yyvsp[-3].atrib);TS_InsertaSUBPROG(yyvsp[-2]);}
-#line 1627 "y.tab.c"
+#line 158 "analisis_sintactico.y"
+                                                                                                       {strcpy(yyvsp[-3].codigo,enumAString(tipoTmp));
+                                                                                                        strcat(yyvsp[-3].codigo," ");
+                                                                                                        strcat(yyvsp[-3].codigo,yyvsp[-1].codigo);
+                                                                                                        strcat(yyvsp[-3].codigo,";");
+                                                                                                        strcpy(yyval.codigo,strdup(yyvsp[-3].codigo));}
+#line 1712 "y.tab.c"
     break;
 
   case 23:
-#line 118 "analisis_sintactico.y"
-                                   {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
-#line 1633 "y.tab.c"
+#line 164 "analisis_sintactico.y"
+                                                                       {tipoTmp=atributoAEnum(yyvsp[-4].atrib);TS_InsertaSUBPROG(yyvsp[-3]);}
+#line 1718 "y.tab.c"
     break;
 
   case 24:
-#line 118 "analisis_sintactico.y"
-                                                                               {TS_InsertaPARAMF(yyvsp[0]);}
-#line 1639 "y.tab.c"
+#line 165 "analisis_sintactico.y"
+                                                            {tipoTmp=atributoAEnum(yyvsp[-3].atrib);TS_InsertaSUBPROG(yyvsp[-2]);}
+#line 1724 "y.tab.c"
     break;
 
   case 25:
-#line 119 "analisis_sintactico.y"
-                                                       {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
-#line 1645 "y.tab.c"
+#line 166 "analisis_sintactico.y"
+                                   {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
+#line 1730 "y.tab.c"
     break;
 
   case 26:
-#line 119 "analisis_sintactico.y"
-                                                                                                   {TS_InsertaPARAMF(yyvsp[0]);}
-#line 1651 "y.tab.c"
+#line 166 "analisis_sintactico.y"
+                                                                               {TS_InsertaPARAMF(yyvsp[0]);}
+#line 1736 "y.tab.c"
+    break;
+
+  case 27:
+#line 167 "analisis_sintactico.y"
+                                                       {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
+#line 1742 "y.tab.c"
     break;
 
   case 28:
-#line 121 "analisis_sintactico.y"
-                                            {yyval.lexema = yyvsp[0].lexema;
-                                             yyval.dimensiones=0; yyval.TamDimen1=0; yyval.TamDimen2=0;
-                                            }
-#line 1659 "y.tab.c"
-    break;
-
-  case 29:
-#line 124 "analisis_sintactico.y"
-                                                         {yyval.lexema = yyvsp[0].lexema;}
-#line 1665 "y.tab.c"
+#line 167 "analisis_sintactico.y"
+                                                                                                   {TS_InsertaPARAMF(yyvsp[0]);}
+#line 1748 "y.tab.c"
     break;
 
   case 30:
-#line 125 "analisis_sintactico.y"
+#line 169 "analisis_sintactico.y"
+                                            {yyval.lexema = yyvsp[0].lexema;
+                                             yyval.dimensiones=0; yyval.TamDimen1=0; yyval.TamDimen2=0;
+                                             strcpy(yyval.codigo,strdup(yyvsp[0].lexema));
+                                            }
+#line 1757 "y.tab.c"
+    break;
+
+  case 31:
+#line 173 "analisis_sintactico.y"
+                                                         {yyval.lexema = yyvsp[0].lexema;}
+#line 1763 "y.tab.c"
+    break;
+
+  case 32:
+#line 174 "analisis_sintactico.y"
                                                                    {yyval.lexema = yyvsp[-3].lexema; 
                                                                     yyval.dimensiones=1;
                                                                     yyval.TamDimen1=atoi(yyvsp[-1].lexema);
                                                                     yyval.TamDimen2=0;}
-#line 1674 "y.tab.c"
+#line 1772 "y.tab.c"
     break;
 
-  case 31:
-#line 130 "analisis_sintactico.y"
+  case 33:
+#line 179 "analisis_sintactico.y"
                                                    {yyval.lexema = yyvsp[-5].lexema;
                                                     yyval.dimensiones=2;
                                                     yyval.TamDimen1=atoi(yyvsp[-3].lexema);
                                                     yyval.TamDimen2=atoi(yyvsp[-1].lexema);}
-#line 1683 "y.tab.c"
-    break;
-
-  case 32:
-#line 135 "analisis_sintactico.y"
-                                             {entradaTS ets = buscarEntrada(yyvsp[0].lexema); yyval = entradaAAtributos(ets);}
-#line 1689 "y.tab.c"
-    break;
-
-  case 33:
-#line 136 "analisis_sintactico.y"
-                                                     {yyval = yyvsp[0];}
-#line 1695 "y.tab.c"
+#line 1781 "y.tab.c"
     break;
 
   case 34:
-#line 137 "analisis_sintactico.y"
-                                                                    {entradaTS ets = buscarEntrada(yyvsp[-3].lexema);
-                                                                     ets.dimensiones = 0;
-                                                                     yyval = entradaAAtributos(ets);}
-#line 1703 "y.tab.c"
+#line 184 "analisis_sintactico.y"
+                                             {entradaTS ets = buscarEntrada(yyvsp[0].lexema); yyval = entradaAAtributos(ets);}
+#line 1787 "y.tab.c"
     break;
 
   case 35:
-#line 141 "analisis_sintactico.y"
-                                                    {entradaTS ets = buscarEntrada(yyvsp[-5].lexema);
-                                                     ets.dimensiones = 0;
-                                                     yyval = entradaAAtributos(ets);}
-#line 1711 "y.tab.c"
+#line 185 "analisis_sintactico.y"
+                                                     {yyval = yyvsp[0];}
+#line 1793 "y.tab.c"
     break;
 
-  case 46:
-#line 154 "analisis_sintactico.y"
-                                                                    {procesaSentenciaAsignacion(yyvsp[-3],yyvsp[-1]);}
-#line 1717 "y.tab.c"
-    break;
-
-  case 48:
-#line 156 "analisis_sintactico.y"
-                                                                   {procesaSentenciaControl(yyvsp[-2]);}
-#line 1723 "y.tab.c"
-    break;
-
-  case 49:
-#line 158 "analisis_sintactico.y"
-                                             {procesaSentenciaControl(yyvsp[-4]);}
-#line 1729 "y.tab.c"
-    break;
-
-  case 50:
-#line 159 "analisis_sintactico.y"
-                                                                         {procesaSentenciaControl(yyvsp[-2]);}
-#line 1735 "y.tab.c"
-    break;
-
-  case 51:
-#line 160 "analisis_sintactico.y"
-                                                                                {procesaSentenciaControl(yyvsp[-2]);}
-#line 1741 "y.tab.c"
-    break;
-
-  case 61:
-#line 169 "analisis_sintactico.y"
-                                        {TS_InsertaIDENT(yyvsp[0]);}
-#line 1747 "y.tab.c"
-    break;
-
-  case 62:
-#line 170 "analisis_sintactico.y"
-                                                                            {TS_InsertaIDENT(yyvsp[0]);}
-#line 1753 "y.tab.c"
-    break;
-
-  case 64:
-#line 173 "analisis_sintactico.y"
-                                        {PILARG_insertaARG(yyvsp[0]);}
-#line 1759 "y.tab.c"
-    break;
-
-  case 65:
-#line 174 "analisis_sintactico.y"
-                                                                   {PILARG_insertaARG(yyvsp[0]);}
-#line 1765 "y.tab.c"
-    break;
-
-  case 66:
-#line 175 "analisis_sintactico.y"
-                                                      {yyval = yyvsp[-1];}
-#line 1771 "y.tab.c"
-    break;
-
-  case 67:
-#line 176 "analisis_sintactico.y"
-                                                  {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);}
-#line 1777 "y.tab.c"
-    break;
-
-  case 68:
-#line 177 "analisis_sintactico.y"
-                                                   {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);}
-#line 1783 "y.tab.c"
-    break;
-
-  case 69:
-#line 178 "analisis_sintactico.y"
-                                                                {yyval = procesaOperacionNegacion(yyvsp[0]);}
-#line 1789 "y.tab.c"
-    break;
-
-  case 70:
-#line 179 "analisis_sintactico.y"
-                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
-#line 1795 "y.tab.c"
-    break;
-
-  case 71:
-#line 180 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 36:
+#line 186 "analisis_sintactico.y"
+                                                                    {entradaTS ets = buscarEntrada(yyvsp[-3].lexema);
+                                                                     ets.dimensiones = 0;
+                                                                     yyval = entradaAAtributos(ets);}
 #line 1801 "y.tab.c"
     break;
 
-  case 72:
-#line 181 "analisis_sintactico.y"
-                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
-#line 1807 "y.tab.c"
+  case 37:
+#line 190 "analisis_sintactico.y"
+                                                    {entradaTS ets = buscarEntrada(yyvsp[-5].lexema);
+                                                     ets.dimensiones = 0;
+                                                     yyval = entradaAAtributos(ets);}
+#line 1809 "y.tab.c"
     break;
 
-  case 73:
-#line 182 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
-#line 1813 "y.tab.c"
+  case 48:
+#line 203 "analisis_sintactico.y"
+                                                                    {procesaSentenciaAsignacion(yyvsp[-3],yyvsp[-1]);}
+#line 1815 "y.tab.c"
     break;
 
-  case 74:
-#line 183 "analisis_sintactico.y"
-                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
-#line 1819 "y.tab.c"
+  case 50:
+#line 205 "analisis_sintactico.y"
+                                                                   {procesaSentenciaControl(yyvsp[-2]);}
+#line 1821 "y.tab.c"
     break;
 
-  case 75:
-#line 184 "analisis_sintactico.y"
-                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
-#line 1825 "y.tab.c"
+  case 51:
+#line 207 "analisis_sintactico.y"
+                                             {procesaSentenciaControl(yyvsp[-4]);}
+#line 1827 "y.tab.c"
     break;
 
-  case 76:
-#line 185 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
-#line 1831 "y.tab.c"
+  case 52:
+#line 208 "analisis_sintactico.y"
+                                                                         {procesaSentenciaControl(yyvsp[-2]);}
+#line 1833 "y.tab.c"
     break;
 
-  case 77:
-#line 186 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
-#line 1837 "y.tab.c"
+  case 53:
+#line 209 "analisis_sintactico.y"
+                                                                                {procesaSentenciaControl(yyvsp[-2]);}
+#line 1839 "y.tab.c"
     break;
 
-  case 78:
-#line 187 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
-#line 1843 "y.tab.c"
+  case 63:
+#line 218 "analisis_sintactico.y"
+                                        {TS_InsertaIDENT(yyvsp[0]); strcpy(yyval.codigo,strdup(yyvsp[0].codigo));}
+#line 1845 "y.tab.c"
     break;
 
-  case 79:
-#line 188 "analisis_sintactico.y"
-                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
-#line 1849 "y.tab.c"
-    break;
-
-  case 80:
-#line 189 "analisis_sintactico.y"
-                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 64:
+#line 219 "analisis_sintactico.y"
+                                                                            {TS_InsertaIDENT(yyvsp[0]);
+                                                                             char c1,c2;
+                                                                             strcat(yyvsp[-2].codigo,",");
+                                                                             strcat(yyvsp[-2].codigo,yyvsp[0].codigo);
+                                                                             strcpy(yyval.codigo,strdup(yyvsp[-2].codigo));}
 #line 1855 "y.tab.c"
     break;
 
-  case 81:
-#line 190 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 66:
+#line 225 "analisis_sintactico.y"
+                                        {PILARG_insertaARG(yyvsp[0]);}
 #line 1861 "y.tab.c"
     break;
 
-  case 82:
-#line 191 "analisis_sintactico.y"
-                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 67:
+#line 226 "analisis_sintactico.y"
+                                                                   {PILARG_insertaARG(yyvsp[0]);}
 #line 1867 "y.tab.c"
     break;
 
-  case 83:
-#line 192 "analisis_sintactico.y"
-                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 68:
+#line 227 "analisis_sintactico.y"
+                                                      {yyval = yyvsp[-1];}
 #line 1873 "y.tab.c"
     break;
 
-  case 84:
-#line 193 "analisis_sintactico.y"
-                                                     {yyval = yyvsp[0];}
+  case 69:
+#line 228 "analisis_sintactico.y"
+                                                  {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);}
 #line 1879 "y.tab.c"
     break;
 
-  case 85:
-#line 194 "analisis_sintactico.y"
-                                            {yyval = yyvsp[0];}
+  case 70:
+#line 229 "analisis_sintactico.y"
+                                                   {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);}
 #line 1885 "y.tab.c"
     break;
 
-  case 86:
-#line 195 "analisis_sintactico.y"
-                                          {yyval = yyvsp[0];}
+  case 71:
+#line 230 "analisis_sintactico.y"
+                                                                {yyval = procesaOperacionNegacion(yyvsp[0]);}
 #line 1891 "y.tab.c"
     break;
 
-  case 88:
-#line 197 "analisis_sintactico.y"
-                                                          {entradaTS ets = buscarEntrada(yyvsp[-2].lexema);
-                                                           procesaLlamadaFuncionSinArgumentos(ets);
-                                                           yyval = entradaAAtributos(ets);}
-#line 1899 "y.tab.c"
+  case 72:
+#line 231 "analisis_sintactico.y"
+                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1897 "y.tab.c"
     break;
 
-  case 89:
-#line 200 "analisis_sintactico.y"
-                                                       {PILARG_insertaMARCA();}
-#line 1905 "y.tab.c"
+  case 73:
+#line 232 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1903 "y.tab.c"
     break;
 
-  case 90:
-#line 200 "analisis_sintactico.y"
-                                                                                                         {entradaTS ets = buscarEntrada(yyvsp[-4].lexema);
-                                                                                                          procesaLlamadaFuncionConArgumentos(ets);
-                                                                                                           yyval = entradaAAtributos(ets);}
-#line 1913 "y.tab.c"
+  case 74:
+#line 233 "analisis_sintactico.y"
+                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1909 "y.tab.c"
     break;
 
-  case 91:
-#line 203 "analisis_sintactico.y"
-                                     {yyval.atrib = yyvsp[0].atrib;}
-#line 1919 "y.tab.c"
+  case 75:
+#line 234 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1915 "y.tab.c"
     break;
 
-  case 94:
-#line 206 "analisis_sintactico.y"
-                                    {yyval.tipo = atributoAEnum(yyvsp[0].atrib+1);}
-#line 1925 "y.tab.c"
+  case 76:
+#line 235 "analisis_sintactico.y"
+                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1921 "y.tab.c"
     break;
 
-  case 95:
-#line 207 "analisis_sintactico.y"
-                                          {yyval.tipo = entero;}
-#line 1931 "y.tab.c"
+  case 77:
+#line 236 "analisis_sintactico.y"
+                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1927 "y.tab.c"
     break;
 
-  case 96:
-#line 208 "analisis_sintactico.y"
-                                                                    { yyval.tipo = yyvsp[-1].tipo;
-                                                                    if (yyvsp[-1].TamDimen2==1){yyval.TamDimen2 = 0; yyval.TamDimen1 = yyvsp[-1].TamDimen1; yyval.dimensiones = 1;}
-                                                                    else{yyval.TamDimen2 = yyvsp[-1].TamDimen2; yyval.TamDimen1 = yyvsp[-1].TamDimen1; yyval.dimensiones = 2;}}
+  case 78:
+#line 237 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1933 "y.tab.c"
+    break;
+
+  case 79:
+#line 238 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
 #line 1939 "y.tab.c"
     break;
 
+  case 80:
+#line 239 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1945 "y.tab.c"
+    break;
+
+  case 81:
+#line 240 "analisis_sintactico.y"
+                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1951 "y.tab.c"
+    break;
+
+  case 82:
+#line 241 "analisis_sintactico.y"
+                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1957 "y.tab.c"
+    break;
+
+  case 83:
+#line 242 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1963 "y.tab.c"
+    break;
+
+  case 84:
+#line 243 "analisis_sintactico.y"
+                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1969 "y.tab.c"
+    break;
+
+  case 85:
+#line 244 "analisis_sintactico.y"
+                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 1975 "y.tab.c"
+    break;
+
+  case 86:
+#line 245 "analisis_sintactico.y"
+                                                     {yyval = yyvsp[0];}
+#line 1981 "y.tab.c"
+    break;
+
+  case 87:
+#line 246 "analisis_sintactico.y"
+                                            {yyval = yyvsp[0];}
+#line 1987 "y.tab.c"
+    break;
+
+  case 88:
+#line 247 "analisis_sintactico.y"
+                                          {yyval = yyvsp[0];}
+#line 1993 "y.tab.c"
+    break;
+
+  case 90:
+#line 249 "analisis_sintactico.y"
+                                                          {entradaTS ets = buscarEntrada(yyvsp[-2].lexema);
+                                                           procesaLlamadaFuncionSinArgumentos(ets);
+                                                           yyval = entradaAAtributos(ets);}
+#line 2001 "y.tab.c"
+    break;
+
+  case 91:
+#line 252 "analisis_sintactico.y"
+                                                       {PILARG_insertaMARCA();}
+#line 2007 "y.tab.c"
+    break;
+
+  case 92:
+#line 252 "analisis_sintactico.y"
+                                                                                                         {entradaTS ets = buscarEntrada(yyvsp[-4].lexema);
+                                                                                                          procesaLlamadaFuncionConArgumentos(ets);
+                                                                                                           yyval = entradaAAtributos(ets);}
+#line 2015 "y.tab.c"
+    break;
+
+  case 93:
+#line 255 "analisis_sintactico.y"
+                                     {yyval.atrib = yyvsp[0].atrib;}
+#line 2021 "y.tab.c"
+    break;
+
+  case 96:
+#line 258 "analisis_sintactico.y"
+                                    {yyval.tipo = atributoAEnum(yyvsp[0].atrib+1);}
+#line 2027 "y.tab.c"
+    break;
+
   case 97:
-#line 211 "analisis_sintactico.y"
+#line 259 "analisis_sintactico.y"
+                                          {yyval.tipo = entero;}
+#line 2033 "y.tab.c"
+    break;
+
+  case 98:
+#line 260 "analisis_sintactico.y"
+                                                                    { yyval.tipo = yyvsp[-1].tipo;
+                                                                    if (yyvsp[-1].TamDimen2==1){yyval.TamDimen2 = 0; yyval.TamDimen1 = yyvsp[-1].TamDimen1; yyval.dimensiones = 1;}
+                                                                    else{yyval.TamDimen2 = yyvsp[-1].TamDimen2; yyval.TamDimen1 = yyvsp[-1].TamDimen1; yyval.dimensiones = 2;}}
+#line 2041 "y.tab.c"
+    break;
+
+  case 99:
+#line 263 "analisis_sintactico.y"
                                                                               {yyval.TamDimen2 = yyvsp[-2].TamDimen2 + 1; 
 
                                                                               if (yyvsp[-2].tipo != yyvsp[0].tipo){
@@ -1952,33 +2054,33 @@ yyreduce:
                                                                               }else{
                                                                                 yyval.TamDimen1 = yyvsp[-2].TamDimen1;
                                                                               }}
-#line 1956 "y.tab.c"
-    break;
-
-  case 98:
-#line 223 "analisis_sintactico.y"
-                                                          {yyval.TamDimen2 = 1;yyval.TamDimen1 = yyvsp[0].TamDimen1;yyval.tipo = yyvsp[0].tipo;}
-#line 1962 "y.tab.c"
-    break;
-
-  case 99:
-#line 225 "analisis_sintactico.y"
-                                          {yyval.TamDimen1 = 1; yyval.tipo = yyvsp[0].tipo;}
-#line 1968 "y.tab.c"
+#line 2058 "y.tab.c"
     break;
 
   case 100:
-#line 226 "analisis_sintactico.y"
+#line 275 "analisis_sintactico.y"
+                                                          {yyval.TamDimen2 = 1;yyval.TamDimen1 = yyvsp[0].TamDimen1;yyval.tipo = yyvsp[0].tipo;}
+#line 2064 "y.tab.c"
+    break;
+
+  case 101:
+#line 277 "analisis_sintactico.y"
+                                          {yyval.TamDimen1 = 1; yyval.tipo = yyvsp[0].tipo;}
+#line 2070 "y.tab.c"
+    break;
+
+  case 102:
+#line 278 "analisis_sintactico.y"
                                                                          {yyval.TamDimen1 = yyvsp[-2].TamDimen1 + 1;
                                                                           if (yyvsp[-2].tipo != yyvsp[0].tipo){
                                                                                 printf("[Linea %d]",linea_actual);  
                                                                                 printf("ERROR SEMÁNTICO: Array con distintos tipos.\n");
                                                                           }}
-#line 1978 "y.tab.c"
+#line 2080 "y.tab.c"
     break;
 
 
-#line 1982 "y.tab.c"
+#line 2084 "y.tab.c"
 
       default: break;
     }
@@ -2210,7 +2312,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 233 "analisis_sintactico.y"
+#line 285 "analisis_sintactico.y"
 
 
 #ifdef DOSWINDOWS
@@ -2224,6 +2326,30 @@ void yyerror(char *msg)
   fprintf(stderr, "[Linea %d]: %s\n", linea_actual, msg);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ANALISIS SEMÁNTICO */
 
 
 void PILARG_insertaENTRADA(entradaTS ets){
@@ -2789,3 +2915,47 @@ char* enumAChar(dtipo t){
 
   return strdup("Ninguno");
 }
+
+
+
+
+
+/* GENERACIÓN DE CÓDIGO */
+
+
+
+void empezarGEN(){
+
+  intermain = fopen("main_inter.c","w");
+
+  fputs("#include <stdio.h>\n",intermain);
+  fputs("#include <stdlib.h>\n",intermain);
+  fputs("#include <stdbool.h>\n",intermain); 
+}
+
+
+void finalizarGEN(){
+  fputs("\n",intermain);
+  fclose(intermain);
+}
+
+
+char* temporal(){
+  char tmp[10];
+  sprintf(tmp,"tmp%d",Ntmp);
+  Ntmp = Ntmp + 1;
+  return strdup(tmp);
+}
+
+
+
+char* enumAString(dtipo t){
+
+  if (t == entero)return strdup("int");
+  if (t == booleano)return strdup("bool");
+  if (t == real)return strdup("double");
+  if (t == caracter)return strdup("char");
+
+  return strdup("Ninguno");
+}
+

@@ -22,6 +22,21 @@ int TOPE_ARG = 0;
 
 entradaTS PILA_ARG[MAX_TS];
 
+
+/* GENERACIÓN DE CÓDIGO */
+
+
+FILE* intermain;
+
+
+/*                      */
+int Ntmp = 0;
+int bloqueMain = 0; //True
+
+
+
+
+
 typedef struct{
   int atrib;
   char* lexema;
@@ -29,6 +44,9 @@ typedef struct{
   unsigned int dimensiones;
   int TamDimen1;
   int TamDimen2;
+ 
+  char nombreTmp[10];
+  char codigo[50000];
 } atributos;
 
 #define YYSTYPE atributos /* Cada símbolo tiene una estructura de tipo atributos */
@@ -71,6 +89,16 @@ void mostrar_tabla();
 char* entrada_a_string(entradaTS);
 char* enumAChar(dtipo t);
 
+/*
+  FUNCIONES PARA GENERAR CODIGO
+*/ 
+void empezarGEN();
+void finalizarGEN();
+char* temporal();
+
+char* enumAString();
+char* strconcat(char*,char*);
+char* strmycpy(char* c1);
 %}
 
 //%error-verbose
@@ -91,27 +119,48 @@ char* enumAChar(dtipo t);
 
 %%
 
-Programa                    : Cabecera_programa bloque
+Programa                    : Cabecera_programa {empezarGEN();} bloque {fputs($3.codigo,intermain);finalizarGEN();}
 bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
-                                  Declar_de_variables_locales
+                                  Declar_de_variables_locales {
+                                                                if (bloqueMain == 0){
+                                                                 
+                                                                  bloqueMain = 1;
+                                                                  strcat($3.codigo,"\n");
+                                                                  strcat($3.codigo,"int main(){\n");
+                                                                }else{
+                                                                  char tmp[50000] = "{\n";
+                                                                  strcat(tmp,$3.codigo);
+                                                                  strcpy($3.codigo,strdup(tmp));
+                                                                }
+                                                                }
                                   Declar_subprogs
                                   Sentencias 
-                              Fin_de_bloque { TS_VaciarENTRADAS();}
+                              Fin_de_bloque { TS_VaciarENTRADAS(); 
+                                                                   //strcat($3.codigo,$5.codigo); 
+                                                                   //strcat($3.codigo,$6.codigo); 
+                                                                   strcat($3.codigo,"\n}\n");
+                                                                   strcpy($$.codigo,strdup($3.codigo));}
 Declar_subprogs             : Declar_subprogs Declar_subprog
                               |
 Declar_subprog              : Cabecera_subprog {subprog = 1;} bloque {subprog = 0;}
 Declar_de_variables_locales : Marca_ini_declar_variables
                                   Variables_locales
-                                  Marca_fin_declar_variables
+                                  Marca_fin_declar_variables {strcpy($$.codigo,strdup($2.codigo));}
                               |
 Marca_ini_declar_variables  : INIDEC
 Marca_fin_declar_variables  : FINDEC
 Cabecera_programa           : MAIN
 Inicio_de_bloque            : LLAIZQ
 Fin_de_bloque               : LLADER
-Variables_locales           : Variables_locales Cuerpo_declar_variables
-                              | Cuerpo_declar_variables
-Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);} lista_declaracion_variables PYC
+Variables_locales           : Variables_locales Cuerpo_declar_variables {strcat($1.codigo,"\n");
+                                                                         strcat($1.codigo,$2.codigo);
+                                                                         strcpy($$.codigo,strdup($1.codigo));}
+                              | Cuerpo_declar_variables {strcpy($$.codigo,strdup($1.codigo));}
+Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);} lista_declaracion_variables PYC {strcpy($1.codigo,enumAString(tipoTmp));
+                                                                                                        strcat($1.codigo," ");
+                                                                                                        strcat($1.codigo,$3.codigo);
+                                                                                                        strcat($1.codigo,";");
+                                                                                                        strcpy($$.codigo,strdup($1.codigo));}
                               | error
 Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {tipoTmp=atributoAEnum($1.atrib);TS_InsertaSUBPROG($2);}
                               | tipo variable PARIZQ PARDER {tipoTmp=atributoAEnum($1.atrib);TS_InsertaSUBPROG($2);}
@@ -120,6 +169,7 @@ argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {
                               |   error
 variable                    : identificador {$$.lexema = $1.lexema;
                                              $$.dimensiones=0; $$.TamDimen1=0; $$.TamDimen2=0;
+                                             strcpy($$.codigo,strdup($1.lexema));
                                             }
                               |   elemento_de_array_decl {$$.lexema = $1.lexema;}
 elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {$$.lexema = $1.lexema; 
@@ -132,7 +182,8 @@ elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {$$.lexema = 
                                                     $$.TamDimen1=atoi($3.lexema);
                                                     $$.TamDimen2=atoi($5.lexema);}
 
-variable_expresion          : identificador  {entradaTS ets = buscarEntrada($1.lexema); $$ = entradaAAtributos(ets);}
+variable_expresion          : identificador  {entradaTS ets = buscarEntrada($1.lexema); $$ = entradaAAtributos(ets);
+                            strcpy($$.codigo,strdup($1.lexema));}
                               |   elemento_de_array  {$$ = $1;}
 elemento_de_array           : identificador CORIZQ expresion CORDER {entradaTS ets = buscarEntrada($1.lexema);
                                                                      ets.dimensiones = 0;
@@ -143,7 +194,7 @@ elemento_de_array           : identificador CORIZQ expresion CORDER {entradaTS e
                                                      $$ = entradaAAtributos(ets);}
 Sentencias                  : Sentencias Sentencia
                               |   Sentencia
-Sentencia                   : bloque
+Sentencia                   : bloque 
                               |   sentencia_asignacion 
                               |   sentencia_si
                               |   sentencia_mientras
@@ -166,45 +217,71 @@ lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena
 expresion_cadena            : expresion | cadena
 lista_variables             : variable
                               |   lista_variables COMA variable
-lista_declaracion_variables :  variable {TS_InsertaIDENT($1);}
-                              |   lista_declaracion_variables COMA variable {TS_InsertaIDENT($3);}
-
+lista_declaracion_variables :  variable {TS_InsertaIDENT($1); strcpy($$.codigo,strdup($1.codigo));}
+                              |   lista_declaracion_variables COMA variable {TS_InsertaIDENT($3);
+                                                                             char c1,c2;
+                                                                             strcat($1.codigo,",");
+                                                                             strcat($1.codigo,$3.codigo);
+                                                                             strcpy($$.codigo,strdup($1.codigo));}
                               |   error
-lista_expresiones           : expresion {PILARG_insertaARG($1);}
-                              |   lista_expresiones COMA expresion {PILARG_insertaARG($3);}
+lista_expresiones           : expresion {PILARG_insertaARG($1);strcpy($$.codigo,$1.codigo);}
+                              |   lista_expresiones COMA expresion {PILARG_insertaARG($3);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,",");strcat($$.codigo,$3.codigo);}
 expresion                   : PARIZQ expresion PARDER {$$ = $2;}
-                              |   OPNEG expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);}
-                              |   OPSUMA expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);}
-                              |   OPRESTA expresion %prec OPNEG {$$ = procesaOperacionNegacion($2);}
-                              |   expresion OPMULT expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPDIV expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPMULTM expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPAND expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPOR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPNEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPLEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPGEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPLESS expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPGR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPMOD expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPSUMA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   expresion OPRESTA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
-                              |   variable_expresion {$$ = $1;}
-                              |   constante {$$ = $1;}
-                              |   funcion {$$ = $1;}
+                              |   OPNEG expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);
+                                                   strcpy($$.codigo,"!");$$.strcat($$.codigo,$2.codigo); }
+                              |   OPSUMA expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);
+                                                    strcpy($$.codigo,"+");$$.strcat($$.codigo,$2.codigo);}
+                              |   OPRESTA expresion %prec OPNEG {$$ = procesaOperacionNegacion($2);
+                                                    strcpy($$.codigo,"-");$$.strcat($$.codigo,$2.codigo);}
+                              |   expresion OPMULT expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                                                    strcpy($$.codigo,$1.codigo);strcat($$.codigo,"*");$$.strcat(codigo,$3.codigo);}
+                              |   expresion OPDIV expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"/");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPMULTM expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"**");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPAND expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"&&");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPOR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"||");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"==");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPNEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"!=");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPLEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"<=");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPGEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,">=");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPLESS expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"<");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPGR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,">");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPMOD expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"%");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPSUMA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"+");strcat($$.codigo,$3.codigo);}
+                              |   expresion OPRESTA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
+                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"-");strcat($$.codigo,$3.codigo);}
+                              |   variable_expresion {$$ = $1;strcpy($$.codigo,$1.codigo);}
+                              |   constante {$$ = $1;strcpy($$.codigo,$1.codigo);}
+                              |   funcion {$$ = $1;strcpy($$.codigo,$1.codigo);}
                               |   error
 funcion                     : identificador PARIZQ PARDER {entradaTS ets = buscarEntrada($1.lexema);
                                                            procesaLlamadaFuncionSinArgumentos(ets);
-                                                           $$ = entradaAAtributos(ets);}
-                              |   identificador PARIZQ {PILARG_insertaMARCA();} lista_expresiones PARDER {entradaTS ets = buscarEntrada($1.lexema);
-                                                                                                          procesaLlamadaFuncionConArgumentos(ets);
-                                                                                                           $$ = entradaAAtributos(ets);}
+                                                           $$ = entradaAAtributos(ets);
+                                                           strcpy($$.codigo,$1.codigo);
+                                                           strcat($$.codigo,"(");strcat($$.codigo,")";}
+                              |   identificador PARIZQ {PILARG_insertaMARCA();} lista_expresiones PARDER
+                              {entradaTS ets = buscarEntrada($1.lexema);
+                               procesaLlamadaFuncionConArgumentos(ets);
+                               $$ = entradaAAtributos(ets);
+                               strcpy($$.codigo,$1.codigo);
+                               strcat($$.codigo,"(");strcat($$.codigo,$4.codigo);strcat($$.codigo,")";}
 tipo                        : TIPOEL {$$.atrib = $1.atrib;}
-cadena                      : CADENA 
-identificador               : IDEN   
-constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);}
-                              | CONSTENT  {$$.tipo = entero;}
+cadena                      : CADENA {strcpy($$.codigo,$1.lexema);} 
+identificador               : IDEN  {strcpy($$.codigo,$1.lexema);}
+constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);strcpy($$.codigo,$$.lexema);}
+                              | CONSTENT  {$$.tipo = entero;strcpy($$.codigo,$$.lexema);}
                               |   CORIZQ ini_elementos_array CORDER { $$.tipo = $2.tipo;
                                                                     if ($2.TamDimen2==1){$$.TamDimen2 = 0; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 1;}
                                                                     else{$$.TamDimen2 = $2.TamDimen2; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 2;}}
@@ -243,6 +320,30 @@ void yyerror(char *msg)
   fprintf(stderr, "[Linea %d]: %s\n", linea_actual, msg);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ANALISIS SEMÁNTICO */
 
 
 void PILARG_insertaENTRADA(entradaTS ets){
@@ -808,3 +909,47 @@ char* enumAChar(dtipo t){
 
   return strdup("Ninguno");
 }
+
+
+
+
+
+/* GENERACIÓN DE CÓDIGO */
+
+
+
+void empezarGEN(){
+
+  intermain = fopen("main_inter.c","w");
+
+  fputs("#include <stdio.h>\n",intermain);
+  fputs("#include <stdlib.h>\n",intermain);
+  fputs("#include <stdbool.h>\n",intermain); 
+}
+
+
+void finalizarGEN(){
+  fputs("\n",intermain);
+  fclose(intermain);
+}
+
+
+char* temporal(){
+  char tmp[10];
+  sprintf(tmp,"tmp%d",Ntmp);
+  Ntmp = Ntmp + 1;
+  return strdup(tmp);
+}
+
+
+
+char* enumAString(dtipo t){
+
+  if (t == entero)return strdup("int");
+  if (t == booleano)return strdup("bool");
+  if (t == real)return strdup("double");
+  if (t == caracter)return strdup("char");
+
+  return strdup("Ninguno");
+}
+
