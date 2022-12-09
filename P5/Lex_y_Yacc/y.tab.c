@@ -113,8 +113,9 @@ typedef struct{
   unsigned int dimensiones;
   int TamDimen1;
   int TamDimen2;
-  
-  char codigo[5000];
+ 
+  char nombreTmp[10];
+  char codigo[50000];
 } atributos;
 
 #define YYSTYPE atributos /* Cada símbolo tiene una estructura de tipo atributos */
@@ -165,10 +166,19 @@ void finalizarGEN();
 char* temporal();
 
 char* enumAString();
-char* strconcat(char*,char*);
-char* strmycpy(char* c1);
 
-#line 172 "y.tab.c"
+
+void genCodigoOperador(atributos* obj, atributos* at1, atributos* at2, int opdor);
+void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor);
+void genCodigoOperadorUnNeg(atributos* obj, atributos* at1);
+
+void genCodigoAsignacion(atributos*, atributos*, atributos*);
+
+char* opdorUnAString(int opdor);
+char* opdorBinAString(int opdor);
+
+
+#line 182 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -634,17 +644,17 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   121,   121,   121,   122,   123,   122,   142,   143,   144,
-     144,   145,   148,   149,   150,   151,   152,   153,   154,   157,
-     158,   158,   163,   164,   165,   166,   166,   167,   167,   168,
-     169,   173,   174,   178,   184,   185,   186,   189,   193,   194,
-     195,   196,   197,   198,   199,   200,   201,   202,   203,   204,
-     205,   206,   208,   209,   210,   211,   212,   213,   214,   215,
-     215,   216,   217,   218,   219,   224,   225,   226,   227,   228,
-     229,   230,   231,   232,   233,   234,   235,   236,   237,   238,
-     239,   240,   241,   242,   243,   244,   245,   246,   247,   248,
-     249,   252,   252,   255,   256,   257,   258,   259,   260,   263,
-     275,   277,   278
+       0,   131,   131,   131,   132,   133,   132,   152,   153,   154,
+     154,   155,   158,   159,   160,   161,   162,   163,   164,   167,
+     168,   168,   173,   174,   175,   176,   176,   177,   177,   178,
+     179,   183,   184,   188,   194,   196,   197,   200,   204,   205,
+     206,   207,   208,   209,   210,   211,   212,   213,   214,   215,
+     216,   217,   219,   220,   221,   222,   223,   224,   225,   226,
+     226,   227,   228,   229,   230,   235,   236,   237,   239,   240,
+     241,   242,   243,   244,   245,   246,   247,   248,   249,   250,
+     251,   252,   253,   254,   255,   256,   257,   269,   280,   291,
+     292,   297,   297,   303,   304,   305,   306,   307,   308,   311,
+     323,   325,   326
 };
 #endif
 
@@ -1619,25 +1629,25 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 121 "analisis_sintactico.y"
-                                                {empezarGEN();}
-#line 1625 "y.tab.c"
+#line 131 "analisis_sintactico.y"
+                                                {printf("HOLA\n");fflush(stdout);empezarGEN();}
+#line 1635 "y.tab.c"
     break;
 
   case 3:
-#line 121 "analisis_sintactico.y"
-                                                                       {fputs(yyvsp[0].codigo,intermain);finalizarGEN();}
-#line 1631 "y.tab.c"
+#line 131 "analisis_sintactico.y"
+                                                                                                       {fputs(yyvsp[0].codigo,intermain);finalizarGEN();}
+#line 1641 "y.tab.c"
     break;
 
   case 4:
-#line 122 "analisis_sintactico.y"
+#line 132 "analisis_sintactico.y"
                                                {TS_InsertaMARCA();}
-#line 1637 "y.tab.c"
+#line 1647 "y.tab.c"
     break;
 
   case 5:
-#line 123 "analisis_sintactico.y"
+#line 133 "analisis_sintactico.y"
                                                               {
                                                                 if (bloqueMain == 0){
                                                                  
@@ -1650,398 +1660,471 @@ yyreduce:
                                                                   strcpy(yyvsp[0].codigo,strdup(tmp));
                                                                 }
                                                                 }
-#line 1654 "y.tab.c"
-    break;
-
-  case 6:
-#line 137 "analisis_sintactico.y"
-                                            { TS_VaciarENTRADAS(); 
-                                                                   //strcat($3.codigo,$5.codigo); 
-                                                                   //strcat($3.codigo,$6.codigo); 
-                                                                   strcat(yyvsp[-4].codigo,"\n}\n");
-                                                                   strcpy(yyval.codigo,strdup(yyvsp[-4].codigo));}
 #line 1664 "y.tab.c"
     break;
 
+  case 6:
+#line 147 "analisis_sintactico.y"
+                                            { TS_VaciarENTRADAS(); 
+                                                                   //strcat($3.codigo,$5.codigo);
+                                                                   strcat(yyvsp[-4].codigo,yyvsp[-1].codigo); 
+                                                                   strcat(yyvsp[-4].codigo,"\n}\n");
+                                                                   strcpy(yyval.codigo,strdup(yyvsp[-4].codigo));}
+#line 1674 "y.tab.c"
+    break;
+
   case 9:
-#line 144 "analisis_sintactico.y"
+#line 154 "analisis_sintactico.y"
                                                {subprog = 1;}
-#line 1670 "y.tab.c"
+#line 1680 "y.tab.c"
     break;
 
   case 10:
-#line 144 "analisis_sintactico.y"
+#line 154 "analisis_sintactico.y"
                                                                      {subprog = 0;}
-#line 1676 "y.tab.c"
+#line 1686 "y.tab.c"
     break;
 
   case 11:
-#line 147 "analisis_sintactico.y"
+#line 157 "analisis_sintactico.y"
                                                              {strcpy(yyval.codigo,strdup(yyvsp[-1].codigo));}
-#line 1682 "y.tab.c"
+#line 1692 "y.tab.c"
     break;
 
   case 18:
-#line 154 "analisis_sintactico.y"
+#line 164 "analisis_sintactico.y"
                                                                         {strcat(yyvsp[-1].codigo,"\n");
                                                                          strcat(yyvsp[-1].codigo,yyvsp[0].codigo);
                                                                          strcpy(yyval.codigo,strdup(yyvsp[-1].codigo));}
-#line 1690 "y.tab.c"
+#line 1700 "y.tab.c"
     break;
 
   case 19:
-#line 157 "analisis_sintactico.y"
+#line 167 "analisis_sintactico.y"
                                                         {strcpy(yyval.codigo,strdup(yyvsp[0].codigo));}
-#line 1696 "y.tab.c"
+#line 1706 "y.tab.c"
     break;
 
   case 20:
-#line 158 "analisis_sintactico.y"
+#line 168 "analisis_sintactico.y"
                                     {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
-#line 1702 "y.tab.c"
+#line 1712 "y.tab.c"
     break;
 
   case 21:
-#line 158 "analisis_sintactico.y"
+#line 168 "analisis_sintactico.y"
                                                                                                        {strcpy(yyvsp[-3].codigo,enumAString(tipoTmp));
                                                                                                         strcat(yyvsp[-3].codigo," ");
                                                                                                         strcat(yyvsp[-3].codigo,yyvsp[-1].codigo);
                                                                                                         strcat(yyvsp[-3].codigo,";");
                                                                                                         strcpy(yyval.codigo,strdup(yyvsp[-3].codigo));}
-#line 1712 "y.tab.c"
+#line 1722 "y.tab.c"
     break;
 
   case 23:
-#line 164 "analisis_sintactico.y"
+#line 174 "analisis_sintactico.y"
                                                                        {tipoTmp=atributoAEnum(yyvsp[-4].atrib);TS_InsertaSUBPROG(yyvsp[-3]);}
-#line 1718 "y.tab.c"
+#line 1728 "y.tab.c"
     break;
 
   case 24:
-#line 165 "analisis_sintactico.y"
+#line 175 "analisis_sintactico.y"
                                                             {tipoTmp=atributoAEnum(yyvsp[-3].atrib);TS_InsertaSUBPROG(yyvsp[-2]);}
-#line 1724 "y.tab.c"
+#line 1734 "y.tab.c"
     break;
 
   case 25:
-#line 166 "analisis_sintactico.y"
+#line 176 "analisis_sintactico.y"
                                    {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
-#line 1730 "y.tab.c"
+#line 1740 "y.tab.c"
     break;
 
   case 26:
-#line 166 "analisis_sintactico.y"
+#line 176 "analisis_sintactico.y"
                                                                                {TS_InsertaPARAMF(yyvsp[0]);}
-#line 1736 "y.tab.c"
+#line 1746 "y.tab.c"
     break;
 
   case 27:
-#line 167 "analisis_sintactico.y"
+#line 177 "analisis_sintactico.y"
                                                        {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
-#line 1742 "y.tab.c"
+#line 1752 "y.tab.c"
     break;
 
   case 28:
-#line 167 "analisis_sintactico.y"
+#line 177 "analisis_sintactico.y"
                                                                                                    {TS_InsertaPARAMF(yyvsp[0]);}
-#line 1748 "y.tab.c"
+#line 1758 "y.tab.c"
     break;
 
   case 30:
-#line 169 "analisis_sintactico.y"
+#line 179 "analisis_sintactico.y"
                                             {yyval.lexema = yyvsp[0].lexema;
                                              yyval.dimensiones=0; yyval.TamDimen1=0; yyval.TamDimen2=0;
                                              strcpy(yyval.codigo,strdup(yyvsp[0].lexema));
                                             }
-#line 1757 "y.tab.c"
+#line 1767 "y.tab.c"
     break;
 
   case 31:
-#line 173 "analisis_sintactico.y"
+#line 183 "analisis_sintactico.y"
                                                          {yyval.lexema = yyvsp[0].lexema;}
-#line 1763 "y.tab.c"
+#line 1773 "y.tab.c"
     break;
 
   case 32:
-#line 174 "analisis_sintactico.y"
+#line 184 "analisis_sintactico.y"
                                                                    {yyval.lexema = yyvsp[-3].lexema; 
                                                                     yyval.dimensiones=1;
                                                                     yyval.TamDimen1=atoi(yyvsp[-1].lexema);
                                                                     yyval.TamDimen2=0;}
-#line 1772 "y.tab.c"
+#line 1782 "y.tab.c"
     break;
 
   case 33:
-#line 179 "analisis_sintactico.y"
+#line 189 "analisis_sintactico.y"
                                                    {yyval.lexema = yyvsp[-5].lexema;
                                                     yyval.dimensiones=2;
                                                     yyval.TamDimen1=atoi(yyvsp[-3].lexema);
                                                     yyval.TamDimen2=atoi(yyvsp[-1].lexema);}
-#line 1781 "y.tab.c"
+#line 1791 "y.tab.c"
     break;
 
   case 34:
-#line 184 "analisis_sintactico.y"
-                                             {entradaTS ets = buscarEntrada(yyvsp[0].lexema); yyval = entradaAAtributos(ets);}
-#line 1787 "y.tab.c"
+#line 194 "analisis_sintactico.y"
+                                             {entradaTS ets = buscarEntrada(yyvsp[0].lexema); yyval = entradaAAtributos(ets);
+                            strcpy(yyval.codigo,strdup(yyvsp[0].lexema));}
+#line 1798 "y.tab.c"
     break;
 
   case 35:
-#line 185 "analisis_sintactico.y"
+#line 196 "analisis_sintactico.y"
                                                      {yyval = yyvsp[0];}
-#line 1793 "y.tab.c"
+#line 1804 "y.tab.c"
     break;
 
   case 36:
-#line 186 "analisis_sintactico.y"
+#line 197 "analisis_sintactico.y"
                                                                     {entradaTS ets = buscarEntrada(yyvsp[-3].lexema);
                                                                      ets.dimensiones = 0;
                                                                      yyval = entradaAAtributos(ets);}
-#line 1801 "y.tab.c"
+#line 1812 "y.tab.c"
     break;
 
   case 37:
-#line 190 "analisis_sintactico.y"
+#line 201 "analisis_sintactico.y"
                                                     {entradaTS ets = buscarEntrada(yyvsp[-5].lexema);
                                                      ets.dimensiones = 0;
                                                      yyval = entradaAAtributos(ets);}
-#line 1809 "y.tab.c"
+#line 1820 "y.tab.c"
+    break;
+
+  case 38:
+#line 204 "analisis_sintactico.y"
+                                                   {strcpy(yyval.codigo,yyvsp[-1].codigo);strcat(yyval.codigo,"\n");strcat(yyval.codigo,yyvsp[0].codigo);}
+#line 1826 "y.tab.c"
+    break;
+
+  case 39:
+#line 205 "analisis_sintactico.y"
+                                            {strcpy(yyval.codigo, yyvsp[0].codigo);}
+#line 1832 "y.tab.c"
+    break;
+
+  case 40:
+#line 206 "analisis_sintactico.y"
+                                     {strcpy(yyval.codigo,yyvsp[0].codigo);}
+#line 1838 "y.tab.c"
+    break;
+
+  case 41:
+#line 207 "analisis_sintactico.y"
+                                                       {strcpy(yyval.codigo,strdup("{\n"));strcat(yyval.codigo, yyvsp[0].codigo);strcat(yyval.codigo,"}\n");}
+#line 1844 "y.tab.c"
     break;
 
   case 48:
-#line 203 "analisis_sintactico.y"
-                                                                    {procesaSentenciaAsignacion(yyvsp[-3],yyvsp[-1]);}
-#line 1815 "y.tab.c"
+#line 214 "analisis_sintactico.y"
+                                                                    {procesaSentenciaAsignacion(yyvsp[-3],yyvsp[-1]);genCodigoAsignacion(&yyval,&yyvsp[-3],&yyvsp[-2]);}
+#line 1850 "y.tab.c"
     break;
 
   case 50:
-#line 205 "analisis_sintactico.y"
+#line 216 "analisis_sintactico.y"
                                                                    {procesaSentenciaControl(yyvsp[-2]);}
-#line 1821 "y.tab.c"
+#line 1856 "y.tab.c"
     break;
 
   case 51:
-#line 207 "analisis_sintactico.y"
+#line 218 "analisis_sintactico.y"
                                              {procesaSentenciaControl(yyvsp[-4]);}
-#line 1827 "y.tab.c"
+#line 1862 "y.tab.c"
     break;
 
   case 52:
-#line 208 "analisis_sintactico.y"
+#line 219 "analisis_sintactico.y"
                                                                          {procesaSentenciaControl(yyvsp[-2]);}
-#line 1833 "y.tab.c"
+#line 1868 "y.tab.c"
     break;
 
   case 53:
-#line 209 "analisis_sintactico.y"
+#line 220 "analisis_sintactico.y"
                                                                                 {procesaSentenciaControl(yyvsp[-2]);}
-#line 1839 "y.tab.c"
+#line 1874 "y.tab.c"
     break;
 
   case 63:
-#line 218 "analisis_sintactico.y"
+#line 229 "analisis_sintactico.y"
                                         {TS_InsertaIDENT(yyvsp[0]); strcpy(yyval.codigo,strdup(yyvsp[0].codigo));}
-#line 1845 "y.tab.c"
+#line 1880 "y.tab.c"
     break;
 
   case 64:
-#line 219 "analisis_sintactico.y"
+#line 230 "analisis_sintactico.y"
                                                                             {TS_InsertaIDENT(yyvsp[0]);
                                                                              char c1,c2;
                                                                              strcat(yyvsp[-2].codigo,",");
                                                                              strcat(yyvsp[-2].codigo,yyvsp[0].codigo);
                                                                              strcpy(yyval.codigo,strdup(yyvsp[-2].codigo));}
-#line 1855 "y.tab.c"
+#line 1890 "y.tab.c"
     break;
 
   case 66:
-#line 225 "analisis_sintactico.y"
-                                        {PILARG_insertaARG(yyvsp[0]);}
-#line 1861 "y.tab.c"
+#line 236 "analisis_sintactico.y"
+                                        {PILARG_insertaARG(yyvsp[0]);strcpy(yyval.codigo,yyvsp[0].codigo);}
+#line 1896 "y.tab.c"
     break;
 
   case 67:
-#line 226 "analisis_sintactico.y"
-                                                                   {PILARG_insertaARG(yyvsp[0]);}
-#line 1867 "y.tab.c"
-    break;
-
-  case 68:
-#line 227 "analisis_sintactico.y"
-                                                      {yyval = yyvsp[-1];}
-#line 1873 "y.tab.c"
-    break;
-
-  case 69:
-#line 228 "analisis_sintactico.y"
-                                                  {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);}
-#line 1879 "y.tab.c"
-    break;
-
-  case 70:
-#line 229 "analisis_sintactico.y"
-                                                   {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);}
-#line 1885 "y.tab.c"
-    break;
-
-  case 71:
-#line 230 "analisis_sintactico.y"
-                                                                {yyval = procesaOperacionNegacion(yyvsp[0]);}
-#line 1891 "y.tab.c"
-    break;
-
-  case 72:
-#line 231 "analisis_sintactico.y"
-                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
-#line 1897 "y.tab.c"
-    break;
-
-  case 73:
-#line 232 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+#line 237 "analisis_sintactico.y"
+                                                                   {PILARG_insertaARG(yyvsp[0]);
+                              strcpy(yyval.codigo,yyvsp[-2].codigo);strcat(yyval.codigo,",");strcat(yyval.codigo,yyvsp[0].codigo);}
 #line 1903 "y.tab.c"
     break;
 
-  case 74:
-#line 233 "analisis_sintactico.y"
-                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 68:
+#line 239 "analisis_sintactico.y"
+                                                      {yyval = yyvsp[-1];}
 #line 1909 "y.tab.c"
     break;
 
-  case 75:
-#line 234 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 69:
+#line 240 "analisis_sintactico.y"
+                                                  {yyval = procesaOperacionNegacion(yyvsp[0]);genCodigoOperadorUnNeg(&yyval,&yyvsp[0]);}
 #line 1915 "y.tab.c"
     break;
 
-  case 76:
-#line 235 "analisis_sintactico.y"
-                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 70:
+#line 241 "analisis_sintactico.y"
+                                                   {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);genCodigoOperadorUn(&yyval,&yyvsp[0],yyvsp[-1].atrib);}
 #line 1921 "y.tab.c"
     break;
 
-  case 77:
-#line 236 "analisis_sintactico.y"
-                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 71:
+#line 242 "analisis_sintactico.y"
+                                                                {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);genCodigoOperadorUn(&yyval,&yyvsp[0],yyvsp[-1].atrib);}
 #line 1927 "y.tab.c"
     break;
 
-  case 78:
-#line 237 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 72:
+#line 243 "analisis_sintactico.y"
+                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1933 "y.tab.c"
     break;
 
-  case 79:
-#line 238 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 73:
+#line 244 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1939 "y.tab.c"
     break;
 
-  case 80:
-#line 239 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 74:
+#line 245 "analisis_sintactico.y"
+                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1945 "y.tab.c"
     break;
 
-  case 81:
-#line 240 "analisis_sintactico.y"
-                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 75:
+#line 246 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1951 "y.tab.c"
     break;
 
-  case 82:
-#line 241 "analisis_sintactico.y"
-                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 76:
+#line 247 "analisis_sintactico.y"
+                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1957 "y.tab.c"
     break;
 
-  case 83:
-#line 242 "analisis_sintactico.y"
-                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 77:
+#line 248 "analisis_sintactico.y"
+                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1963 "y.tab.c"
     break;
 
-  case 84:
-#line 243 "analisis_sintactico.y"
-                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 78:
+#line 249 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1969 "y.tab.c"
     break;
 
-  case 85:
-#line 244 "analisis_sintactico.y"
-                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);}
+  case 79:
+#line 250 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1975 "y.tab.c"
     break;
 
-  case 86:
-#line 245 "analisis_sintactico.y"
-                                                     {yyval = yyvsp[0];}
+  case 80:
+#line 251 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1981 "y.tab.c"
     break;
 
-  case 87:
-#line 246 "analisis_sintactico.y"
-                                            {yyval = yyvsp[0];}
+  case 81:
+#line 252 "analisis_sintactico.y"
+                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1987 "y.tab.c"
     break;
 
-  case 88:
-#line 247 "analisis_sintactico.y"
-                                          {yyval = yyvsp[0];}
+  case 82:
+#line 253 "analisis_sintactico.y"
+                                                           {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
 #line 1993 "y.tab.c"
     break;
 
+  case 83:
+#line 254 "analisis_sintactico.y"
+                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
+#line 1999 "y.tab.c"
+    break;
+
+  case 84:
+#line 255 "analisis_sintactico.y"
+                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
+#line 2005 "y.tab.c"
+    break;
+
+  case 85:
+#line 256 "analisis_sintactico.y"
+                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperador(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
+#line 2011 "y.tab.c"
+    break;
+
+  case 86:
+#line 257 "analisis_sintactico.y"
+                                                     {yyval = yyvsp[0];strcpy(yyval.codigo,yyvsp[0].codigo);
+                              strcpy(yyval.nombreTmp, strdup(temporal())); 
+                              strcpy(yyval.codigo, strdup("\n\n"));
+                              strcat(yyval.codigo,strdup(enumAString(yyval.tipo)));
+                              strcat(yyval.codigo,strdup(" ")); 
+                              strcat(yyval.codigo,yyval.nombreTmp); 
+                              strcat(yyval.codigo,strdup(";\n"));
+                              strcat(yyval.codigo,yyval.nombreTmp);
+                              strcat(yyval.codigo,strdup("= "));
+                              strcat(yyval.codigo,yyvsp[0].codigo);
+                              strcat(yyval.codigo,strdup(";"));  
+                              }
+#line 2028 "y.tab.c"
+    break;
+
+  case 87:
+#line 269 "analisis_sintactico.y"
+                                            {yyval = yyvsp[0];
+                              strcpy(yyval.nombreTmp, strdup(temporal())); 
+                              strcpy(yyval.codigo, strdup("\n\n"));
+                              strcat(yyval.codigo,strdup(enumAString(yyval.tipo)));
+                              strcat(yyval.codigo,strdup(" ")); 
+                              strcat(yyval.codigo,yyval.nombreTmp); 
+                              strcat(yyval.codigo,strdup(";\n"));
+                              strcat(yyval.codigo,yyval.nombreTmp);
+                              strcat(yyval.codigo,strdup("= "));
+                              strcat(yyval.codigo,yyvsp[0].codigo);
+                              strcat(yyval.codigo,strdup(";"));}
+#line 2044 "y.tab.c"
+    break;
+
+  case 88:
+#line 280 "analisis_sintactico.y"
+                                          {yyval = yyvsp[0];
+                              strcpy(yyval.nombreTmp, strdup(temporal())); 
+                              strcpy(yyval.codigo, strdup("\n\n"));
+                              strcat(yyval.codigo,strdup(enumAString(yyval.tipo)));
+                              strcat(yyval.codigo,strdup(" ")); 
+                              strcat(yyval.codigo,yyval.nombreTmp); 
+                              strcat(yyval.codigo,strdup(";\n"));
+                              strcat(yyval.codigo,yyval.nombreTmp);
+                              strcat(yyval.codigo,strdup("= "));
+                              strcat(yyval.codigo,yyvsp[0].codigo);
+                              strcat(yyval.codigo,strdup(";"));}
+#line 2060 "y.tab.c"
+    break;
+
   case 90:
-#line 249 "analisis_sintactico.y"
+#line 292 "analisis_sintactico.y"
                                                           {entradaTS ets = buscarEntrada(yyvsp[-2].lexema);
                                                            procesaLlamadaFuncionSinArgumentos(ets);
-                                                           yyval = entradaAAtributos(ets);}
-#line 2001 "y.tab.c"
+                                                           yyval = entradaAAtributos(ets);
+                                                           strcpy(yyval.codigo,yyvsp[-2].codigo);
+                                                           strcat(yyval.codigo,"(");strcat(yyval.codigo,")");}
+#line 2070 "y.tab.c"
     break;
 
   case 91:
-#line 252 "analisis_sintactico.y"
+#line 297 "analisis_sintactico.y"
                                                        {PILARG_insertaMARCA();}
-#line 2007 "y.tab.c"
+#line 2076 "y.tab.c"
     break;
 
   case 92:
-#line 252 "analisis_sintactico.y"
-                                                                                                         {entradaTS ets = buscarEntrada(yyvsp[-4].lexema);
-                                                                                                          procesaLlamadaFuncionConArgumentos(ets);
-                                                                                                           yyval = entradaAAtributos(ets);}
-#line 2015 "y.tab.c"
+#line 298 "analisis_sintactico.y"
+                              {entradaTS ets = buscarEntrada(yyvsp[-4].lexema);
+                               procesaLlamadaFuncionConArgumentos(ets);
+                               yyval = entradaAAtributos(ets);
+                               strcpy(yyval.codigo,yyvsp[-4].codigo);
+                               strcat(yyval.codigo,"(");strcat(yyval.codigo,yyvsp[-1].codigo);strcat(yyval.codigo,")");}
+#line 2086 "y.tab.c"
     break;
 
   case 93:
-#line 255 "analisis_sintactico.y"
+#line 303 "analisis_sintactico.y"
                                      {yyval.atrib = yyvsp[0].atrib;}
-#line 2021 "y.tab.c"
+#line 2092 "y.tab.c"
+    break;
+
+  case 94:
+#line 304 "analisis_sintactico.y"
+                                     {strcpy(yyval.codigo,yyvsp[0].lexema);}
+#line 2098 "y.tab.c"
+    break;
+
+  case 95:
+#line 305 "analisis_sintactico.y"
+                                    {strcpy(yyval.codigo,yyvsp[0].lexema);}
+#line 2104 "y.tab.c"
     break;
 
   case 96:
-#line 258 "analisis_sintactico.y"
-                                    {yyval.tipo = atributoAEnum(yyvsp[0].atrib+1);}
-#line 2027 "y.tab.c"
+#line 306 "analisis_sintactico.y"
+                                    {yyval.tipo = atributoAEnum(yyvsp[0].atrib+1);strcpy(yyval.codigo,yyval.lexema);}
+#line 2110 "y.tab.c"
     break;
 
   case 97:
-#line 259 "analisis_sintactico.y"
-                                          {yyval.tipo = entero;}
-#line 2033 "y.tab.c"
+#line 307 "analisis_sintactico.y"
+                                          {yyval.tipo = entero;strcpy(yyval.codigo,yyval.lexema);}
+#line 2116 "y.tab.c"
     break;
 
   case 98:
-#line 260 "analisis_sintactico.y"
+#line 308 "analisis_sintactico.y"
                                                                     { yyval.tipo = yyvsp[-1].tipo;
                                                                     if (yyvsp[-1].TamDimen2==1){yyval.TamDimen2 = 0; yyval.TamDimen1 = yyvsp[-1].TamDimen1; yyval.dimensiones = 1;}
                                                                     else{yyval.TamDimen2 = yyvsp[-1].TamDimen2; yyval.TamDimen1 = yyvsp[-1].TamDimen1; yyval.dimensiones = 2;}}
-#line 2041 "y.tab.c"
+#line 2124 "y.tab.c"
     break;
 
   case 99:
-#line 263 "analisis_sintactico.y"
+#line 311 "analisis_sintactico.y"
                                                                               {yyval.TamDimen2 = yyvsp[-2].TamDimen2 + 1; 
 
                                                                               if (yyvsp[-2].tipo != yyvsp[0].tipo){
@@ -2054,33 +2137,33 @@ yyreduce:
                                                                               }else{
                                                                                 yyval.TamDimen1 = yyvsp[-2].TamDimen1;
                                                                               }}
-#line 2058 "y.tab.c"
+#line 2141 "y.tab.c"
     break;
 
   case 100:
-#line 275 "analisis_sintactico.y"
+#line 323 "analisis_sintactico.y"
                                                           {yyval.TamDimen2 = 1;yyval.TamDimen1 = yyvsp[0].TamDimen1;yyval.tipo = yyvsp[0].tipo;}
-#line 2064 "y.tab.c"
+#line 2147 "y.tab.c"
     break;
 
   case 101:
-#line 277 "analisis_sintactico.y"
+#line 325 "analisis_sintactico.y"
                                           {yyval.TamDimen1 = 1; yyval.tipo = yyvsp[0].tipo;}
-#line 2070 "y.tab.c"
+#line 2153 "y.tab.c"
     break;
 
   case 102:
-#line 278 "analisis_sintactico.y"
+#line 326 "analisis_sintactico.y"
                                                                          {yyval.TamDimen1 = yyvsp[-2].TamDimen1 + 1;
                                                                           if (yyvsp[-2].tipo != yyvsp[0].tipo){
                                                                                 printf("[Linea %d]",linea_actual);  
                                                                                 printf("ERROR SEMÁNTICO: Array con distintos tipos.\n");
                                                                           }}
-#line 2080 "y.tab.c"
+#line 2163 "y.tab.c"
     break;
 
 
-#line 2084 "y.tab.c"
+#line 2167 "y.tab.c"
 
       default: break;
     }
@@ -2312,7 +2395,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 285 "analisis_sintactico.y"
+#line 333 "analisis_sintactico.y"
 
 
 #ifdef DOSWINDOWS
@@ -2399,7 +2482,7 @@ void TS_InsertaENTRADA(entradaTS ets){
     TOPE = TOPE + 1;
   }
 
- // mostrar_tabla();
+ //mostrar_tabla();
 }
 
 void TSAUX_InsertaENTRADA(entradaTS ets){
@@ -2957,5 +3040,86 @@ char* enumAString(dtipo t){
   if (t == caracter)return strdup("char");
 
   return strdup("Ninguno");
+}
+
+char* opdorUnAString(int opdor){
+  if (opdor == 0) return strdup("+");
+  if (opdor == 1) return strdup("-");
+  return strdup("Ninguno");
+}
+
+
+char* opdorBinAString(int opdor){
+  if (opdor == 0) return strdup("*");
+  if (opdor == 1) return strdup("/");
+  if (opdor == 2) return strdup("**");
+  if (opdor == 3) return strdup("&&");
+  if (opdor == 4) return strdup("||");
+  if (opdor == 5) return strdup("==");
+  if (opdor == 6) return strdup("!=");
+  if (opdor == 7) return strdup("<=");
+  if (opdor == 8) return strdup(">=");
+  if (opdor == 9) return strdup("<");
+  if (opdor == 10) return strdup(">");
+  if (opdor == 11) return strdup("%");
+  return strdup("Ninguno");
+}
+
+void genCodigoOperador(atributos* obj, atributos* at1, atributos* at2, int opdor){
+  strcpy((*obj).nombreTmp, strdup(temporal())); 
+  strcpy((*obj).codigo,(*at1).codigo); 
+  strcat((*obj).codigo, strdup("\n\n"));
+  strcat((*obj).codigo,strdup(enumAString((*obj).tipo)));
+  strcat((*obj).codigo,strdup(" ")); 
+  strcat((*obj).codigo,(*obj).nombreTmp); 
+  strcat((*obj).codigo,strdup(";\n"));
+  strcat((*obj).codigo,(*obj).nombreTmp);
+  strcat((*obj).codigo,strdup("= "));
+  strcat((*obj).codigo,(*at1).nombreTmp);
+  strcat((*obj).codigo,strdup(opdorBinAString(opdor)));
+  strcat((*obj).codigo,(*at2).nombreTmp);
+  strcat((*obj).codigo,strdup(";"));  
+}
+
+void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor){
+
+  strcpy((*obj).nombreTmp, strdup(temporal())); 
+  strcpy((*obj).codigo,(*at1).codigo); 
+  strcat((*obj).codigo, strdup("\n\n"));
+  strcat((*obj).codigo,strdup(enumAString((*obj).tipo)));
+  strcat((*obj).codigo,strdup(" ")); 
+  strcat((*obj).codigo,(*obj).nombreTmp); 
+  strcat((*obj).codigo,strdup(";\n"));
+  strcat((*obj).codigo,(*obj).nombreTmp);
+  strcat((*obj).codigo,strdup("= "));
+  strcat((*obj).codigo,strdup(opdorUnAString(opdor)));
+  strcat((*obj).codigo,(*at1).nombreTmp);
+  strcat((*obj).codigo,strdup(";"));  
+}
+
+void genCodigoOperadorUnNeg(atributos* obj, atributos* at1){
+
+  
+  strcpy((*obj).nombreTmp, strdup(temporal())); 
+  strcpy((*obj).codigo,(*at1).codigo); 
+  strcat((*obj).codigo, strdup("\n\n"));
+  strcat((*obj).codigo,strdup(enumAString((*obj).tipo)));
+  strcat((*obj).codigo,strdup(" ")); 
+  strcat((*obj).codigo,(*obj).nombreTmp); 
+  strcat((*obj).codigo,strdup(";\n"));
+  strcat((*obj).codigo,(*obj).nombreTmp);
+  strcat((*obj).codigo,strdup("= "));
+  strcat((*obj).codigo,"!");
+  strcat((*obj).codigo,(*at1).nombreTmp);
+  strcat((*obj).codigo,strdup(";"));  
+}
+
+void genCodigoAsignacion(atributos* obj, atributos* at1, atributos* at2){
+  strcpy((*obj).codigo,(*at2).codigo);
+  strcat((*obj).codigo,strdup("\n\n"));
+  strcat((*obj).codigo,(*at1).codigo);
+  strcat((*obj).codigo,strdup(" = "));
+  strcat((*obj).codigo,(*at2).nombreTmp);
+  strcat((*obj).codigo,strdup(";"));
 }
 
