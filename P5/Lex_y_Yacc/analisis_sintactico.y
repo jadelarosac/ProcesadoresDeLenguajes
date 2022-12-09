@@ -97,8 +97,17 @@ void finalizarGEN();
 char* temporal();
 
 char* enumAString();
-char* strconcat(char*,char*);
-char* strmycpy(char* c1);
+
+
+void genCodigoOperador(atributos* obj, atributos* at1, atributos* at2, int opdor);
+void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor);
+void genCodigoOperadorUnNeg(atributos* obj, atributos* at1);
+
+void genCodigoAsignacion(atributos*, atributos*, atributos*);
+
+char* opdorUnAString(int opdor);
+char* opdorBinAString(int opdor);
+
 %}
 
 //%error-verbose
@@ -136,8 +145,8 @@ bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                                   Declar_subprogs
                                   Sentencias 
                               Fin_de_bloque { TS_VaciarENTRADAS(); 
-                                                                   //strcat($3.codigo,$5.codigo); 
-                                                                   //strcat($3.codigo,$6.codigo); 
+                                                                   //strcat($3.codigo,$5.codigo);
+                                                                   strcat($3.codigo,$6.codigo); 
                                                                    strcat($3.codigo,"\n}\n");
                                                                    strcpy($$.codigo,strdup($3.codigo));}
 Declar_subprogs             : Declar_subprogs Declar_subprog
@@ -192,17 +201,17 @@ elemento_de_array           : identificador CORIZQ expresion CORDER {entradaTS e
                               COMA expresion CORDER {entradaTS ets = buscarEntrada($1.lexema);
                                                      ets.dimensiones = 0;
                                                      $$ = entradaAAtributos(ets);}
-Sentencias                  : Sentencias Sentencia
-                              |   Sentencia
-Sentencia                   : bloque 
-                              |   sentencia_asignacion 
-                              |   sentencia_si
+Sentencias                  : Sentencias Sentencia {strcpy($$.codigo,$1.codigo);strcat($$.codigo,"\n");strcat($$.codigo,$2.codigo);}
+                              |   Sentencia {strcpy($$.codigo, $1.codigo);}
+Sentencia                   : bloque {strcpy($$.codigo,$1.codigo);} 
+                              |   sentencia_asignacion {strcpy($$.codigo,strdup("{\n"));strcat($$.codigo, $1.codigo);strcat($$.codigo,"}\n");}
+                              |   sentencia_si 
                               |   sentencia_mientras
                               |   sentencia_hacer_hasta
                               |   sentencia_entrada
                               |   sentencia_salida
                               |   sentencia_retornar
-sentencia_asignacion        : variable_expresion ASIG expresion PYC {procesaSentenciaAsignacion($1,$3);}
+sentencia_asignacion        : variable_expresion ASIG expresion PYC {procesaSentenciaAsignacion($1,$3);genCodigoAsignacion(&$$,&$1,&$2);}
                               |   error
 sentencia_si                : SI PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);}
                               |   SI PARIZQ expresion PARDER Sentencia 
@@ -228,55 +237,69 @@ lista_expresiones           : expresion {PILARG_insertaARG($1);strcpy($$.codigo,
                               |   lista_expresiones COMA expresion {PILARG_insertaARG($3);
                               strcpy($$.codigo,$1.codigo);strcat($$.codigo,",");strcat($$.codigo,$3.codigo);}
 expresion                   : PARIZQ expresion PARDER {$$ = $2;}
-                              |   OPNEG expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);
-                                                   strcpy($$.codigo,"!");$$.strcat($$.codigo,$2.codigo); }
-                              |   OPSUMA expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);
-                                                    strcpy($$.codigo,"+");$$.strcat($$.codigo,$2.codigo);}
-                              |   OPRESTA expresion %prec OPNEG {$$ = procesaOperacionNegacion($2);
-                                                    strcpy($$.codigo,"-");$$.strcat($$.codigo,$2.codigo);}
-                              |   expresion OPMULT expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                                                    strcpy($$.codigo,$1.codigo);strcat($$.codigo,"*");$$.strcat(codigo,$3.codigo);}
-                              |   expresion OPDIV expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"/");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPMULTM expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"**");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPAND expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"&&");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPOR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"||");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"==");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPNEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"!=");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPLEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"<=");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPGEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,">=");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPLESS expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"<");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPGR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,">");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPMOD expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"%");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPSUMA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"+");strcat($$.codigo,$3.codigo);}
-                              |   expresion OPRESTA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,"-");strcat($$.codigo,$3.codigo);}
-                              |   variable_expresion {$$ = $1;strcpy($$.codigo,$1.codigo);}
-                              |   constante {$$ = $1;strcpy($$.codigo,$1.codigo);}
-                              |   funcion {$$ = $1;strcpy($$.codigo,$1.codigo);}
+                              |   OPNEG expresion {$$ = procesaOperacionNegacion($2);genCodigoOperadorUnNeg(&$$,&$2);}
+                              |   OPSUMA expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);genCodigoOperadorUn(&$$,&$2,$1.atrib);}
+                              |   OPRESTA expresion %prec OPNEG {$$ = procesaOperacionMixtaCuandoUnaria($2);genCodigoOperadorUn(&$$,&$2,$1.atrib);}
+                              |   expresion OPMULT expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPDIV expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPMULTM expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPAND expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPOR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPNEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPLEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPGEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPLESS expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPGR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPMOD expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPSUMA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPRESTA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
+                              |   variable_expresion {$$ = $1;strcpy($$.codigo,$1.codigo);
+                              strcpy($$.nombreTmp, strdup(temporal())); 
+                              strcpy($$.codigo, strdup("\n\n"));
+                              strcat($$.codigo,strdup(enumAString($$.tipo)));
+                              strcat($$.codigo,strdup(" ")); 
+                              strcat($$.codigo,$$.nombreTmp); 
+                              strcat($$.codigo,strdup(";\n"));
+                              strcat($$.codigo,$$.nombreTmp);
+                              strcat($$.codigo,strdup("= "));
+                              strcat($$.codigo,$1.codigo);
+                              strcat($$.codigo,strdup(";"));  
+                              }
+                              |   constante {$$ = $1;
+                              strcpy($$.nombreTmp, strdup(temporal())); 
+                              strcpy($$.codigo, strdup("\n\n"));
+                              strcat($$.codigo,strdup(enumAString($$.tipo)));
+                              strcat($$.codigo,strdup(" ")); 
+                              strcat($$.codigo,$$.nombreTmp); 
+                              strcat($$.codigo,strdup(";\n"));
+                              strcat($$.codigo,$$.nombreTmp);
+                              strcat($$.codigo,strdup("= "));
+                              strcat($$.codigo,$1.codigo);
+                              strcat($$.codigo,strdup(";"));}  
+                              |   funcion {$$ = $1;
+                              strcpy($$.nombreTmp, strdup(temporal())); 
+                              strcpy($$.codigo, strdup("\n\n"));
+                              strcat($$.codigo,strdup(enumAString($$.tipo)));
+                              strcat($$.codigo,strdup(" ")); 
+                              strcat($$.codigo,$$.nombreTmp); 
+                              strcat($$.codigo,strdup(";\n"));
+                              strcat($$.codigo,$$.nombreTmp);
+                              strcat($$.codigo,strdup("= "));
+                              strcat($$.codigo,$1.codigo);
+                              strcat($$.codigo,strdup(";"));}  
                               |   error
 funcion                     : identificador PARIZQ PARDER {entradaTS ets = buscarEntrada($1.lexema);
                                                            procesaLlamadaFuncionSinArgumentos(ets);
                                                            $$ = entradaAAtributos(ets);
                                                            strcpy($$.codigo,$1.codigo);
-                                                           strcat($$.codigo,"(");strcat($$.codigo,")";}
+                                                           strcat($$.codigo,"(");strcat($$.codigo,")");}
                               |   identificador PARIZQ {PILARG_insertaMARCA();} lista_expresiones PARDER
                               {entradaTS ets = buscarEntrada($1.lexema);
                                procesaLlamadaFuncionConArgumentos(ets);
                                $$ = entradaAAtributos(ets);
                                strcpy($$.codigo,$1.codigo);
-                               strcat($$.codigo,"(");strcat($$.codigo,$4.codigo);strcat($$.codigo,")";}
+                               strcat($$.codigo,"(");strcat($$.codigo,$4.codigo);strcat($$.codigo,")");}
 tipo                        : TIPOEL {$$.atrib = $1.atrib;}
 cadena                      : CADENA {strcpy($$.codigo,$1.lexema);} 
 identificador               : IDEN  {strcpy($$.codigo,$1.lexema);}
@@ -393,7 +416,7 @@ void TS_InsertaENTRADA(entradaTS ets){
     TOPE = TOPE + 1;
   }
 
- // mostrar_tabla();
+ //mostrar_tabla();
 }
 
 void TSAUX_InsertaENTRADA(entradaTS ets){
@@ -951,5 +974,86 @@ char* enumAString(dtipo t){
   if (t == caracter)return strdup("char");
 
   return strdup("Ninguno");
+}
+
+char* opdorUnAString(int opdor){
+  if (opdor == 0) return strdup("+");
+  if (opdor == 1) return strdup("-");
+  return strdup("Ninguno");
+}
+
+
+char* opdorBinAString(int opdor){
+  if (opdor == 0) return strdup("*");
+  if (opdor == 1) return strdup("/");
+  if (opdor == 2) return strdup("**");
+  if (opdor == 3) return strdup("&&");
+  if (opdor == 4) return strdup("||");
+  if (opdor == 5) return strdup("==");
+  if (opdor == 6) return strdup("!=");
+  if (opdor == 7) return strdup("<=");
+  if (opdor == 8) return strdup(">=");
+  if (opdor == 9) return strdup("<");
+  if (opdor == 10) return strdup(">");
+  if (opdor == 11) return strdup("%");
+  return strdup("Ninguno");
+}
+
+void genCodigoOperador(atributos* obj, atributos* at1, atributos* at2, int opdor){
+  strcpy((*obj).nombreTmp, strdup(temporal())); 
+  strcpy((*obj).codigo,(*at1).codigo); 
+  strcat((*obj).codigo, strdup("\n\n"));
+  strcat((*obj).codigo,strdup(enumAString((*obj).tipo)));
+  strcat((*obj).codigo,strdup(" ")); 
+  strcat((*obj).codigo,(*obj).nombreTmp); 
+  strcat((*obj).codigo,strdup(";\n"));
+  strcat((*obj).codigo,(*obj).nombreTmp);
+  strcat((*obj).codigo,strdup("= "));
+  strcat((*obj).codigo,(*at1).nombreTmp);
+  strcat((*obj).codigo,strdup(opdorBinAString(opdor)));
+  strcat((*obj).codigo,(*at2).nombreTmp);
+  strcat((*obj).codigo,strdup(";"));  
+}
+
+void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor){
+
+  strcpy((*obj).nombreTmp, strdup(temporal())); 
+  strcpy((*obj).codigo,(*at1).codigo); 
+  strcat((*obj).codigo, strdup("\n\n"));
+  strcat((*obj).codigo,strdup(enumAString((*obj).tipo)));
+  strcat((*obj).codigo,strdup(" ")); 
+  strcat((*obj).codigo,(*obj).nombreTmp); 
+  strcat((*obj).codigo,strdup(";\n"));
+  strcat((*obj).codigo,(*obj).nombreTmp);
+  strcat((*obj).codigo,strdup("= "));
+  strcat((*obj).codigo,strdup(opdorUnAString(opdor)));
+  strcat((*obj).codigo,(*at1).nombreTmp);
+  strcat((*obj).codigo,strdup(";"));  
+}
+
+void genCodigoOperadorUnNeg(atributos* obj, atributos* at1){
+
+  
+  strcpy((*obj).nombreTmp, strdup(temporal())); 
+  strcpy((*obj).codigo,(*at1).codigo); 
+  strcat((*obj).codigo, strdup("\n\n"));
+  strcat((*obj).codigo,strdup(enumAString((*obj).tipo)));
+  strcat((*obj).codigo,strdup(" ")); 
+  strcat((*obj).codigo,(*obj).nombreTmp); 
+  strcat((*obj).codigo,strdup(";\n"));
+  strcat((*obj).codigo,(*obj).nombreTmp);
+  strcat((*obj).codigo,strdup("= "));
+  strcat((*obj).codigo,"!");
+  strcat((*obj).codigo,(*at1).nombreTmp);
+  strcat((*obj).codigo,strdup(";"));  
+}
+
+void genCodigoAsignacion(atributos* obj, atributos* at1, atributos* at2){
+  strcpy((*obj).codigo,(*at2).codigo);
+  strcat((*obj).codigo,strdup("\n\n"));
+  strcat((*obj).codigo,(*at1).codigo);
+  strcat((*obj).codigo,strdup(" = "));
+  strcat((*obj).codigo,(*at2).nombreTmp);
+  strcat((*obj).codigo,strdup(";"));
 }
 
