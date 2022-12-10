@@ -1,5 +1,5 @@
-analisis_sintactico: main.o y.tab.o
-	gcc -o analisis_sintactico main.o y.tab.o
+analizador_yacc: main.o y.tab.o
+	gcc -o analizador_yacc main.o y.tab.o
 
 y.tab.o: y.tab.c
 	gcc -c y.tab.c
@@ -7,8 +7,8 @@ y.tab.o: y.tab.c
 main.o: main.c
 	gcc -c main.c
 
-y.tab.c: analisis_sintactico.y lex.yy.c
-	bison -t -v -o y.tab.c analisis_sintactico.y
+y.tab.c: analizador_yacc.y lex.yy.c
+	bison -t -v -o y.tab.c analizador_yacc.y
 
 lex.yy.c: analisis_lexico.l
 	flex analisis_lexico.l
@@ -18,6 +18,6 @@ clean:
 
 all:
 	make clean
-	make analisis_sintactico
+	make analizador_yacc
 
 
