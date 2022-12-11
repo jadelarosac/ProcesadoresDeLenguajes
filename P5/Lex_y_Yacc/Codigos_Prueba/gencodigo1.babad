@@ -8,6 +8,10 @@ programa_principal(){
   leer n;
   curr = 2;
 
+  si (3*curr == n){
+     escribir "*",curr;
+     n=n/curr;
+  }
   mientras (curr <= n){
     declarar
       entero d;

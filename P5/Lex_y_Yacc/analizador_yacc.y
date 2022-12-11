@@ -32,6 +32,7 @@ FILE* intermain;
 
 /*                      */
 int Ntmp = 0;
+int Netiqueta = 0;
 int bloqueMain = 0; //True
 char* paux;
 char* textoPrintf = NULL;
@@ -96,6 +97,7 @@ char* enumAChar(dtipo t);
 void empezarGEN();
 void finalizarGEN();
 char* temporal();
+char* etiqueta();
 
 char* enumAString();
 char* enumATipoForm(dtipo t);
@@ -107,7 +109,8 @@ void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor);
 void genCodigoOperadorUnNeg(atributos* obj, atributos* at1);
 
 void genCodigoAsignacion(atributos*, atributos*, atributos*);
-
+void genCodigoSino(atributos* ,atributos*,atributos*,atributos*);
+void genCodigoSi(atributos* ,atributos*,atributos*);
 char* opdorUnAString(int opdor);
 char* opdorBinAString(int opdor);
 
@@ -142,10 +145,10 @@ bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                                                                   bloqueMain = 1;
                                                                   paux = strdup("\n");
                                                                   mystrcat(&$3.codigo,&paux);
-                                                                  paux = strdup("int main(){\n");
+                                                                  paux = strdup("int main(){//inicio bloque\n");
                                                                   mystrcat(&$3.codigo,&paux);
                                                                 }else{
-                                                                  char* tmp = strdup("{\n");
+                                                                  char* tmp = strdup("{//inicio bloque\n");
                                                                   mystrcat(&tmp,&$3.codigo);
                                                                   paux = strdup(tmp);
                                                                   mystrcpy(&$3.codigo,&paux);
@@ -156,7 +159,7 @@ bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                               Fin_de_bloque { TS_VaciarENTRADAS(); 
                                                                    //mystrcat($3.codigo,$5.codigo);
                                                                    mystrcat(&$3.codigo,&$6.codigo); 
-                                                                   paux = strdup("\n}\n");
+                                                                   paux = strdup("\n}//fin bloque\n");
                                                                    mystrcat(&$3.codigo,&paux);
                                                                    mystrcpy(&$$.codigo,&$3.codigo);}
 Declar_subprogs             : Declar_subprogs Declar_subprog
@@ -227,38 +230,44 @@ Sentencias                  : Sentencias Sentencia {mystrcpy(&$$.codigo,&$1.codi
                             mystrcat(&$$.codigo,&$2.codigo);}
                               |   Sentencia {mystrcpy(&$$.codigo, &$1.codigo);}
 Sentencia                   : bloque {mystrcpy(&$$.codigo,&$1.codigo);} 
-                              |   sentencia_asignacion {paux = strdup("{\n");
+                              |   sentencia_asignacion {paux = strdup("{//inicio sentencia asig\n");
                               mystrcpy(&$$.codigo,&paux);
                               mystrcat(&$$.codigo, &$1.codigo);
-                              paux = strdup("}");
+                              paux = strdup("}//fin sentencia asig");
                               mystrcat(&$$.codigo,&paux);}
-                              |   sentencia_si  {paux = strdup("SENTENCIA SI");
-                              mystrcpy(&$$.codigo,&paux);}
+                              |   sentencia_si  {paux = strdup("{//inicio sentencia if\n");
+                              mystrcpy(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&$1.codigo);
+                              paux = strdup("}//fin sentencia if");
+                              mystrcat(&$$.codigo,&paux);}
                               |   sentencia_mientras {paux = strdup("SENTENCIA mientras");
                               mystrcpy(&$$.codigo,&paux);}
                               |   sentencia_hacer_hasta {paux = strdup("SENTENCIA HASTA");
                               mystrcpy(&$$.codigo,&paux);}
-                              |   sentencia_entrada {paux = strdup("{\n");
+                              |   sentencia_entrada {paux = strdup("{//inicio sentencia entrada\n");
                               mystrcpy(&$$.codigo,&paux);
                               mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup("}");
+                              paux = strdup("}//fin sentencia entrada");
                               mystrcat(&$$.codigo,&paux);
                               }
-                              |   sentencia_salida {paux = strdup("{\n");
+                              |   sentencia_salida {paux = strdup("{//inicio sentencia salida\n");
                               mystrcpy(&$$.codigo,&paux);
                               mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup("}");
+                              paux = strdup("}//fin sentencia salida");
                               mystrcat(&$$.codigo,&paux);
                               }
                               |   sentencia_retornar {paux = strdup("SENTENCIA RETORNAR");
                               mystrcpy(&$$.codigo,&paux);}
 sentencia_asignacion        : variable_expresion ASIG expresion PYC {procesaSentenciaAsignacion($1,$3);genCodigoAsignacion(&$$,&$1,&$3);}
                               |   error
-sentencia_si                : SI PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);}
+sentencia_si                : SI PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);
+                            genCodigoSi(&$$,&$3,&$5);}
                               |   SI PARIZQ expresion PARDER Sentencia 
-                              SINO Sentencia {procesaSentenciaControl($3);}
-sentencia_mientras          : MIENTRAS PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);}
-sentencia_hacer_hasta       : HACER Sentencia HASTA PARIZQ expresion PARDER PYC {procesaSentenciaControl($5);}
+                              SINO Sentencia {procesaSentenciaControl($3);genCodigoSino(&$$,&$3,&$5,&$7);}
+sentencia_mientras          : MIENTRAS PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);
+                            genCodigoMientras(&$$,&$3,&$5);}
+sentencia_hacer_hasta       : HACER Sentencia HASTA PARIZQ expresion PARDER PYC {procesaSentenciaControl($5);
+                            }
 sentencia_entrada           : ENTRADA lista_variables PYC {paux = strdup("scanf(\"");
                             mystrcpy(&$$.codigo,&paux);
                             mystrcat(&$$.codigo,&textoScanf);
@@ -1088,6 +1097,12 @@ char* temporal(){
 }
 
 
+char* etiqueta(){
+  char etiqueta[20];
+  sprintf(etiqueta,"etiqueta%d",Netiqueta);
+  Netiqueta = Netiqueta + 1;
+  return strdup(etiqueta);
+}
 
 char* enumAString(dtipo t){
 
@@ -1251,12 +1266,76 @@ char* enumATipoForm(dtipo t){
   return strdup("Ninguno");
 }
 
+void genCodigoSi(atributos* obj,atributos* cond,atributos* sent){
+
+  char* etfin = etiqueta();
+  
+  mystrcpy(&(*obj).codigo,&(*cond).codigo);
+  paux=strdup("if (!");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*cond).nombreTmp);
+  paux=strdup(") goto ");
+  mystrcat(&(*obj).codigo,&paux);
+  paux=strdup(etfin);
+  mystrcat(&(*obj).codigo,&paux);
+  paux=strdup(";\n{//inicio if\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*sent).codigo); 
+  paux=strdup("}//fin if\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&etfin);
+  paux = strdup(":\n");
+  mystrcat(&(*obj).codigo,&paux);
+}
+
+
+void genCodigoSino(atributos* obj,atributos* cond, atributos* sent, atributos* sent2){
+
+  char* etfin = etiqueta();
+  char* etelse = etiqueta();
+
+  mystrcpy(&(*obj).codigo,&(*cond).codigo);
+  paux=strdup("if (!");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*cond).nombreTmp);
+  paux=strdup(") goto ");
+  mystrcat(&(*obj).codigo,&paux);
+  paux=strdup(etelse);
+  mystrcat(&(*obj).codigo,&paux);
+  paux=strdup(";\n{//inicio if\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*sent).codigo); 
+  paux=strdup("}//fin if\n");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup("goto ");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(etfin);
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);
+
+  mystrcat(&(*obj).codigo,&etelse);
+  paux = strdup(":\n");
+  mystrcat(&(*obj).codigo,&paux);
+
+
+  paux=strdup("{//inicio else\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*sent2).codigo); 
+  paux=strdup("}//fin else\n");
+  mystrcat(&(*obj).codigo,&paux);
+
+  mystrcat(&(*obj).codigo,&etfin);
+  paux = strdup(":\n");
+  mystrcat(&(*obj).codigo,&paux); 
+}
 
 
 
-
-
-
+void genCodigoMientras(atributos* obj,atributos* cond,atributos* sent){
+  char* etini = etiqueta();
+  char* etfin = etiqueta();
+}
 
 
 
