@@ -1,3 +1,14 @@
+FUEN=./Codigos_Prueba_Fuentes
+OBJ=./Codigos_Prueba_Intermedios
+EXE=./Codigos_Prueba_Compilados
+
+%.out: $(OBJ)/%.c
+	gcc $^ -o $(EXE)/$@
+
+$(OBJ)/%.c: $(FUEN)/%.babad
+	./analizador_yacc $^
+	mv ./main_inter.c $@
+
 analizador_yacc: main.o y.tab.o
 	gcc -o analizador_yacc main.o y.tab.o
 
