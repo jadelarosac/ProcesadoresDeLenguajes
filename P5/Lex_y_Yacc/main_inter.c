@@ -14,7 +14,7 @@ scanf("%d",&n);
 
 {//inicio sentencia salida
 
-printf("%d %s ",n,"==");
+printf("%d %s ",n,"=");
 }//fin sentencia salida
 
 {//inicio sentencia asig
@@ -22,34 +22,29 @@ printf("%d %s ",n,"==");
 curr = 2;
 }//fin sentencia asig
 
-{//inicio sentencia while
+{//inicio sentencia do-until
 etiqueta2: ;
-
-
-int tmp0;
-tmp0=curr<=n;
-if (!tmp0) goto etiqueta3;
 {//inicio bloque
 int d;
 {//inicio sentencia asig
 
 
-int tmp1;
-tmp1=n/curr;
+int tmp0;
+tmp0=n/curr;
 
-d = tmp1;
+d = tmp0;
 }//fin sentencia asig
 
 {//inicio sentencia if
 
 
+int tmp1;
+tmp1=d*curr;
+
+
 int tmp2;
-tmp2=d*curr;
-
-
-int tmp3;
-tmp3=tmp2==n;
-if (!tmp3) goto etiqueta1;
+tmp2=tmp1==n;
+if (!tmp2) goto etiqueta1;
 {//inicio if
 {//inicio bloque
 {//inicio sentencia salida
@@ -60,10 +55,10 @@ printf("%s %d ","*",curr);
 {//inicio sentencia asig
 
 
-int tmp4;
-tmp4=n/curr;
+int tmp3;
+tmp3=n/curr;
 
-n = tmp4;
+n = tmp3;
 }//fin sentencia asig
 
 }//fin bloque
@@ -74,10 +69,10 @@ etiqueta1: ;
 {//inicio sentencia asig
 
 
-int tmp5;
-tmp5=curr+1;
+int tmp4;
+tmp4=curr+1;
 
-curr = tmp5;
+curr = tmp4;
 }//fin sentencia asig
 }//fin else
 etiqueta0: ;
@@ -85,9 +80,11 @@ etiqueta0: ;
 
 }//fin bloque
 
-goto etiqueta2;
-etiqueta3: ;
-}//fin sentencia while
+
+int tmp5;
+tmp5=curr>n;
+if (!tmp5) goto etiqueta2;
+}//fin sentencia do-until
 
 {//inicio sentencia salida
 printf("%s ","\n");

@@ -113,6 +113,7 @@ void genCodigoAsignacion(atributos*, atributos*, atributos*);
 void genCodigoSino(atributos* ,atributos*,atributos*,atributos*);
 void genCodigoSi(atributos* ,atributos*,atributos*);
 void genCodigoMientras(atributos* obj,atributos* cond,atributos* sent);
+void genCodigoHacerHasta(atributos* obj,atributos* cond,atributos* sent);
 
 char* opdorUnAString(int opdor);
 char* opdorBinAString(int opdor);
@@ -248,8 +249,12 @@ Sentencia                   : bloque {mystrcpy(&$$.codigo,&$1.codigo);}
                               mystrcat(&$$.codigo,&$1.codigo);
                               paux = strdup("}//fin sentencia while\n");
                               mystrcat(&$$.codigo,&paux);}
-                              |   sentencia_hacer_hasta {paux = strdup("SENTENCIA HASTA");
-                              mystrcpy(&$$.codigo,&paux);}
+                              |   sentencia_hacer_hasta { paux = strdup("{//inicio sentencia do-until\n");
+                              mystrcpy(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&$1.codigo);
+                              paux = strdup("}//fin sentencia do-until\n");
+                              mystrcat(&$$.codigo,&paux);
+                              }
                               |   sentencia_entrada {paux = strdup("{//inicio sentencia entrada\n");
                               mystrcpy(&$$.codigo,&paux);
                               mystrcat(&$$.codigo,&$1.codigo);
@@ -272,8 +277,7 @@ sentencia_si                : SI PARIZQ expresion PARDER Sentencia {procesaSente
                               SINO Sentencia {procesaSentenciaControl($3);genCodigoSino(&$$,&$3,&$5,&$7);}
 sentencia_mientras          : MIENTRAS PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);
                             genCodigoMientras(&$$,&$3,&$5);}
-sentencia_hacer_hasta       : HACER Sentencia HASTA PARIZQ expresion PARDER PYC {procesaSentenciaControl($5);
-                            }
+sentencia_hacer_hasta       : HACER Sentencia HASTA PARIZQ expresion PARDER PYC {procesaSentenciaControl($5);genCodigoHacerHasta(&$$,&$5,&$2);}
 sentencia_entrada           : ENTRADA lista_variables PYC {paux = strdup("scanf(\"");
                             mystrcpy(&$$.codigo,&paux);
                             mystrcat(&$$.codigo,&textoScanf);
@@ -1413,6 +1417,31 @@ void genCodigoMientras(atributos* obj,atributos* cond,atributos* sent){
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup(": ;\n");
   mystrcat(&(*obj).codigo,&paux);
+}
+
+
+void genCodigoHacerHasta(atributos* obj,atributos* cond,atributos* sent){
+    
+  char* etini = etiqueta();
+  
+  paux = strdup(etini);
+  mystrcpy(&(*obj).codigo,&paux);
+  paux = strdup(": ;\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*sent).codigo);
+
+
+  mystrcat(&(*obj).codigo,&(*cond).codigo);
+
+  paux=strdup("if (!");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*cond).nombreTmp);
+  paux=strdup(") goto ");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&etini);
+  paux=strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);
+
 }
 
 
