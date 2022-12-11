@@ -1,0 +1,1 @@
+- Declarar funciones fuera o dentro del main
