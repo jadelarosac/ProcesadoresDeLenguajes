@@ -15,7 +15,7 @@ programa_principal(){
     d= n/curr;
 
     si (d*curr == n){
-      escribir "* ";
+      escribir "*", curr;
       n = n/curr;
     }
     si no

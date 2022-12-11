@@ -52,7 +52,8 @@
 [0-9]+\.[0-9]+ {yylval.atrib = 0;return(CONST);}
 [0-9]+ {yylval.lexema=strdup(yytext);return(CONSTENT);}
 \'[^\']\' {yylval.atrib = 1;return(CONST);}
-("cierto"|"falso") {yylval.atrib = 2;return(CONST);}
+"cierto" {yylval.atrib = 2;return(CONST);}
+"falso" {yylval.atrib = 2;return(CONST);}
 ([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* { yylval.lexema = strdup(yytext);
                                            return(IDEN);}
 \n {linea_actual++;}

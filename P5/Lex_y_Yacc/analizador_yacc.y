@@ -25,6 +25,7 @@ entradaTS PILA_ARG[MAX_TS];
 
 /* GENERACIÓN DE CÓDIGO */
 
+char VACIO[5] = "";
 
 FILE* intermain;
 
@@ -32,9 +33,9 @@ FILE* intermain;
 /*                      */
 int Ntmp = 0;
 int bloqueMain = 0; //True
-
-
-
+char* paux;
+char* textoPrintf = NULL;
+char* textoScanf = NULL;
 
 
 typedef struct{
@@ -45,8 +46,8 @@ typedef struct{
   int TamDimen1;
   int TamDimen2;
  
-  char nombreTmp[10];
-  char codigo[50000];
+  char* nombreTmp;
+  char* codigo;
 } atributos;
 
 #define YYSTYPE atributos /* Cada símbolo tiene una estructura de tipo atributos */
@@ -97,9 +98,11 @@ void finalizarGEN();
 char* temporal();
 
 char* enumAString();
+char* enumATipoForm(dtipo t);
 
 
-void genCodigoOperador(atributos* obj, atributos* at1, atributos* at2, int opdor);
+void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int opdor);
+void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int opdor);
 void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor);
 void genCodigoOperadorUnNeg(atributos* obj, atributos* at1);
 
@@ -107,6 +110,9 @@ void genCodigoAsignacion(atributos*, atributos*, atributos*);
 
 char* opdorUnAString(int opdor);
 char* opdorBinAString(int opdor);
+
+void mystrcat(char**,char**);
+void mystrcpy(char**,char**);
 
 %}
 
@@ -134,52 +140,65 @@ bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                                                                 if (bloqueMain == 0){
                                                                  
                                                                   bloqueMain = 1;
-                                                                  strcat($3.codigo,"\n");
-                                                                  strcat($3.codigo,"int main(){\n");
+                                                                  paux = strdup("\n");
+                                                                  mystrcat(&$3.codigo,&paux);
+                                                                  paux = strdup("int main(){\n");
+                                                                  mystrcat(&$3.codigo,&paux);
                                                                 }else{
-                                                                  char tmp[50000] = "{\n";
-                                                                  strcat(tmp,$3.codigo);
-                                                                  strcpy($3.codigo,strdup(tmp));
+                                                                  char* tmp = strdup("{\n");
+                                                                  mystrcat(&tmp,&$3.codigo);
+                                                                  paux = strdup(tmp);
+                                                                  mystrcpy(&$3.codigo,&paux);
                                                                 }
                                                                 }
                                   Declar_subprogs
                                   Sentencias 
                               Fin_de_bloque { TS_VaciarENTRADAS(); 
-                                                                   //strcat($3.codigo,$5.codigo);
-                                                                   strcat($3.codigo,$6.codigo); 
-                                                                   strcat($3.codigo,"\n}\n");
-                                                                   strcpy($$.codigo,strdup($3.codigo));}
+                                                                   //mystrcat($3.codigo,$5.codigo);
+                                                                   mystrcat(&$3.codigo,&$6.codigo); 
+                                                                   paux = strdup("\n}\n");
+                                                                   mystrcat(&$3.codigo,&paux);
+                                                                   mystrcpy(&$$.codigo,&$3.codigo);}
 Declar_subprogs             : Declar_subprogs Declar_subprog
                               |
 Declar_subprog              : Cabecera_subprog {subprog = 1;} bloque {subprog = 0;}
 Declar_de_variables_locales : Marca_ini_declar_variables
                                   Variables_locales
-                                  Marca_fin_declar_variables {strcpy($$.codigo,strdup($2.codigo));}
-                              |
+                                  Marca_fin_declar_variables {mystrcpy(&$$.codigo,&$2.codigo);}
+                              |   {paux = strdup("");mystrcpy(&$$.codigo,&paux);}
 Marca_ini_declar_variables  : INIDEC
 Marca_fin_declar_variables  : FINDEC
 Cabecera_programa           : MAIN
 Inicio_de_bloque            : LLAIZQ
 Fin_de_bloque               : LLADER
-Variables_locales           : Variables_locales Cuerpo_declar_variables {strcat($1.codigo,"\n");
-                                                                         strcat($1.codigo,$2.codigo);
-                                                                         strcpy($$.codigo,strdup($1.codigo));}
-                              | Cuerpo_declar_variables {strcpy($$.codigo,strdup($1.codigo));}
-Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);} lista_declaracion_variables PYC {strcpy($1.codigo,enumAString(tipoTmp));
-                                                                                                        strcat($1.codigo," ");
-                                                                                                        strcat($1.codigo,$3.codigo);
-                                                                                                        strcat($1.codigo,";");
-                                                                                                        strcpy($$.codigo,strdup($1.codigo));}
+Variables_locales           : Variables_locales Cuerpo_declar_variables {paux = strdup("\n");
+                                                                         mystrcat(&$1.codigo,&paux);
+                                                                         mystrcat(&$1.codigo,&$2.codigo);
+                                                                         mystrcpy(&$$.codigo,&$1.codigo);}
+                              | Cuerpo_declar_variables {paux = strdup($1.codigo);
+                              mystrcpy(&$$.codigo,&paux);}
+Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);} lista_declaracion_variables PYC {paux = strdup(enumAString(tipoTmp)); 
+                                                                                                        mystrcpy(&$1.codigo,&paux);
+                                                                                                        paux = strdup(" ");
+                                                                                                        mystrcat(&$1.codigo,&paux);
+                                                                                                        mystrcat(&$1.codigo,&$3.codigo);
+                                                                                                        paux = strdup(";\n");
+                                                                                                        mystrcat(&$1.codigo,&paux);
+                                                                                                        paux = strdup($1.codigo);
+                                                                                                        mystrcpy(&$$.codigo,&paux);}
                               | error
 Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {tipoTmp=atributoAEnum($1.atrib);TS_InsertaSUBPROG($2);}
                               | tipo variable PARIZQ PARDER {tipoTmp=atributoAEnum($1.atrib);TS_InsertaSUBPROG($2);}
 argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {TS_InsertaPARAMF($3);}
                               |   argumentos COMA tipo {tipoTmp=atributoAEnum($3.atrib);} variable {TS_InsertaPARAMF($5);}
                               |   error
-variable                    : identificador {$$.lexema = $1.lexema;
+variable                    : identificador {$$.lexema = $1.lexema; 
                                              $$.dimensiones=0; $$.TamDimen1=0; $$.TamDimen2=0;
-                                             strcpy($$.codigo,strdup($1.lexema));
-                                            }
+                                             paux = strdup($1.lexema);
+                                             mystrcpy(&$$.codigo,&paux);
+                                                                                          
+                                             }
+                                            
                               |   elemento_de_array_decl {$$.lexema = $1.lexema;}
 elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {$$.lexema = $1.lexema; 
                                                                     $$.dimensiones=1;
@@ -192,7 +211,8 @@ elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {$$.lexema = 
                                                     $$.TamDimen2=atoi($5.lexema);}
 
 variable_expresion          : identificador  {entradaTS ets = buscarEntrada($1.lexema); $$ = entradaAAtributos(ets);
-                            strcpy($$.codigo,strdup($1.lexema));}
+                            paux = strdup($1.lexema);
+                            mystrcpy(&$$.codigo,&paux);}
                               |   elemento_de_array  {$$ = $1;}
 elemento_de_array           : identificador CORIZQ expresion CORDER {entradaTS ets = buscarEntrada($1.lexema);
                                                                      ets.dimensiones = 0;
@@ -201,110 +221,213 @@ elemento_de_array           : identificador CORIZQ expresion CORDER {entradaTS e
                               COMA expresion CORDER {entradaTS ets = buscarEntrada($1.lexema);
                                                      ets.dimensiones = 0;
                                                      $$ = entradaAAtributos(ets);}
-Sentencias                  : Sentencias Sentencia {strcpy($$.codigo,$1.codigo);strcat($$.codigo,"\n");strcat($$.codigo,$2.codigo);}
-                              |   Sentencia {strcpy($$.codigo, $1.codigo);}
-Sentencia                   : bloque {strcpy($$.codigo,$1.codigo);} 
-                              |   sentencia_asignacion {strcpy($$.codigo,strdup("{\n"));strcat($$.codigo, $1.codigo);strcat($$.codigo,"}\n");}
-                              |   sentencia_si 
-                              |   sentencia_mientras
-                              |   sentencia_hacer_hasta
-                              |   sentencia_entrada
-                              |   sentencia_salida
-                              |   sentencia_retornar
-sentencia_asignacion        : variable_expresion ASIG expresion PYC {procesaSentenciaAsignacion($1,$3);genCodigoAsignacion(&$$,&$1,&$2);}
+Sentencias                  : Sentencias Sentencia {mystrcpy(&$$.codigo,&$1.codigo);
+                            paux = strdup("\n");
+                            mystrcat(&$$.codigo,&paux);
+                            mystrcat(&$$.codigo,&$2.codigo);}
+                              |   Sentencia {mystrcpy(&$$.codigo, &$1.codigo);}
+Sentencia                   : bloque {mystrcpy(&$$.codigo,&$1.codigo);} 
+                              |   sentencia_asignacion {paux = strdup("{\n");
+                              mystrcpy(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo, &$1.codigo);
+                              paux = strdup("}");
+                              mystrcat(&$$.codigo,&paux);}
+                              |   sentencia_si  {paux = strdup("SENTENCIA SI");
+                              mystrcpy(&$$.codigo,&paux);}
+                              |   sentencia_mientras {paux = strdup("SENTENCIA mientras");
+                              mystrcpy(&$$.codigo,&paux);}
+                              |   sentencia_hacer_hasta {paux = strdup("SENTENCIA HASTA");
+                              mystrcpy(&$$.codigo,&paux);}
+                              |   sentencia_entrada {paux = strdup("{\n");
+                              mystrcpy(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&$1.codigo);
+                              paux = strdup("}");
+                              mystrcat(&$$.codigo,&paux);
+                              }
+                              |   sentencia_salida {paux = strdup("{\n");
+                              mystrcpy(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&$1.codigo);
+                              paux = strdup("}");
+                              mystrcat(&$$.codigo,&paux);
+                              }
+                              |   sentencia_retornar {paux = strdup("SENTENCIA RETORNAR");
+                              mystrcpy(&$$.codigo,&paux);}
+sentencia_asignacion        : variable_expresion ASIG expresion PYC {procesaSentenciaAsignacion($1,$3);genCodigoAsignacion(&$$,&$1,&$3);}
                               |   error
 sentencia_si                : SI PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);}
                               |   SI PARIZQ expresion PARDER Sentencia 
                               SINO Sentencia {procesaSentenciaControl($3);}
 sentencia_mientras          : MIENTRAS PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);}
 sentencia_hacer_hasta       : HACER Sentencia HASTA PARIZQ expresion PARDER PYC {procesaSentenciaControl($5);}
-sentencia_entrada           : ENTRADA lista_variables PYC
-sentencia_salida            : SALIDA lista_expresiones_cadena PYC
+sentencia_entrada           : ENTRADA lista_variables PYC {paux = strdup("scanf(\"");
+                            mystrcpy(&$$.codigo,&paux);
+                            mystrcat(&$$.codigo,&textoScanf);
+                            paux = strdup("\",");
+                            mystrcat(&$$.codigo,&paux);
+                            mystrcat(&$$.codigo,&$2.codigo);
+                            paux = strdup(");\n");
+                            mystrcat(&$$.codigo,&paux);
+                            // Se resetea la variable global
+                            textoScanf = NULL; 
+                            }
+sentencia_salida            : SALIDA lista_expresiones_cadena PYC {mystrcpy(&$$.codigo,&$2.codigo);
+                            paux = strdup("printf(\"");
+                            mystrcat(&$$.codigo,&paux);
+                            mystrcat(&$$.codigo,&textoPrintf);
+                            paux = strdup("\",");
+                            mystrcat(&$$.codigo,&paux);
+                            mystrcat(&$$.codigo,&$2.nombreTmp);
+                            paux = strdup(");\n");
+                            mystrcat(&$$.codigo,&paux);
+                            // Se resetea la variable global
+                            textoPrintf = NULL;
+                            }
+
+
 sentencia_retornar          : DEVOLVER expresion PYC
-lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena
-                              |   expresion_cadena
-expresion_cadena            : expresion | cadena
-lista_variables             : variable
-                              |   lista_variables COMA variable
-lista_declaracion_variables :  variable {TS_InsertaIDENT($1); strcpy($$.codigo,strdup($1.codigo));}
+lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena {mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
+                            paux = strdup(",");
+                            mystrcat(&$$.nombreTmp,&paux);
+                            mystrcat(&$$.nombreTmp,&$3.nombreTmp);
+                            mystrcpy(&$$.codigo,&$1.codigo);
+                            paux = strdup("\n");
+                            mystrcat(&$$.codigo,&paux);
+                            mystrcat(&$$.codigo,&$3.codigo);
+                            }
+                              |   expresion_cadena {mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
+                              mystrcpy(&$$.codigo,&$1.codigo);}
+expresion_cadena            : expresion {mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
+                            mystrcpy(&$$.codigo,&$1.codigo);
+                            paux = strdup(enumATipoForm($1.tipo));
+                            if (textoPrintf == NULL) mystrcpy(&textoPrintf, &paux);
+                            else mystrcat(&textoPrintf,&paux);
+                            paux = strdup(" ");
+                            mystrcat(&textoPrintf,&paux);
+                            }
+                            | cadena {mystrcpy(&$$.nombreTmp,&$1.codigo);
+                            paux = strdup("");
+                            mystrcpy(&$$.codigo,&paux);
+                            paux = strdup("%s ");
+                            if (textoPrintf == NULL) mystrcpy(&textoPrintf, &paux);
+                            else mystrcat(&textoPrintf,&paux);
+                            }
+lista_variables             : variable {
+                            entradaTS ets = buscarEntrada($1.lexema);
+                            $1.tipo = ets.tipoDato; 
+                            paux = strdup("&");
+                            mystrcpy(&$$.codigo,&paux);
+                            mystrcat(&$$.codigo,&$1.codigo);
+                            paux = strdup(enumATipoForm($1.tipo));
+                            if (textoScanf == NULL) mystrcpy(&textoScanf, &paux);
+                            else mystrcat(&textoScanf,&paux);
+                            paux = strdup(" ");
+                            mystrcat(&textoScanf,&paux);
+
+                            }
+                              |   lista_variables COMA variable {mystrcpy(&$$.codigo,&$1.codigo);
+                              paux = strdup(",&");
+                              mystrcat(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&$3.codigo);
+                              entradaTS ets = buscarEntrada($3.lexema);
+                              $3.tipo = ets.tipoDato; 
+                              paux = strdup(enumATipoForm($3.tipo));
+                              if (textoScanf == NULL) mystrcpy(&textoScanf, &paux);
+                              else mystrcat(&textoScanf,&paux);
+                              paux = strdup(" ");
+                              mystrcat(&textoScanf,&paux);
+                              }
+lista_declaracion_variables :  variable {TS_InsertaIDENT($1); 
+                            paux = strdup($1.codigo);
+                            mystrcpy(&$$.codigo,&paux);
+                            }
                               |   lista_declaracion_variables COMA variable {TS_InsertaIDENT($3);
-                                                                             char c1,c2;
-                                                                             strcat($1.codigo,",");
-                                                                             strcat($1.codigo,$3.codigo);
-                                                                             strcpy($$.codigo,strdup($1.codigo));}
+                                                                             paux = strdup(",");
+                                                                             mystrcat(&$1.codigo,&paux);
+                                                                             mystrcat(&$1.codigo,&$3.codigo);
+                                                                             paux = strdup($1.codigo);
+                                                                             mystrcpy(&$$.codigo,&paux);}
                               |   error
-lista_expresiones           : expresion {PILARG_insertaARG($1);strcpy($$.codigo,$1.codigo);}
+lista_expresiones           : expresion {PILARG_insertaARG($1);mystrcpy(&$$.codigo,&$1.codigo);}
                               |   lista_expresiones COMA expresion {PILARG_insertaARG($3);
-                              strcpy($$.codigo,$1.codigo);strcat($$.codigo,",");strcat($$.codigo,$3.codigo);}
+                              mystrcpy(&$$.codigo,&$1.codigo);
+                              paux = strdup(",");
+                              mystrcat(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&$3.codigo);}
 expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               |   OPNEG expresion {$$ = procesaOperacionNegacion($2);genCodigoOperadorUnNeg(&$$,&$2);}
                               |   OPSUMA expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);genCodigoOperadorUn(&$$,&$2,$1.atrib);}
                               |   OPRESTA expresion %prec OPNEG {$$ = procesaOperacionMixtaCuandoUnaria($2);genCodigoOperadorUn(&$$,&$2,$1.atrib);}
-                              |   expresion OPMULT expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPDIV expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPMULTM expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPAND expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPOR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPNEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPLEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPGEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPLESS expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPGR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPMOD expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPSUMA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   expresion OPRESTA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperador(&$$,&$1,&$3,$2.atrib);}
-                              |   variable_expresion {$$ = $1;strcpy($$.codigo,$1.codigo);
-                              strcpy($$.nombreTmp, strdup(temporal())); 
-                              strcpy($$.codigo, strdup("\n\n"));
-                              strcat($$.codigo,strdup(enumAString($$.tipo)));
-                              strcat($$.codigo,strdup(" ")); 
-                              strcat($$.codigo,$$.nombreTmp); 
-                              strcat($$.codigo,strdup(";\n"));
-                              strcat($$.codigo,$$.nombreTmp);
-                              strcat($$.codigo,strdup("= "));
-                              strcat($$.codigo,$1.codigo);
-                              strcat($$.codigo,strdup(";"));  
+                              |   expresion OPMULT expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPDIV expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPMULTM expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPAND expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPOR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPNEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPLEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPGEQ expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPLESS expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPGR expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPMOD expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPSUMA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorMix(&$$,&$1,&$3,$2.atrib);}
+                              |   expresion OPRESTA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorMix(&$$,&$1,&$3,$2.atrib);}
+                              |   variable_expresion {$$ = $1;
+                              mystrcpy(&$$.nombreTmp,&$1.lexema); 
+                              paux = strdup("");
+                              mystrcpy(&$$.codigo,&paux);
                               }
                               |   constante {$$ = $1;
-                              strcpy($$.nombreTmp, strdup(temporal())); 
-                              strcpy($$.codigo, strdup("\n\n"));
-                              strcat($$.codigo,strdup(enumAString($$.tipo)));
-                              strcat($$.codigo,strdup(" ")); 
-                              strcat($$.codigo,$$.nombreTmp); 
-                              strcat($$.codigo,strdup(";\n"));
-                              strcat($$.codigo,$$.nombreTmp);
-                              strcat($$.codigo,strdup("= "));
-                              strcat($$.codigo,$1.codigo);
-                              strcat($$.codigo,strdup(";"));}  
+                              mystrcpy(&$$.nombreTmp,&$1.lexema); 
+                              paux = strdup("");
+                              mystrcpy(&$$.codigo,&paux);
+                              }  
                               |   funcion {$$ = $1;
-                              strcpy($$.nombreTmp, strdup(temporal())); 
-                              strcpy($$.codigo, strdup("\n\n"));
-                              strcat($$.codigo,strdup(enumAString($$.tipo)));
-                              strcat($$.codigo,strdup(" ")); 
-                              strcat($$.codigo,$$.nombreTmp); 
-                              strcat($$.codigo,strdup(";\n"));
-                              strcat($$.codigo,$$.nombreTmp);
-                              strcat($$.codigo,strdup("= "));
-                              strcat($$.codigo,$1.codigo);
-                              strcat($$.codigo,strdup(";"));}  
+                              paux = temporal();
+                              mystrcpy(&$$.nombreTmp,&paux); 
+                              paux = strdup(enumAString($$.tipo));
+                              mystrcpy(&$$.codigo,&paux);
+                              paux = strdup(" ");
+                              mystrcat(&$$.codigo,&paux); 
+                              paux = strdup($$.nombreTmp);
+                              mystrcat(&$$.codigo,&paux); 
+                              paux = strdup(";\n");
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup($$.nombreTmp);
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup("=");
+                              mystrcat(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&$1.codigo);
+                              paux = strdup(";\n");
+                              mystrcat(&$$.codigo,&paux);}  
                               |   error
 funcion                     : identificador PARIZQ PARDER {entradaTS ets = buscarEntrada($1.lexema);
                                                            procesaLlamadaFuncionSinArgumentos(ets);
                                                            $$ = entradaAAtributos(ets);
-                                                           strcpy($$.codigo,$1.codigo);
-                                                           strcat($$.codigo,"(");strcat($$.codigo,")");}
+                                                           mystrcpy(&$$.codigo,&$1.codigo);
+                                                           paux = strdup("(");
+                                                           mystrcat(&$$.codigo,&paux);
+                                                           paux = strdup(")");
+                                                           mystrcat(&$$.codigo,&paux);}
                               |   identificador PARIZQ {PILARG_insertaMARCA();} lista_expresiones PARDER
                               {entradaTS ets = buscarEntrada($1.lexema);
                                procesaLlamadaFuncionConArgumentos(ets);
                                $$ = entradaAAtributos(ets);
-                               strcpy($$.codigo,$1.codigo);
-                               strcat($$.codigo,"(");strcat($$.codigo,$4.codigo);strcat($$.codigo,")");}
+                               mystrcpy(&$$.codigo,&$1.codigo);
+                               paux = strdup("(");
+                               mystrcat(&$$.codigo,&paux);
+                               mystrcat(&$$.codigo,&$4.codigo);
+                               paux = strdup(")");
+                               mystrcat(&$$.codigo,&paux);}
 tipo                        : TIPOEL {$$.atrib = $1.atrib;}
-cadena                      : CADENA {strcpy($$.codigo,$1.lexema);} 
-identificador               : IDEN  {strcpy($$.codigo,$1.lexema);}
-constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);strcpy($$.codigo,$$.lexema);}
-                              | CONSTENT  {$$.tipo = entero;strcpy($$.codigo,$$.lexema);}
+cadena                      : CADENA {paux = strdup($1.lexema);mystrcpy(&$$.codigo,&paux);} 
+identificador               : IDEN  {paux = strdup($1.lexema);mystrcpy(&$$.codigo,&paux);}
+constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);
+                            paux = strdup($1.lexema);
+                            mystrcpy(&$$.codigo,&paux);}
+                              | CONSTENT  {$$.tipo = entero;
+                              paux = strdup($1.lexema);
+                              mystrcpy(&$$.codigo,&paux);
+                              }
                               |   CORIZQ ini_elementos_array CORDER { $$.tipo = $2.tipo;
                                                                     if ($2.TamDimen2==1){$$.TamDimen2 = 0; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 1;}
                                                                     else{$$.TamDimen2 = $2.TamDimen2; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 2;}}
@@ -969,7 +1092,7 @@ char* temporal(){
 char* enumAString(dtipo t){
 
   if (t == entero)return strdup("int");
-  if (t == booleano)return strdup("bool");
+  if (t == booleano)return strdup("int");
   if (t == real)return strdup("double");
   if (t == caracter)return strdup("char");
 
@@ -981,6 +1104,8 @@ char* opdorUnAString(int opdor){
   if (opdor == 1) return strdup("-");
   return strdup("Ninguno");
 }
+
+
 
 
 char* opdorBinAString(int opdor){
@@ -999,61 +1124,167 @@ char* opdorBinAString(int opdor){
   return strdup("Ninguno");
 }
 
-void genCodigoOperador(atributos* obj, atributos* at1, atributos* at2, int opdor){
-  strcpy((*obj).nombreTmp, strdup(temporal())); 
-  strcpy((*obj).codigo,(*at1).codigo); 
-  strcat((*obj).codigo, strdup("\n\n"));
-  strcat((*obj).codigo,strdup(enumAString((*obj).tipo)));
-  strcat((*obj).codigo,strdup(" ")); 
-  strcat((*obj).codigo,(*obj).nombreTmp); 
-  strcat((*obj).codigo,strdup(";\n"));
-  strcat((*obj).codigo,(*obj).nombreTmp);
-  strcat((*obj).codigo,strdup("= "));
-  strcat((*obj).codigo,(*at1).nombreTmp);
-  strcat((*obj).codigo,strdup(opdorBinAString(opdor)));
-  strcat((*obj).codigo,(*at2).nombreTmp);
-  strcat((*obj).codigo,strdup(";"));  
+
+
+void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int opdor){
+  paux = temporal();
+  mystrcpy(&(*obj).nombreTmp,&paux); 
+  mystrcpy(&(*obj).codigo,&(*at1).codigo); 
+  paux = strdup("\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*at2).codigo); 
+  paux = strdup("\n");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = enumAString((*obj).tipo);
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(" ");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup((*obj).nombreTmp);
+  mystrcat(&(*obj).codigo,&paux); 
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup((*obj).nombreTmp);
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup("=");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
+  paux = strdup(opdorUnAString(opdor));
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);  
+}
+
+void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int opdor){
+  paux = temporal();
+  mystrcpy(&(*obj).nombreTmp,&paux); 
+  mystrcpy(&(*obj).codigo,&(*at1).codigo); 
+  paux = strdup("\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*at2).codigo); 
+  paux = strdup("\n");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = enumAString((*obj).tipo);
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(" ");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup((*obj).nombreTmp);
+  mystrcat(&(*obj).codigo,&paux); 
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup((*obj).nombreTmp);
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup("=");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
+  paux = strdup(opdorBinAString(opdor));
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);  
 }
 
 void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor){
-
-  strcpy((*obj).nombreTmp, strdup(temporal())); 
-  strcpy((*obj).codigo,(*at1).codigo); 
-  strcat((*obj).codigo, strdup("\n\n"));
-  strcat((*obj).codigo,strdup(enumAString((*obj).tipo)));
-  strcat((*obj).codigo,strdup(" ")); 
-  strcat((*obj).codigo,(*obj).nombreTmp); 
-  strcat((*obj).codigo,strdup(";\n"));
-  strcat((*obj).codigo,(*obj).nombreTmp);
-  strcat((*obj).codigo,strdup("= "));
-  strcat((*obj).codigo,strdup(opdorUnAString(opdor)));
-  strcat((*obj).codigo,(*at1).nombreTmp);
-  strcat((*obj).codigo,strdup(";"));  
+  paux = temporal();
+  mystrcpy(&(*obj).nombreTmp,&paux); 
+  mystrcpy(&(*obj).codigo,&(*at1).codigo); 
+  paux = strdup("\n");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = (*obj).nombreTmp;
+  mystrcat(&(*obj).codigo,&paux); 
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = (*obj).nombreTmp;
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup("=");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(opdorBinAString(opdor));
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);  
 }
 
 void genCodigoOperadorUnNeg(atributos* obj, atributos* at1){
 
   
-  strcpy((*obj).nombreTmp, strdup(temporal())); 
-  strcpy((*obj).codigo,(*at1).codigo); 
-  strcat((*obj).codigo, strdup("\n\n"));
-  strcat((*obj).codigo,strdup(enumAString((*obj).tipo)));
-  strcat((*obj).codigo,strdup(" ")); 
-  strcat((*obj).codigo,(*obj).nombreTmp); 
-  strcat((*obj).codigo,strdup(";\n"));
-  strcat((*obj).codigo,(*obj).nombreTmp);
-  strcat((*obj).codigo,strdup("= "));
-  strcat((*obj).codigo,"!");
-  strcat((*obj).codigo,(*at1).nombreTmp);
-  strcat((*obj).codigo,strdup(";"));  
+  paux = temporal();
+  mystrcpy(&(*obj).nombreTmp,&paux); 
+  mystrcpy(&(*obj).codigo,&(*at1).codigo); 
+  paux = strdup("\n");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(" ");
+  mystrcat(&(*obj).codigo,&paux); 
+  mystrcat(&(*obj).codigo,&(*obj).nombreTmp); 
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*obj).nombreTmp);
+  paux = strdup("=");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup("!");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);  
 }
 
 void genCodigoAsignacion(atributos* obj, atributos* at1, atributos* at2){
-  strcpy((*obj).codigo,(*at2).codigo);
-  strcat((*obj).codigo,strdup("\n\n"));
-  strcat((*obj).codigo,(*at1).codigo);
-  strcat((*obj).codigo,strdup(" = "));
-  strcat((*obj).codigo,(*at2).nombreTmp);
-  strcat((*obj).codigo,strdup(";"));
+  mystrcpy(&(*obj).codigo,&(*at2).codigo);
+  paux = strdup("\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*at1).codigo);
+  paux = strdup(" = ");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);
 }
 
+
+char* enumATipoForm(dtipo t){
+
+  if (t == entero)return strdup("%d");
+  if (t == booleano)return strdup("%d");
+  if (t == real)return strdup("%f");
+  if (t == caracter)return strdup("%c");
+
+  return strdup("Ninguno");
+}
+
+
+
+
+
+
+
+
+
+
+void mystrcat(char** c1,char** c2){
+ 
+  printf("1:%s\n",*c1);
+  printf("2:%s\n",*c2);
+
+  int newSize = strlen(*c1) + strlen(*c2) + 1;
+
+  char* newC = (char*) malloc(newSize);
+
+  strcpy(newC,*c1);
+  strcat(newC,*c2);
+  free(*c1);
+  free(*c2);
+  *c1 = newC;
+}
+
+void mystrcpy(char** c1,char** c2){
+  
+  printf("0:%s\n",*c2);
+  int newSize = strlen(*c2) + 1;
+  
+  *c1 = (char*) malloc(newSize);
+  strcpy(*c1,*c2); 
+
+  free(*c2);
+
+  printf("00000000\n");
+}

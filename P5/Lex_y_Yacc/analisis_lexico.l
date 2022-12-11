@@ -48,11 +48,12 @@
 "<" {yylval.atrib = 9;return(OPLESS);}      //OPBIN
 ">" {yylval.atrib = 10;return(OPGR);}       //OPBIN
 "%" {yylval.atrib = 11;return(OPMOD);}      //OPBIN
-\"[^\"]+\" {return(CADENA);}
-[0-9]+\.[0-9]+ {yylval.atrib = 0;return(CONST);}
+\"[^\"]+\" {yylval.lexema=strdup(yytext);return(CADENA);}
+[0-9]+\.[0-9]+ {yylval.lexema=strdup(yytext);yylval.atrib = 0;return(CONST);}
 [0-9]+ {yylval.lexema=strdup(yytext);return(CONSTENT);}
-\'[^\']\' {yylval.atrib = 1;return(CONST);}
-("cierto"|"falso") {yylval.atrib = 2;return(CONST);}
+\'[^\']\' {yylval.lexema=strdup(yytext);yylval.atrib = 1;return(CONST);}
+"falso" {yylval.lexema=strdup("0");yylval.atrib = 2;return(CONST);}
+"cierto" {yylval.lexema=strdup("1");yylval.atrib = 2;return(CONST);}
 ([a-z]|[A-Z]|"_")([a-z]|[A-Z]|"_"|[0-9])* { yylval.lexema = strdup(yytext);
                                            return(IDEN);}
 \n {linea_actual++;}
