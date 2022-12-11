@@ -80,6 +80,7 @@ atributos procesaOperacionMixtaCuandoUnaria(atributos op1);
 atributos procesaOperacionNegacion(atributos op1);
 void procesaSentenciaAsignacion(atributos op1, atributos op2);
 void procesaSentenciaControl(atributos exp);
+void procesaSentenciaRetornar(atributos ret);
 void procesaLlamadaFuncionConArgumentos(entradaTS ets);
 void procesaLlamadaFuncionSinArgumentos(entradaTS ets);
 
@@ -111,6 +112,8 @@ void genCodigoOperadorUnNeg(atributos* obj, atributos* at1);
 void genCodigoAsignacion(atributos*, atributos*, atributos*);
 void genCodigoSino(atributos* ,atributos*,atributos*,atributos*);
 void genCodigoSi(atributos* ,atributos*,atributos*);
+void genCodigoMientras(atributos* obj,atributos* cond,atributos* sent);
+
 char* opdorUnAString(int opdor);
 char* opdorBinAString(int opdor);
 
@@ -233,27 +236,30 @@ Sentencia                   : bloque {mystrcpy(&$$.codigo,&$1.codigo);}
                               |   sentencia_asignacion {paux = strdup("{//inicio sentencia asig\n");
                               mystrcpy(&$$.codigo,&paux);
                               mystrcat(&$$.codigo, &$1.codigo);
-                              paux = strdup("}//fin sentencia asig");
+                              paux = strdup("}//fin sentencia asig\n");
                               mystrcat(&$$.codigo,&paux);}
                               |   sentencia_si  {paux = strdup("{//inicio sentencia if\n");
                               mystrcpy(&$$.codigo,&paux);
                               mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup("}//fin sentencia if");
+                              paux = strdup("}//fin sentencia if\n");
                               mystrcat(&$$.codigo,&paux);}
-                              |   sentencia_mientras {paux = strdup("SENTENCIA mientras");
-                              mystrcpy(&$$.codigo,&paux);}
+                              |   sentencia_mientras {paux = strdup("{//inicio sentencia while\n");
+                              mystrcpy(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&$1.codigo);
+                              paux = strdup("}//fin sentencia while\n");
+                              mystrcat(&$$.codigo,&paux);}
                               |   sentencia_hacer_hasta {paux = strdup("SENTENCIA HASTA");
                               mystrcpy(&$$.codigo,&paux);}
                               |   sentencia_entrada {paux = strdup("{//inicio sentencia entrada\n");
                               mystrcpy(&$$.codigo,&paux);
                               mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup("}//fin sentencia entrada");
+                              paux = strdup("}//fin sentencia entrada\n");
                               mystrcat(&$$.codigo,&paux);
                               }
                               |   sentencia_salida {paux = strdup("{//inicio sentencia salida\n");
                               mystrcpy(&$$.codigo,&paux);
                               mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup("}//fin sentencia salida");
+                              paux = strdup("}//fin sentencia salida\n");
                               mystrcat(&$$.codigo,&paux);
                               }
                               |   sentencia_retornar {paux = strdup("SENTENCIA RETORNAR");
@@ -293,7 +299,7 @@ sentencia_salida            : SALIDA lista_expresiones_cadena PYC {mystrcpy(&$$.
                             }
 
 
-sentencia_retornar          : DEVOLVER expresion PYC
+sentencia_retornar          : DEVOLVER expresion PYC {procesaSentenciaRetornar($2);}
 lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena {mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
                             paux = strdup(",");
                             mystrcat(&$$.nombreTmp,&paux);
@@ -326,11 +332,14 @@ lista_variables             : variable {
                             paux = strdup("&");
                             mystrcpy(&$$.codigo,&paux);
                             mystrcat(&$$.codigo,&$1.codigo);
-                            paux = strdup(enumATipoForm($1.tipo));
-                            if (textoScanf == NULL) mystrcpy(&textoScanf, &paux);
-                            else mystrcat(&textoScanf,&paux);
-                            paux = strdup(" ");
-                            mystrcat(&textoScanf,&paux);
+                            if (textoScanf == NULL){
+                              paux = strdup(enumATipoForm($1.tipo));
+                              mystrcpy(&textoScanf, &paux);
+                            }
+                            else {
+                              paux = strdup(enumATipoForm($1.tipo));
+                              mystrcat(&textoScanf,&paux);
+                            }
 
                             }
                               |   lista_variables COMA variable {mystrcpy(&$$.codigo,&$1.codigo);
@@ -339,11 +348,16 @@ lista_variables             : variable {
                               mystrcat(&$$.codigo,&$3.codigo);
                               entradaTS ets = buscarEntrada($3.lexema);
                               $3.tipo = ets.tipoDato; 
-                              paux = strdup(enumATipoForm($3.tipo));
-                              if (textoScanf == NULL) mystrcpy(&textoScanf, &paux);
-                              else mystrcat(&textoScanf,&paux);
-                              paux = strdup(" ");
-                              mystrcat(&textoScanf,&paux);
+                              if (textoScanf == NULL){
+                                paux = strdup(enumATipoForm($3.tipo));
+                                mystrcpy(&textoScanf, &paux);
+                              }
+                              else{
+                                paux = strdup("\\n");
+                                mystrcat(&textoScanf,&paux);
+                                paux = strdup(enumATipoForm($3.tipo));
+                                mystrcat(&textoScanf,&paux);
+                              }
                               }
 lista_declaracion_variables :  variable {TS_InsertaIDENT($1); 
                             paux = strdup($1.codigo);
@@ -605,7 +619,7 @@ void TS_InsertaIDENT(atributos atr){
 
   while (tope_aux > 0 ){
     if (strcmp(TS[tope_aux].nombre,ets.nombre) == 0){
-      fprintf(stderr, "Error semántico: Doble declaración de la variable '%s'\n",ets.nombre);
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Doble declaración de la variable '%s'\n",ets.nombre);
     }
 
     if (TS[tope_aux].entrada == marca) break;
@@ -671,7 +685,10 @@ void TS_InsertaPARAMF(atributos atr){
   int tope_aux = TOPE_AUX - 1;
 
   while (tope_aux >= 0){
-    if (strcmp(TS_aux[tope_aux].nombre,ets.nombre) == 0) fprintf(stderr, "Error semántico:se ha encontrado otro parámetro formal con el mismo identificador: '%s'\n", ets.nombre);
+    if (strcmp(TS_aux[tope_aux].nombre,ets.nombre) == 0) {
+      printf("[Linea %d]",linea_actual);   
+      printf("ERROR SEMÁNTICO:se ha encontrado otro parámetro formal con el mismo identificador: '%s'\n", ets.nombre);
+    }
     tope_aux--;
   }
 
@@ -692,7 +709,7 @@ entradaTS buscarEntrada(char* nombre){
   }
 
   if (i == -1){
-    fprintf(stderr, "Error semántico: se utiliza un identificador no declarado: '%s'\n", nombre);
+    printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: se utiliza un identificador no declarado: '%s'\n", nombre);
     ets.nombre = strdup("");
   }else{
     ets = TS[i];
@@ -995,6 +1012,32 @@ void procesaSentenciaAsignacion(atributos op1, atributos op2){
   }
 }
 
+void procesaSentenciaRetornar(atributos ret){
+
+  int i = TOPE-1;
+  
+  while (i>=1){
+    if (TS[i].entrada == marca && (TS[i-1].entrada == parametro_formal || TS[i-1].entrada == funcion)) break;
+    i--;
+  }
+
+  if (i == 0){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: No se deben retornar valores en el programa principal.\n");
+  }else{
+     while (i>=0){
+       if (TS[i].entrada == funcion) break;
+        i--;
+     }
+     if (i == 0){
+     	printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: no se encontró la función del devolver en el analisis semántico\n");
+     	return;
+     }
+     if (TS[i].tipoDato != ret.tipo){
+     	printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El valor retornado no se corresponde con el que devuelve la función.\n");
+     }
+  }
+}
+
 void procesaSentenciaControl(atributos exp){
   if (exp.tipo != booleano){
     printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: La sentencia de control (si|mientras|hasta) espera una expresión booleana.\n");
@@ -1284,7 +1327,7 @@ void genCodigoSi(atributos* obj,atributos* cond,atributos* sent){
   paux=strdup("}//fin if\n");
   mystrcat(&(*obj).codigo,&paux);
   mystrcat(&(*obj).codigo,&etfin);
-  paux = strdup(":\n");
+  paux = strdup(": ;\n");
   mystrcat(&(*obj).codigo,&paux);
 }
 
@@ -1315,7 +1358,7 @@ void genCodigoSino(atributos* obj,atributos* cond, atributos* sent, atributos* s
   mystrcat(&(*obj).codigo,&paux);
 
   mystrcat(&(*obj).codigo,&etelse);
-  paux = strdup(":\n");
+  paux = strdup(": ;\n");
   mystrcat(&(*obj).codigo,&paux);
 
 
@@ -1325,9 +1368,12 @@ void genCodigoSino(atributos* obj,atributos* cond, atributos* sent, atributos* s
   paux=strdup("}//fin else\n");
   mystrcat(&(*obj).codigo,&paux);
 
+
+
   mystrcat(&(*obj).codigo,&etfin);
-  paux = strdup(":\n");
+  paux = strdup(": ;\n");
   mystrcat(&(*obj).codigo,&paux); 
+
 }
 
 
@@ -1335,14 +1381,46 @@ void genCodigoSino(atributos* obj,atributos* cond, atributos* sent, atributos* s
 void genCodigoMientras(atributos* obj,atributos* cond,atributos* sent){
   char* etini = etiqueta();
   char* etfin = etiqueta();
+
+
+  paux = strdup(etini);
+  mystrcpy(&(*obj).codigo,&paux);
+  paux=strdup(": ;\n");
+  mystrcat(&(*obj).codigo,&paux);
+
+  mystrcat(&(*obj).codigo,&(*cond).codigo);
+  paux=strdup("if (!");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&(*cond).nombreTmp);
+  paux=strdup(") goto ");
+  mystrcat(&(*obj).codigo,&paux);
+  paux=strdup(etfin);
+  mystrcat(&(*obj).codigo,&paux);
+  paux=strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);
+ 
+  mystrcat(&(*obj).codigo, &(*sent).codigo);
+  
+  paux = strdup("\ngoto ");
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(etini);
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(";\n");
+  mystrcat(&(*obj).codigo,&paux);
+
+
+  paux = strdup(etfin);
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(": ;\n");
+  mystrcat(&(*obj).codigo,&paux);
 }
 
 
 
 void mystrcat(char** c1,char** c2){
  
-  printf("1:%s\n",*c1);
-  printf("2:%s\n",*c2);
+  //printf("1:%s\n",*c1);
+  //printf("2:%s\n",*c2);
 
   int newSize = strlen(*c1) + strlen(*c2) + 1;
 
@@ -1357,7 +1435,7 @@ void mystrcat(char** c1,char** c2){
 
 void mystrcpy(char** c1,char** c2){
   
-  printf("0:%s\n",*c2);
+  //printf("0:%s\n",*c2);
   int newSize = strlen(*c2) + 1;
   
   *c1 = (char*) malloc(newSize);
@@ -1365,5 +1443,4 @@ void mystrcpy(char** c1,char** c2){
 
   free(*c2);
 
-  printf("00000000\n");
 }

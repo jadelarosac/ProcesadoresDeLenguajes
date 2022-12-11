@@ -8,6 +8,7 @@ programa_principal(){
   cuenta = 0;
   primero = 1;
 
+  escribir "introduce un número :";
   leer n;
   escribir n, " == ";
   curr = 2;

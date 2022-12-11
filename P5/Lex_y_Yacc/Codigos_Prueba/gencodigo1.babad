@@ -6,12 +6,9 @@ programa_principal(){
 
   escribir "introduce numero :";
   leer n;
+  escribir n, "==";
   curr = 2;
 
-  si (3*curr == n){
-     escribir "*",curr;
-     n=n/curr;
-  }
   mientras (curr <= n){
     declarar
       entero d;
@@ -26,4 +23,5 @@ programa_principal(){
       curr = curr + 1;
   }
   escribir "\n";
+
 }

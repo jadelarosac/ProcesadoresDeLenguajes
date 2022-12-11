@@ -60,6 +60,7 @@ atributos procesaOperacionMixtaCuandoUnaria(atributos op1);
 atributos procesaOperacionNegacion(atributos op1);
 void procesaSentenciaAsignacion(atributos op1, atributos op2);
 void procesaSentenciaControl(atributos exp);
+void procesaSentenciaRetornar(atributos ret);
 void procesaLlamadaFuncionConArgumentos(entradaTS ets);
 void procesaLlamadaFuncionSinArgumentos(entradaTS ets);
 
@@ -160,7 +161,7 @@ sentencia_mientras          : MIENTRAS PARIZQ expresion PARDER Sentencia {proces
 sentencia_hacer_hasta       : HACER Sentencia HASTA PARIZQ expresion PARDER PYC {procesaSentenciaControl($5);}
 sentencia_entrada           : ENTRADA lista_variables PYC
 sentencia_salida            : SALIDA lista_expresiones_cadena PYC
-sentencia_retornar          : DEVOLVER expresion PYC
+sentencia_retornar          : DEVOLVER expresion PYC {procesaSentenciaRetornar($2);}
 lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena
                               |   expresion_cadena
 expresion_cadena            : expresion | cadena
@@ -173,9 +174,9 @@ lista_declaracion_variables :  variable {TS_InsertaIDENT($1);}
 lista_expresiones           : expresion {PILARG_insertaARG($1);}
                               |   lista_expresiones COMA expresion {PILARG_insertaARG($3);}
 expresion                   : PARIZQ expresion PARDER {$$ = $2;}
-                              |   OPNEG expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);}
+                              |   OPNEG expresion {$$ = procesaOperacionNegacion($2);}
                               |   OPSUMA expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);}
-                              |   OPRESTA expresion %prec OPNEG {$$ = procesaOperacionNegacion($2);}
+                              |   OPRESTA expresion %prec OPNEG {$$ = procesaOperacionMixtaCuandoUnaria($2);}
                               |   expresion OPMULT expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
                               |   expresion OPDIV expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
                               |   expresion OPMULTM expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);}
@@ -292,7 +293,7 @@ void TS_InsertaENTRADA(entradaTS ets){
     TOPE = TOPE + 1;
   }
 
- // mostrar_tabla();
+  //mostrar_tabla();
 }
 
 void TSAUX_InsertaENTRADA(entradaTS ets){
@@ -349,7 +350,7 @@ void TS_InsertaIDENT(atributos atr){
 
   while (tope_aux > 0 ){
     if (strcmp(TS[tope_aux].nombre,ets.nombre) == 0){
-      fprintf(stderr, "Error semántico: Doble declaración de la variable '%s'\n",ets.nombre);
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: Doble declaración de la variable '%s'\n",ets.nombre);
     }
 
     if (TS[tope_aux].entrada == marca) break;
@@ -415,7 +416,9 @@ void TS_InsertaPARAMF(atributos atr){
   int tope_aux = TOPE_AUX - 1;
 
   while (tope_aux >= 0){
-    if (strcmp(TS_aux[tope_aux].nombre,ets.nombre) == 0) fprintf(stderr, "Error semántico:se ha encontrado otro parámetro formal con el mismo identificador: '%s'\n", ets.nombre);
+    if (strcmp(TS_aux[tope_aux].nombre,ets.nombre) == 0){
+     printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO:se ha encontrado otro parámetro formal con el mismo identificador: '%s'\n", ets.nombre);
+    }
     tope_aux--;
   }
 
@@ -436,7 +439,7 @@ entradaTS buscarEntrada(char* nombre){
   }
 
   if (i == -1){
-    fprintf(stderr, "Error semántico: se utiliza un identificador no declarado: '%s'\n", nombre);
+    printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: se utiliza un identificador no declarado: '%s'\n", nombre);
     ets.nombre = strdup("");
   }else{
     ets = TS[i];
@@ -742,6 +745,32 @@ void procesaSentenciaAsignacion(atributos op1, atributos op2){
 void procesaSentenciaControl(atributos exp){
   if (exp.tipo != booleano){
     printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: La sentencia de control (si|mientras|hasta) espera una expresión booleana.\n");
+  }
+}
+
+void procesaSentenciaRetornar(atributos ret){
+
+  int i = TOPE-1;
+  
+  while (i>=1){
+    if (TS[i].entrada == marca && (TS[i-1].entrada == parametro_formal || TS[i-1].entrada == funcion)) break;
+    i--;
+  }
+
+  if (i == 0){
+      printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: No se deben retornar valores en el programa principal.\n");
+  }else{
+     while (i>=0){
+       if (TS[i].entrada == funcion) break;
+        i--;
+     }
+     if (i == 0){
+     	printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: no se encontró la función del devolver en el analisis semántico\n");
+     	return;
+     }
+     if (TS[i].tipoDato != ret.tipo){
+     	printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El valor retornado no se corresponde con el que devuelve la función.\n");
+     }
   }
 }
 
