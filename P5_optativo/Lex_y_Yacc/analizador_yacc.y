@@ -29,12 +29,14 @@ entradaTS PILA_ARG[MAX_TS];
 char VACIO[5] = "";
 
 FILE* intermain;
+FILE* dec_fun_c;
+FILE* dec_fun_h;
 
 
 /*                      */
 int Ntmp = 0;
 int Netiqueta = 0;
-int bloqueMain = 0; //True
+int noBloqueMain = 0; // Estamos en el bloque main
 char* paux;
 char* textoPrintf = NULL;
 char* textoScanf = NULL;
@@ -142,69 +144,150 @@ void mystrcpy(char**,char**);
 
 %%
 
-Programa                    : Cabecera_programa {empezarGEN();} bloque {fputs($3.codigo,intermain);finalizarGEN();}
+Programa                    : Cabecera_programa {empezarGEN();} bloque {
+                                                                        fputs($3.codigo,intermain);
+                                                                        finalizarGEN();}
 bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                                   Declar_de_variables_locales {
-                                                                if (bloqueMain == 0){
-
-                                                                  bloqueMain = 1;
+                                                                char** codigo3 = &$3.codigo;
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo3 = &$3.codigo;
+                                                                }
+                                                                if (noBloqueMain == 0){
+                                                                  noBloqueMain = 1;
                                                                   paux = strdup("\n");
-                                                                  mystrcat(&$3.codigo,&paux);
+                                                                  mystrcat(codigo3,&paux);
                                                                   paux = strdup("int main(){//inicio bloque\n");
-                                                                  mystrcat(&$3.codigo,&paux);
+                                                                  mystrcat(codigo3,&paux);
                                                                 }else{
                                                                   char* tmp = strdup("{//inicio bloque\n");
-                                                                  mystrcat(&tmp,&$3.codigo);
+                                                                  mystrcat(&tmp,codigo3);
                                                                   paux = strdup(tmp);
-                                                                  mystrcpy(&$3.codigo,&paux);
+                                                                  mystrcpy(codigo3,&paux);
                                                                 }
                                                                 }
                                   Declar_subprogs
                                   Sentencias
-                              Fin_de_bloque { TS_VaciarENTRADAS();
-                                                                   //mystrcat($3.codigo,$5.codigo);
-                                                                   mystrcat(&$3.codigo,&$6.codigo);
-                                                                   paux = strdup("\n}//fin bloque\n");
-                                                                   mystrcat(&$3.codigo,&paux);
-                                                                   mystrcpy(&$$.codigo,&$3.codigo);}
+                              Fin_de_bloque {
+                                                                char** codigo3 = &$3.codigo;
+                                                                char** codigo6 = &$6.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo3 = &$3.codigo;
+                                                                  codigo6 = &$6.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                TS_VaciarENTRADAS();
+                                                                mystrcat(codigo3, codigo6);
+                                                                paux = strdup("\n}//fin bloque\n");
+                                                                mystrcat(codigo3, &paux);
+                                                                mystrcpy(codigoS, codigo3 );
+                                              }
 Declar_subprogs             : Declar_subprogs Declar_subprog
                               |
 Declar_subprog              : Cabecera_subprog {subprog = 1;} bloque {subprog = 0;}
 Declar_de_variables_locales : Marca_ini_declar_variables
                                   Variables_locales
-                                  Marca_fin_declar_variables {mystrcpy(&$$.codigo,&$2.codigo);}
-                              |   {paux = strdup("");mystrcpy(&$$.codigo,&paux);}
+                                  Marca_fin_declar_variables {
+                                                                char** codigo2 = &$2.codigo;
+                                                                char** codigoS = &$$.codigo;
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo2 = &$2.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+                                                                mystrcpy(codigoS, codigo2);
+                                                                }
+                              |   {
+                                                                char** lugar_donde_escribir = &$$.codigo;
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  lugar_donde_escribir = &$$.codigo;
+                                                                }
+                                                                paux = strdup("");
+                                                                mystrcpy(lugar_donde_escribir,&paux);
+                                  }
 Marca_ini_declar_variables  : INIDEC
 Marca_fin_declar_variables  : FINDEC
 Cabecera_programa           : MAIN
 Inicio_de_bloque            : LLAIZQ
 Fin_de_bloque               : LLADER
-Variables_locales           : Variables_locales Cuerpo_declar_variables {paux = strdup("\n");
-                                                                         mystrcat(&$1.codigo,&paux);
-                                                                         mystrcat(&$1.codigo,&$2.codigo);
-                                                                         mystrcpy(&$$.codigo,&$1.codigo);}
-                              | Cuerpo_declar_variables {paux = strdup($1.codigo);
-                              mystrcpy(&$$.codigo,&paux);}
-Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);} lista_declaracion_variables PYC {paux = strdup(enumAString(tipoTmp));
-                                                                                                        mystrcpy(&$1.codigo,&paux);
-                                                                                                        paux = strdup(" ");
-                                                                                                        mystrcat(&$1.codigo,&paux);
-                                                                                                        mystrcat(&$1.codigo,&$3.codigo);
-                                                                                                        paux = strdup(";\n");
-                                                                                                        mystrcat(&$1.codigo,&paux);
-                                                                                                        paux = strdup($1.codigo);
-                                                                                                        mystrcpy(&$$.codigo,&paux);}
+Variables_locales           : Variables_locales Cuerpo_declar_variables {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigo2 = &$2.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigo2 = &$2.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                paux = strdup("\n");
+                                                                mystrcat(codigo1, &paux );
+                                                                mystrcat(codigo1, codigo2 );
+                                                                mystrcpy(codigoS, codigo1 );
+                                                                }
+                              | Cuerpo_declar_variables {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                paux = strdup(*codigo1);
+                                                                mystrcpy(codigoS,&paux);
+                                                                }
+Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);} lista_declaracion_variables PYC {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigo3 = &$3.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigo3 = &$3.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                paux = strdup(enumAString(tipoTmp));
+                                                                mystrcpy(codigo1,&paux);
+                                                                paux=strdup(" ");
+                                                                mystrcat(codigo1,&paux);
+                                                                mystrcat(codigo1,codigo3);
+                                                                paux=strdup(";\n");
+                                                                mystrcat(codigo1,&paux);
+                                                                paux=strdup(*codigo1);
+                                                                mystrcpy(codigoS,&paux);}
                               | error
 Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {tipoTmp=atributoAEnum($1.atrib);TS_InsertaSUBPROG($2);}
                               | tipo variable PARIZQ PARDER {tipoTmp=atributoAEnum($1.atrib);TS_InsertaSUBPROG($2);}
 argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {TS_InsertaPARAMF($3);}
                               |   argumentos COMA tipo {tipoTmp=atributoAEnum($3.atrib);} variable {TS_InsertaPARAMF($5);}
                               |   error
-variable                    : identificador {$$.lexema = $1.lexema;
-                                             $$.dimensiones=0; $$.TamDimen1=0; $$.TamDimen2=0;
-                                             paux = strdup($1.lexema);
-                                             mystrcpy(&$$.codigo,&paux);
+variable                    : identificador {
+                                                                char** codigoS = &$$.codigo;
 
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                $$.lexema = $1.lexema;
+                                                                $$.dimensiones=0;
+                                                                $$.TamDimen1=0;
+                                                                $$.TamDimen2=0;
+                                                                paux = strdup($1.lexema);
+
+                                                                mystrcpy(codigoS,&paux);
                                              }
 
                               |   elemento_de_array_decl {$$.lexema = $1.lexema;}
@@ -229,47 +312,154 @@ elemento_de_array           : identificador CORIZQ expresion CORDER {entradaTS e
                               COMA expresion CORDER {entradaTS ets = buscarEntrada($1.lexema);
                                                      ets.dimensiones = 0;
                                                      $$ = entradaAAtributos(ets);}
-Sentencias                  : Sentencias Sentencia {mystrcpy(&$$.codigo,&$1.codigo);
-                            paux = strdup("\n");
-                            mystrcat(&$$.codigo,&paux);
-                            mystrcat(&$$.codigo,&$2.codigo);}
-                              |   Sentencia {mystrcpy(&$$.codigo, &$1.codigo);}
-Sentencia                   : bloque {mystrcpy(&$$.codigo,&$1.codigo);}
-                              |   sentencia_asignacion {paux = strdup("{//inicio sentencia asig\n");
-                              mystrcpy(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo, &$1.codigo);
-                              paux = strdup("}//fin sentencia asig\n");
-                              mystrcat(&$$.codigo,&paux);}
-                              |   sentencia_si  {paux = strdup("{//inicio sentencia if\n");
-                              mystrcpy(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup("}//fin sentencia if\n");
-                              mystrcat(&$$.codigo,&paux);}
-                              |   sentencia_mientras {paux = strdup("{//inicio sentencia while\n");
-                              mystrcpy(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup("}//fin sentencia while\n");
-                              mystrcat(&$$.codigo,&paux);}
-                              |   sentencia_hacer_hasta { paux = strdup("{//inicio sentencia do-until\n");
-                              mystrcpy(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup("}//fin sentencia do-until\n");
-                              mystrcat(&$$.codigo,&paux);
-                              }
-                              |   sentencia_entrada {paux = strdup("{//inicio sentencia entrada\n");
-                              mystrcpy(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup("}//fin sentencia entrada\n");
-                              mystrcat(&$$.codigo,&paux);
-                              }
-                              |   sentencia_salida {paux = strdup("{//inicio sentencia salida\n");
-                              mystrcpy(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup("}//fin sentencia salida\n");
-                              mystrcat(&$$.codigo,&paux);
-                              }
-                              |   sentencia_retornar {paux = strdup("SENTENCIA RETORNAR");
-                              mystrcpy(&$$.codigo,&paux);}
+Sentencias                  : Sentencias Sentencia {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigo2 = &$2.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigo2 = &$2.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                mystrcpy(codigoS,codigo1);
+                                                                paux=strdup("\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo2);
+                                                                }
+                              |   Sentencia {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                mystrcpy(codigoS, codigo1);
+                                                                }
+Sentencia                   : bloque {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                mystrcpy(codigoS,codigo1);
+                                                                }
+                              |   sentencia_asignacion {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                paux = strdup("{//inicio sentencia asig\n");
+                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcat(codigoS, codigo1);
+                                                                paux = strdup("}//fin sentencia asig\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                }
+                              |   sentencia_si  {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                paux = strdup("{//inicio sentencia if\n");
+                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo1);
+                                                                paux=strdup("}//finsentenciaif\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                }
+                              |   sentencia_mientras {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                paux = strdup("{//inicio sentencia while\n");
+                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo1);
+                                                                paux=strdup("}//finsentenciawhile\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                }
+                              |   sentencia_hacer_hasta{
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                paux=strdup("{//iniciosentenciado-until\n");
+                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo1);
+                                                                paux=strdup("}//finsentenciado-until\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                }
+                              |   sentencia_entrada {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                paux = strdup("{//inicio sentencia entrada\n");
+                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo1);
+                                                                paux = strdup("}//fin sentencia entrada\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                }
+                              |   sentencia_salida {
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                paux = strdup("{//inicio sentencia salida\n");
+                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo1);
+                                                                paux=strdup("}//finsentenciasalida\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                }
+                              |   sentencia_retornar {
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                }
+
+                                                                paux = strdup("SENTENCIA RETORNAR");
+                                                                mystrcpy(codigoS,&paux);
+                                                                }
 sentencia_asignacion        : variable_expresion ASIG expresion PYC {procesaSentenciaAsignacion($1,$3);genCodigoAsignacion(&$$,&$1,&$3);}
                               |   error
 sentencia_si                : SI PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);
@@ -279,101 +469,207 @@ sentencia_si                : SI PARIZQ expresion PARDER Sentencia {procesaSente
 sentencia_mientras          : MIENTRAS PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);
                             genCodigoMientras(&$$,&$3,&$5);}
 sentencia_hacer_hasta       : HACER Sentencia HASTA PARIZQ expresion PARDER PYC {procesaSentenciaControl($5);genCodigoHacerHasta(&$$,&$5,&$2);}
-sentencia_entrada           : ENTRADA lista_variables PYC {paux = strdup("scanf(\"");
-                            mystrcpy(&$$.codigo,&paux);
-                            mystrcat(&$$.codigo,&textoScanf);
-                            paux = strdup("\",");
-                            mystrcat(&$$.codigo,&paux);
-                            mystrcat(&$$.codigo,&$2.codigo);
-                            paux = strdup(");\n");
-                            mystrcat(&$$.codigo,&paux);
-                            // Se resetea la variable global
-                            textoScanf = NULL;
-                            }
-sentencia_salida            : SALIDA lista_expresiones_cadena PYC {mystrcpy(&$$.codigo,&$2.codigo);
-                            paux = strdup("printf(\"");
-                            mystrcat(&$$.codigo,&paux);
-                            mystrcat(&$$.codigo,&textoPrintf);
-                            paux = strdup("\",");
-                            mystrcat(&$$.codigo,&paux);
-                            mystrcat(&$$.codigo,&$2.nombreTmp);
-                            paux = strdup(");\n");
-                            mystrcat(&$$.codigo,&paux);
-                            // Se resetea la variable global
-                            textoPrintf = NULL;
-                            }
+sentencia_entrada           : ENTRADA lista_variables PYC {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo2 = &$2.codigo;
 
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                  codigo2 = &$2.codigo;
+                                                                }
 
+                                                                paux = strdup("scanf(\"");
+                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcat(codigoS,&textoScanf);
+                                                                paux=strdup("\",");
+                                                                mystrcat(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo2);
+                                                                paux=strdup(");\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                //Se resetea la variable global
+                                                                textoScanf=NULL;
+                            }
+sentencia_salida            : SALIDA lista_expresiones_cadena PYC {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo2 = &$2.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                  codigo2 = &$2.codigo;
+                                                                }
+
+                                                                mystrcpy(codigoS,codigo2);
+                                                                paux=strdup("printf(\"");
+                                                                mystrcat(codigoS,&paux);
+                                                                mystrcat(codigoS,&textoPrintf);
+                                                                paux=strdup("\",");
+                                                                mystrcat(codigoS,&paux);
+                                                                mystrcat(codigoS,&$2.nombreTmp);
+                                                                paux=strdup(");\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                //Se resetea la variable global
+                                                                textoPrintf=NULL;
+}
 sentencia_retornar          : DEVOLVER expresion PYC {procesaSentenciaRetornar($2);}
-lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena {mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
-                            paux = strdup(",");
-                            mystrcat(&$$.nombreTmp,&paux);
-                            mystrcat(&$$.nombreTmp,&$3.nombreTmp);
-                            mystrcpy(&$$.codigo,&$1.codigo);
-                            paux = strdup("\n");
-                            mystrcat(&$$.codigo,&paux);
-                            mystrcat(&$$.codigo,&$3.codigo);
-                            }
-                              |   expresion_cadena {mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
-                              mystrcpy(&$$.codigo,&$1.codigo);}
-expresion_cadena            : expresion {mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
-                            mystrcpy(&$$.codigo,&$1.codigo);
-                            paux = strdup(enumATipoForm($1.tipo));
-                            if (textoPrintf == NULL) mystrcpy(&textoPrintf, &paux);
-                            else mystrcat(&textoPrintf,&paux);
-                            paux = strdup(" ");
-                            mystrcat(&textoPrintf,&paux);
-                            }
-                            | cadena {mystrcpy(&$$.nombreTmp,&$1.codigo);
-                            paux = strdup("");
-                            mystrcpy(&$$.codigo,&paux);
-                            paux = strdup("%s ");
-                            if (textoPrintf == NULL) mystrcpy(&textoPrintf, &paux);
-                            else mystrcat(&textoPrintf,&paux);
-                            }
-lista_variables             : variable {
-                            entradaTS ets = buscarEntrada($1.lexema);
-                            $1.tipo = ets.tipoDato;
-                            paux = strdup("&");
-                            mystrcpy(&$$.codigo,&paux);
-                            mystrcat(&$$.codigo,&$1.codigo);
-                            if (textoScanf == NULL){
-                              paux = strdup(enumATipoForm($1.tipo));
-                              mystrcpy(&textoScanf, &paux);
-                            }
-                            else {
-                              paux = strdup(enumATipoForm($1.tipo));
-                              mystrcat(&textoScanf,&paux);
-                            }
+lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigo3 = &$3.codigo;
 
-                            }
-                              |   lista_variables COMA variable {mystrcpy(&$$.codigo,&$1.codigo);
-                              paux = strdup(",&");
-                              mystrcat(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$3.codigo);
-                              entradaTS ets = buscarEntrada($3.lexema);
-                              $3.tipo = ets.tipoDato;
-                              if (textoScanf == NULL){
-                                paux = strdup(enumATipoForm($3.tipo));
-                                mystrcpy(&textoScanf, &paux);
-                              }
-                              else{
-                                paux = strdup("\\n");
-                                mystrcat(&textoScanf,&paux);
-                                paux = strdup(enumATipoForm($3.tipo));
-                                mystrcat(&textoScanf,&paux);
-                              }
-                              }
-lista_declaracion_variables :  variable {TS_InsertaIDENT($1);
-                            paux = strdup($1.codigo);
-                            mystrcpy(&$$.codigo,&paux);
-                            }
-                              |   lista_declaracion_variables COMA variable {TS_InsertaIDENT($3);
-                                                                             paux = strdup(",");
-                                                                             mystrcat(&$1.codigo,&paux);
-                                                                             mystrcat(&$1.codigo,&$3.codigo);
-                                                                             paux = strdup($1.codigo);
-                                                                             mystrcpy(&$$.codigo,&paux);}
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigo3 = &$3.codigo;
+                                                                }
+
+                                                                mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
+                                                                paux=strdup(",");
+                                                                mystrcat(&$$.nombreTmp,&paux);
+                                                                mystrcat(&$$.nombreTmp,&$3.nombreTmp);
+                                                                mystrcpy(codigoS,codigo1);
+                                                                paux=strdup("\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo3);
+                                                                }
+                              |   expresion_cadena {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.codigo;
+                                                                }
+
+                                                                mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
+                                                                mystrcpy(codigoS,codigo1);
+                                                                }
+expresion_cadena            : expresion {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.codigo;
+                                                                }
+
+                                                                mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
+                                                                mystrcpy(codigoS,codigo1);
+                                                                paux=strdup(enumATipoForm($1.tipo));
+                                                                if(textoPrintf==NULL)mystrcpy(&textoPrintf,&paux);
+                                                                else mystrcat(&textoPrintf,&paux);
+                                                                paux=strdup(" ");
+                                                                mystrcat(&textoPrintf,&paux);
+                                                                }
+                            | cadena {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.codigo;
+                                                                }
+
+                                                                mystrcpy(&$$.nombreTmp,codigo1);
+                                                                paux = strdup("");
+                                                                mystrcpy(codigoS,&paux);
+                                                                paux = strdup("%s ");
+                                                                if (textoPrintf == NULL) mystrcpy(&textoPrintf, &paux);
+                                                                else mystrcat(&textoPrintf,&paux);
+                                                                }
+lista_variables             : variable {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.codigo;
+                                                                }
+
+                                                                entradaTS ets = buscarEntrada($1.lexema);
+                                                                $1.tipo = ets.tipoDato;
+                                                                paux = strdup("&");
+                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo1);
+
+                                                                if (textoScanf == NULL){
+                                                                  paux = strdup(enumATipoForm($1.tipo));
+                                                                  mystrcpy(&textoScanf, &paux);
+                                                                }
+                                                                else {
+                                                                  paux = strdup(enumATipoForm($1.tipo));
+                                                                  mystrcat(&textoScanf,&paux);
+                                                                }
+                                                                }
+                              |   lista_variables COMA variable {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigo3 = &$3.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigo3 = &$3.codigo;
+                                                                }
+
+                                                                mystrcpy(codigoS,codigo1);
+                                                                paux=strdup(",&");
+                                                                mystrcat(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo3);
+                                                                entradaTS ets=buscarEntrada($3.lexema);
+                                                                $3.tipo = ets.tipoDato;
+                                                                if (textoScanf == NULL){
+                                                                  paux = strdup(enumATipoForm($3.tipo));
+                                                                  mystrcpy(&textoScanf, &paux);
+                                                                }
+                                                                else{
+                                                                  paux = strdup("\\n");
+                                                                  mystrcat(&textoScanf,&paux);
+                                                                  paux = strdup(enumATipoForm($3.tipo));
+                                                                  mystrcat(&textoScanf,&paux);
+                                                                }
+                                                                }
+lista_declaracion_variables :  variable {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.codigo;
+                                                                }
+
+                                                                TS_InsertaIDENT($1);
+                                                                paux = strdup(*codigo1);
+                                                                mystrcpy(codigoS,&paux);
+                                                                }
+                              |   lista_declaracion_variables COMA variable {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigo3 = &$3.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                {
+                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.codigo;
+                                                                  codigo3 = &$3.codigo;
+                                                                }
+
+
+                                                                TS_InsertaIDENT($3);
+                                                                paux = strdup(",");
+                                                                mystrcat(codigo1,&paux);
+                                                                mystrcat(codigo1,codigo3);
+                                                                paux = strdup($1.codigo);
+                                                                mystrcpy(codigoS,&paux);
+                                                                }
                               |   error
 lista_expresiones           : expresion {PILARG_insertaARG($1);mystrcpy(&$$.codigo,&$1.codigo);}
                               |   lista_expresiones COMA expresion {PILARG_insertaARG($3);
@@ -903,7 +1199,6 @@ atributos procesaOperacionNegacion(atributos op1){
 
 
 void procesaLlamadaFuncionConArgumentos(entradaTS ets){
-  nivel_profundidad_funciones_anidadas++;
   int i = TOPE-1;
   int indice_args;
   int n_params = 0;
@@ -966,7 +1261,6 @@ void procesaLlamadaFuncionConArgumentos(entradaTS ets){
 }
 
 void procesaLlamadaFuncionSinArgumentos(entradaTS ets){
-  nivel_profundidad_funciones_anidadas++;
   if (ets.parametros > 0){
       printf("[Linea %d]",linea_actual); printf("ERROR SEMÁNTICO: Se han pasado 0 argmuentos a la funcion %s, se esperan más.\n",ets.nombre);
   }
@@ -998,7 +1292,6 @@ void procesaSentenciaAsignacion(atributos op1, atributos op2){
 void procesaSentenciaRetornar(atributos ret){
 
   int i = TOPE-1;
-  nivel_profundidad_funciones_anidadas--;
 
   while (i>=1){
     if (TS[i].entrada == marca && (TS[i-1].entrada == parametro_formal || TS[i-1].entrada == funcion)) break;
@@ -1103,16 +1396,30 @@ char* enumAChar(dtipo t){
 void empezarGEN(){
 
   intermain = fopen("main_inter.c","w");
+  dec_fun_c = fopen("dec_fun.c","w");
+  dec_fun_h = fopen("dec_fun.h","w");
 
   fputs("#include <stdio.h>\n",intermain);
   fputs("#include <stdlib.h>\n",intermain);
   fputs("#include <stdbool.h>\n",intermain);
+  fputs("#include \"dec_fun.h\"\n",intermain);
+
+  fputs("#include \"dec_fun.h\"\n",dec_fun_c);
+
+  fputs("#ifndef DEC_FUN_H\n#define DEC_FUN_H\n",dec_fun_h);
 }
 
 
 void finalizarGEN(){
+  fputs("#endif\n",dec_fun_h);
+
   fputs("\n",intermain);
+  fputs("\n",dec_fun_c);
+  fputs("\n",dec_fun_h);
+
   fclose(intermain);
+  fclose(dec_fun_c);
+  fclose(dec_fun_h);
 }
 
 
