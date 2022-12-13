@@ -1,0 +1,27 @@
+programa_principal(){
+
+  declarar
+  entero n, curr;
+  fin declarar
+
+  escribir "introduce numero :";
+  leer n;
+  escribir n, "==";
+  curr = 2;
+
+  mientras (curr <= n){
+    declarar
+      entero d;
+    fin declarar
+    d= n/curr;
+
+    si (d*curr == n){
+      escribir "*", curr;
+      n = n/curr;
+    }
+    si no
+      curr = curr + 1;
+  }
+  escribir "\n";
+
+}

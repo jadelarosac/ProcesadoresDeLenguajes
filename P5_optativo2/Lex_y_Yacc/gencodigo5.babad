@@ -1,0 +1,33 @@
+programa_principal(){
+
+  declarar
+    entero n;
+  fin declarar
+
+  entero fact(entero a)
+  {
+    declarar
+      entero d,resultado;
+    fin declarar
+    entero multiplicar(entero e1, entero e2){
+    	retornar e1*e2;
+    }
+
+    d = a;
+    resultado = 1;
+    mientras (d >= 1){
+    	resultado = multiplicar(resultado,d);
+    	d = d - 1;
+    }
+    retornar resultado;
+  }
+
+  escribir "introduce numero :";
+  leer n;
+  escribir n, "!==", fact(n);
+  
+  escribir "\n";
+
+}
+
+

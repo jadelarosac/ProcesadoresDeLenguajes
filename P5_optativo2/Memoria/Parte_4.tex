@@ -1,0 +1,46 @@
+\newpage
+\section{Tabla de Tokens}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{| c | c | c | c |}
+  \hline
+  Token & Atributo & Patrón & Código \\ \hline
+  CONST & 0: coma flotante & (  [0-9]+``.``[0-9]+ | $\backslash$`\{  $^\wedge \backslash$ ` \}$\backslash$`  & 257 \\
+  & 1:caracter & | ``cierto`` | ``falso`` ) &  \\
+  & 2: booleano & & \\ \hline
+  CONSTENT & & [0-9]+ & 258 \\ \hline
+  IDEN & & ([a-z] | [A-Z] | \_ ) ([0-9]+ | [a-z] | [A-Z] | \_ )* & 259 \\ \hline
+  CADENA & &  $\backslash$``\{  $^\wedge \backslash$ `` \}+$\backslash$``& 260 \\ \hline
+  OPBIN & 0:*  1:/  2:**  3:\&\& 4:|| & ( ``*``  |  ``/``  |  ``**``  |  ``\&\&``  |  ``||`` |  ``==`` |  ``$!$=``  |   & 261 \\
+  &   5:== 6:!= 7:\textless{}= 8:>=   & ``\textless{}=``  |  ``\textgreater=``  |  ``\textless`` |  ``\textgreater``  |  ``\%``  )& \\
+  & 9:< 10:> 11:\% & & \\ \hline
+OPUN & & ``$!$`` &  262 \\ \hline
+OPMIX & 0:$+$ 1:$-$ & (``$+$`` | ``$-$``) & 263 \\ \hline
+ASIG &  & ``$=$`` & 264 \\ \hline
+CORIZQ & & ``[`` & 265 \\ \hline
+CORDER & & ``]`` & 266\\ \hline
+PARIZQ & & ``(`` & 267\\ \hline
+PARDER & & ``)`` & 268\\ \hline
+LLAIZQ & & ``\{`` & 269\\ \hline
+LLADER & & ``\}`` & 270\\ \hline
+PYC & & ``;`` & 271\\ \hline
+COMA & & ``,`` & 272\\ \hline
+SI & & ``si`` & 273\\ \hline
+SINO & & ``si no`` & 274\\ \hline
+MIENTRAS & & ``mientras`` & 275\\ \hline
+HACER& & ``hacer`` & 276\\ \hline
+HASTA& & ``hasta que`` & 277\\ \hline
+INIDEC& & ``declarar`` & 278\\ \hline
+FINDEC& & ``fin declarar`` & 279\\ \hline
+SALIDA & & ``escribir`` & 280\\ \hline
+ENTRADA & & ``leer`` & 281\\ \hline
+DEVOLVER & & ``retornar`` & 282\\ \hline
+MAIN & & ``programa\_principal()`` & 283\\ \hline
+TIPOEL & 0:entero 1:coma flotante  & (``entero`` | ``real`` | ``caracter`` | ``booleano``) & 284\\
+& 2:carácter 3:booleano& & \\ \hline
+
+\end{tabular}
+\end{table}
+
