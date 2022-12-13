@@ -9,6 +9,7 @@ void yyerror(char * msg);
 
 int linea_actual = 1;
 int nivel_profundidad_funciones_anidadas = 0;
+int funciones_anidadas = 0;
 
 #define MAX_TS 500
 
@@ -52,6 +53,7 @@ typedef struct{
 
   char* nombreTmp;
   char* codigo;
+  char* cod_fun;
 } atributos;
 
 #define YYSTYPE atributos /* Cada símbolo tiene una estructura de tipo atributos */
@@ -146,13 +148,17 @@ void mystrcpy(char**,char**);
 
 Programa                    : Cabecera_programa {empezarGEN();} bloque {
                                                                         fputs($3.codigo,intermain);
+                                                                        if(funciones_anidadas > 0)
+                                                                        {
+                                                                          fputs($3.cod_fun,intermain);
+                                                                        }
                                                                         finalizarGEN();}
 bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                                   Declar_de_variables_locales {
                                                                 char** codigo3 = &$3.codigo;
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo3 = &$3.codigo;
+                                                                  codigo3 = &$3.cod_fun;
                                                                 }
                                                                 if (noBloqueMain == 0){
                                                                   noBloqueMain = 1;
@@ -174,11 +180,11 @@ bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                                                                 char** codigo6 = &$6.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo3 = &$3.codigo;
-                                                                  codigo6 = &$6.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo3 = &$3.cod_fun;
+                                                                  codigo6 = &$6.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 TS_VaciarENTRADAS();
@@ -189,25 +195,29 @@ bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                                               }
 Declar_subprogs             : Declar_subprogs Declar_subprog
                               |
-Declar_subprog              : Cabecera_subprog {subprog = 1;} bloque {subprog = 0;}
+Declar_subprog              : Cabecera_subprog {subprog = 1; nivel_profundidad_funciones_anidadas++; funciones_anidadas++;}
+                                                                 bloque
+                                                                {subprog = 0; nivel_profundidad_funciones_anidadas--;}
 Declar_de_variables_locales : Marca_ini_declar_variables
                                   Variables_locales
                                   Marca_fin_declar_variables {
                                                                 char** codigo2 = &$2.codigo;
                                                                 char** codigoS = &$$.codigo;
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo2 = &$2.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo2 = &$2.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
                                                                 mystrcpy(codigoS, codigo2);
                                                                 }
                               |   {
                                                                 char** lugar_donde_escribir = &$$.codigo;
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  lugar_donde_escribir = &$$.codigo;
+                                                                  lugar_donde_escribir = &$$.cod_fun;
                                                                 }
+
                                                                 paux = strdup("");
                                                                 mystrcpy(lugar_donde_escribir,&paux);
                                   }
@@ -221,11 +231,11 @@ Variables_locales           : Variables_locales Cuerpo_declar_variables {
                                                                 char** codigo2 = &$2.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigo2 = &$2.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigo2 = &$2.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 paux = strdup("\n");
@@ -237,10 +247,10 @@ Variables_locales           : Variables_locales Cuerpo_declar_variables {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 paux = strdup(*codigo1);
@@ -251,11 +261,11 @@ Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);} lista_dec
                                                                 char** codigo3 = &$3.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigo3 = &$3.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigo3 = &$3.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 paux = strdup(enumAString(tipoTmp));
@@ -276,9 +286,9 @@ argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {
 variable                    : identificador {
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 $$.lexema = $1.lexema;
@@ -317,11 +327,11 @@ Sentencias                  : Sentencias Sentencia {
                                                                 char** codigo2 = &$2.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigo2 = &$2.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigo2 = &$2.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 mystrcpy(codigoS,codigo1);
@@ -333,10 +343,10 @@ Sentencias                  : Sentencias Sentencia {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 mystrcpy(codigoS, codigo1);
@@ -345,10 +355,10 @@ Sentencia                   : bloque {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 mystrcpy(codigoS,codigo1);
@@ -357,10 +367,10 @@ Sentencia                   : bloque {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 paux = strdup("{//inicio sentencia asig\n");
@@ -373,10 +383,10 @@ Sentencia                   : bloque {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 paux = strdup("{//inicio sentencia if\n");
@@ -389,10 +399,10 @@ Sentencia                   : bloque {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 paux = strdup("{//inicio sentencia while\n");
@@ -405,10 +415,10 @@ Sentencia                   : bloque {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 paux=strdup("{//iniciosentenciado-until\n");
@@ -421,10 +431,10 @@ Sentencia                   : bloque {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 paux = strdup("{//inicio sentencia entrada\n");
@@ -437,10 +447,10 @@ Sentencia                   : bloque {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigoS = &$$.codigo;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 paux = strdup("{//inicio sentencia salida\n");
@@ -452,9 +462,9 @@ Sentencia                   : bloque {
                               |   sentencia_retornar {
                                                                 char** codigoS = &$$.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
+                                                                  codigoS = &$$.cod_fun;
                                                                 }
 
                                                                 paux = strdup("SENTENCIA RETORNAR");
@@ -473,10 +483,10 @@ sentencia_entrada           : ENTRADA lista_variables PYC {
                                                                 char** codigoS = &$$.codigo;
                                                                 char** codigo2 = &$2.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
-                                                                  codigo2 = &$2.codigo;
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo2 = &$2.cod_fun;
                                                                 }
 
                                                                 paux = strdup("scanf(\"");
@@ -494,10 +504,10 @@ sentencia_salida            : SALIDA lista_expresiones_cadena PYC {
                                                                 char** codigoS = &$$.codigo;
                                                                 char** codigo2 = &$2.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
-                                                                  codigo2 = &$2.codigo;
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo2 = &$2.cod_fun;
                                                                 }
 
                                                                 mystrcpy(codigoS,codigo2);
@@ -518,11 +528,11 @@ lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigo3 = &$3.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigo3 = &$3.codigo;
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigo3 = &$3.cod_fun;
                                                                 }
 
                                                                 mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
@@ -538,10 +548,10 @@ lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena {
                                                                 char** codigoS = &$$.codigo;
                                                                 char** codigo1 = &$1.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
-                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
                                                                 }
 
                                                                 mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
@@ -551,10 +561,10 @@ expresion_cadena            : expresion {
                                                                 char** codigoS = &$$.codigo;
                                                                 char** codigo1 = &$1.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
-                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
                                                                 }
 
                                                                 mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
@@ -569,10 +579,10 @@ expresion_cadena            : expresion {
                                                                 char** codigoS = &$$.codigo;
                                                                 char** codigo1 = &$1.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
-                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
                                                                 }
 
                                                                 mystrcpy(&$$.nombreTmp,codigo1);
@@ -586,10 +596,10 @@ lista_variables             : variable {
                                                                 char** codigoS = &$$.codigo;
                                                                 char** codigo1 = &$1.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
-                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
                                                                 }
 
                                                                 entradaTS ets = buscarEntrada($1.lexema);
@@ -612,11 +622,11 @@ lista_variables             : variable {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigo3 = &$3.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigo3 = &$3.codigo;
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigo3 = &$3.cod_fun;
                                                                 }
 
                                                                 mystrcpy(codigoS,codigo1);
@@ -640,10 +650,10 @@ lista_declaracion_variables :  variable {
                                                                 char** codigoS = &$$.codigo;
                                                                 char** codigo1 = &$1.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
-                                                                  codigo1 = &$1.codigo;
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
                                                                 }
 
                                                                 TS_InsertaIDENT($1);
@@ -655,13 +665,12 @@ lista_declaracion_variables :  variable {
                                                                 char** codigo1 = &$1.codigo;
                                                                 char** codigo3 = &$3.codigo;
 
-                                                                if (nivel_profundidad_funciones_anidadas == 0)
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
                                                                 {
-                                                                  codigoS = &$$.codigo;
-                                                                  codigo1 = &$1.codigo;
-                                                                  codigo3 = &$3.codigo;
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigo3 = &$3.cod_fun;
                                                                 }
-
 
                                                                 TS_InsertaIDENT($3);
                                                                 paux = strdup(",");
@@ -671,12 +680,37 @@ lista_declaracion_variables :  variable {
                                                                 mystrcpy(codigoS,&paux);
                                                                 }
                               |   error
-lista_expresiones           : expresion {PILARG_insertaARG($1);mystrcpy(&$$.codigo,&$1.codigo);}
-                              |   lista_expresiones COMA expresion {PILARG_insertaARG($3);
-                              mystrcpy(&$$.codigo,&$1.codigo);
-                              paux = strdup(",");
-                              mystrcat(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$3.codigo);}
+lista_expresiones           : expresion {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                }
+
+                                                                PILARG_insertaARG($1);
+                                                                mystrcpy(codigoS,codigo1);
+                                                                }
+                              |   lista_expresiones COMA expresion {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigo3 = &$3.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigo3 = &$3.cod_fun;
+                                                                }
+
+                                                                PILARG_insertaARG($3);
+                                                                mystrcpy(codigoS,codigo1);
+                                                                paux = strdup(",");
+                                                                mystrcat(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo3);
+                                                                }
 expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               |   OPNEG expresion {$$ = procesaOperacionNegacion($2);genCodigoOperadorUnNeg(&$$,&$2);}
                               |   OPSUMA expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);genCodigoOperadorUn(&$$,&$2,$1.atrib);}
@@ -695,63 +729,151 @@ expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               |   expresion OPMOD expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
                               |   expresion OPSUMA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorMix(&$$,&$1,&$3,$2.atrib);}
                               |   expresion OPRESTA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorMix(&$$,&$1,&$3,$2.atrib);}
-                              |   variable_expresion {$$ = $1;
-                              mystrcpy(&$$.nombreTmp,&$1.lexema);
-                              paux = strdup("");
-                              mystrcpy(&$$.codigo,&paux);
+                              |   variable_expresion {
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                }
+
+                                                                $$ = $1;
+                                                                mystrcpy(&$$.nombreTmp,&$1.lexema);
+                                                                paux = strdup("");
+                                                                mystrcpy(codigoS,&paux);
                               }
-                              |   constante {$$ = $1;
-                              mystrcpy(&$$.nombreTmp,&$1.lexema);
-                              paux = strdup("");
-                              mystrcpy(&$$.codigo,&paux);
-                              }
-                              |   funcion {$$ = $1;
-                              paux = temporal();
-                              mystrcpy(&$$.nombreTmp,&paux);
-                              paux = strdup(enumAString($$.tipo));
-                              mystrcpy(&$$.codigo,&paux);
-                              paux = strdup(" ");
-                              mystrcat(&$$.codigo,&paux);
-                              paux = strdup($$.nombreTmp);
-                              mystrcat(&$$.codigo,&paux);
-                              paux = strdup(";\n");
-                              mystrcat(&$$.codigo,&paux);
-                              paux = strdup($$.nombreTmp);
-                              mystrcat(&$$.codigo,&paux);
-                              paux = strdup("=");
-                              mystrcat(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$1.codigo);
-                              paux = strdup(";\n");
-                              mystrcat(&$$.codigo,&paux);}
+                              |   constante {
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                }
+
+                                                                $$ = $1;
+                                                                mystrcpy(&$$.nombreTmp,&$1.lexema);
+                                                                paux = strdup("");
+                                                                mystrcpy(codigoS,&paux);
+                                                                }
+                              |   funcion {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                }
+
+                                                                $$ = $1;
+                                                                paux = temporal();
+                                                                mystrcpy(&$$.nombreTmp,&paux);
+                                                                paux = strdup(enumAString($$.tipo));
+                                                                mystrcpy(codigoS,&paux);
+                                                                paux = strdup(" ");
+                                                                mystrcat(codigoS,&paux);
+                                                                paux = strdup($$.nombreTmp);
+                                                                mystrcat(codigoS,&paux);
+                                                                paux = strdup(";\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                paux = strdup($$.nombreTmp);
+                                                                mystrcat(codigoS,&paux);
+                                                                paux = strdup("=");
+                                                                mystrcat(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo1);
+                                                                paux = strdup(";\n");
+                                                                mystrcat(codigoS,&paux);
+                                                                }
                               |   error
-funcion                     : identificador PARIZQ PARDER {entradaTS ets = buscarEntrada($1.lexema);
-                                                           procesaLlamadaFuncionSinArgumentos(ets);
-                                                           $$ = entradaAAtributos(ets);
-                                                           mystrcpy(&$$.codigo,&$1.codigo);
-                                                           paux = strdup("(");
-                                                           mystrcat(&$$.codigo,&paux);
-                                                           paux = strdup(")");
-                                                           mystrcat(&$$.codigo,&paux);}
+funcion                     : identificador PARIZQ PARDER {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                }
+
+                                                                entradaTS ets = buscarEntrada($1.lexema);
+                                                                procesaLlamadaFuncionSinArgumentos(ets);
+                                                                $$ = entradaAAtributos(ets);
+                                                                mystrcpy(codigoS,codigo1);
+                                                                paux = strdup("(");
+                                                                mystrcat(codigoS,&paux);
+                                                                paux = strdup(")");
+                                                                mystrcat(codigoS,&paux);
+                                                                }
                               |   identificador PARIZQ {PILARG_insertaMARCA();} lista_expresiones PARDER
-                              {entradaTS ets = buscarEntrada($1.lexema);
-                               procesaLlamadaFuncionConArgumentos(ets);
-                               $$ = entradaAAtributos(ets);
-                               mystrcpy(&$$.codigo,&$1.codigo);
-                               paux = strdup("(");
-                               mystrcat(&$$.codigo,&paux);
-                               mystrcat(&$$.codigo,&$4.codigo);
-                               paux = strdup(")");
-                               mystrcat(&$$.codigo,&paux);}
+                              {
+                                                                char** codigoS = &$$.codigo;
+                                                                char** codigo1 = &$1.codigo;
+                                                                char** codigo4 = &$4.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                  codigo1 = &$1.cod_fun;
+                                                                  codigo4 = &$4.cod_fun;
+                                                                }
+
+                                                                entradaTS ets = buscarEntrada($1.lexema);
+                                                                procesaLlamadaFuncionConArgumentos(ets);
+                                                                $$ = entradaAAtributos(ets);
+                                                                mystrcpy(codigoS,codigo1);
+                                                                paux = strdup("(");
+                                                                mystrcat(codigoS,&paux);
+                                                                mystrcat(codigoS,codigo4);
+                                                                paux = strdup(")");
+                                                                mystrcat(codigoS,&paux);
+                                                                }
 tipo                        : TIPOEL {$$.atrib = $1.atrib;}
-cadena                      : CADENA {paux = strdup($1.lexema);mystrcpy(&$$.codigo,&paux);}
-identificador               : IDEN  {paux = strdup($1.lexema);mystrcpy(&$$.codigo,&paux);}
-constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);
-                            paux = strdup($1.lexema);
-                            mystrcpy(&$$.codigo,&paux);}
-                              | CONSTENT  {$$.tipo = entero;
-                              paux = strdup($1.lexema);
-                              mystrcpy(&$$.codigo,&paux);
-                              }
+cadena                      : CADENA {
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                }
+
+                                                                paux = strdup($1.lexema);
+                                                                mystrcpy(codigoS,&paux);
+                                                                }
+identificador               : IDEN  {
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                }
+
+                                                                paux = strdup($1.lexema);
+                                                                mystrcpy(codigoS,&paux);
+                                                                }
+constante                   : CONST {
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                }
+
+                                                                $$.tipo = atributoAEnum($1.atrib+1);
+                                                                paux = strdup($1.lexema);
+                                                                mystrcpy(codigoS,&paux);
+                                                                }
+                              | CONSTENT  {
+                                                                char** codigoS = &$$.codigo;
+
+                                                                if (nivel_profundidad_funciones_anidadas != 0)
+                                                                {
+                                                                  codigoS = &$$.cod_fun;
+                                                                }
+
+                                                                $$.tipo = entero;
+                                                                paux = strdup($1.lexema);
+                                                                mystrcpy(codigoS,&paux);
+                                                                }
                               |   CORIZQ ini_elementos_array CORDER { $$.tipo = $2.tipo;
                                                                     if ($2.TamDimen2==1){$$.TamDimen2 = 0; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 1;}
                                                                     else{$$.TamDimen2 = $2.TamDimen2; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 2;}}
@@ -1476,117 +1598,171 @@ char* opdorBinAString(int opdor){
 
 
 void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int opdor){
+
+  char** obj_codigo = &(*obj).codigo;
+  char** at1_codigo = &(*at1).codigo;
+  char** at2_codigo = &(*at2).codigo;
+
+  if( nivel_profundidad_funciones_anidadas != 0)
+  {
+    obj_codigo = &(*obj).cod_fun;
+    at1_codigo = &(*at1).cod_fun;
+    at2_codigo = &(*at2).cod_fun;
+  }
+
   paux = temporal();
   mystrcpy(&(*obj).nombreTmp,&paux);
-  mystrcpy(&(*obj).codigo,&(*at1).codigo);
+  mystrcpy(obj_codigo,at1_codigo);
   paux = strdup("\n");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at2).codigo);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,at2_codigo);
   paux = strdup("\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = enumAString((*obj).tipo);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(" ");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup((*obj).nombreTmp);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup((*obj).nombreTmp);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup("=");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*at1).nombreTmp);
   paux = strdup(opdorUnAString(opdor));
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*at2).nombreTmp);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 }
 
 void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int opdor){
+
+  char** obj_codigo = &(*obj).codigo;
+  char** at1_codigo = &(*at1).codigo;
+  char** at2_codigo = &(*at2).codigo;
+
+  if( nivel_profundidad_funciones_anidadas != 0)
+  {
+    obj_codigo = &(*obj).cod_fun;
+    at1_codigo = &(*at1).cod_fun;
+    at2_codigo = &(*at2).cod_fun;
+  }
+
   paux = temporal();
   mystrcpy(&(*obj).nombreTmp,&paux);
-  mystrcpy(&(*obj).codigo,&(*at1).codigo);
+  mystrcpy(obj_codigo,at1_codigo);
   paux = strdup("\n");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at2).codigo);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,at2_codigo);
   paux = strdup("\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = enumAString((*obj).tipo);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(" ");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup((*obj).nombreTmp);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup((*obj).nombreTmp);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup("=");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*at1).nombreTmp);
   paux = strdup(opdorBinAString(opdor));
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*at2).nombreTmp);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 }
 
 void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor){
+
+  char** obj_codigo = &(*obj).codigo;
+  char** at1_codigo = &(*at1).codigo;
+
+  if( nivel_profundidad_funciones_anidadas != 0)
+  {
+    obj_codigo = &(*obj).cod_fun;
+    at1_codigo = &(*at1).cod_fun;
+  }
+
   paux = temporal();
   mystrcpy(&(*obj).nombreTmp,&paux);
-  mystrcpy(&(*obj).codigo,&(*at1).codigo);
+  mystrcpy(obj_codigo,at1_codigo);
   paux = strdup("\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = (*obj).nombreTmp;
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = (*obj).nombreTmp;
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup("=");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(opdorBinAString(opdor));
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*at1).nombreTmp);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 }
 
 void genCodigoOperadorUnNeg(atributos* obj, atributos* at1){
 
+  char** obj_codigo = &(*obj).codigo;
+  char** at1_codigo = &(*at1).codigo;
+
+  if( nivel_profundidad_funciones_anidadas != 0)
+  {
+    obj_codigo = &(*obj).cod_fun;
+    at1_codigo = &(*at1).cod_fun;
+  }
 
   paux = temporal();
   mystrcpy(&(*obj).nombreTmp,&paux);
-  mystrcpy(&(*obj).codigo,&(*at1).codigo);
+  mystrcpy(obj_codigo,at1_codigo);
   paux = strdup("\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(" ");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*obj).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*obj).nombreTmp);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*obj).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*obj).nombreTmp);
   paux = strdup("=");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup("!");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*at1).nombreTmp);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 }
 
 void genCodigoAsignacion(atributos* obj, atributos* at1, atributos* at2){
-  mystrcpy(&(*obj).codigo,&(*at2).codigo);
+
+  char** obj_codigo = &(*obj).codigo;
+  char** at1_codigo = &(*at1).codigo;
+  char** at2_codigo = &(*at2).codigo;
+
+  if( nivel_profundidad_funciones_anidadas != 0)
+  {
+    obj_codigo = &(*obj).cod_fun;
+    at1_codigo = &(*at1).cod_fun;
+    at2_codigo = &(*at2).cod_fun;
+  }
+
+  mystrcpy(obj_codigo,at2_codigo);
   paux = strdup("\n");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at1).codigo);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,at1_codigo);
   paux = strdup(" = ");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*at2).nombreTmp);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 }
 
 
@@ -1602,132 +1778,180 @@ char* enumATipoForm(dtipo t){
 
 void genCodigoSi(atributos* obj,atributos* cond,atributos* sent){
 
+  char** obj_codigo = &(*obj).codigo;
+  char** cond_codigo = &(*cond).codigo;
+  char** sent_codigo = &(*sent).codigo;
+
+  if( nivel_profundidad_funciones_anidadas != 0)
+  {
+    obj_codigo = &(*obj).cod_fun;
+    cond_codigo = &(*cond).cod_fun;
+    sent_codigo = &(*sent).cod_fun;
+  }
+
   char* etfin = etiqueta();
 
-  mystrcpy(&(*obj).codigo,&(*cond).codigo);
+  mystrcpy(obj_codigo,cond_codigo);
   paux=strdup("if (!");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*cond).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*cond).nombreTmp);
   paux=strdup(") goto ");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux=strdup(etfin);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux=strdup(";\n{//inicio if\n");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*sent).codigo);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,sent_codigo);
   paux=strdup("}//fin if\n");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&etfin);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&etfin);
   paux = strdup(": ;\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 }
 
 
 void genCodigoSino(atributos* obj,atributos* cond, atributos* sent, atributos* sent2){
 
+  char** obj_codigo = &(*obj).codigo;
+  char** cond_codigo = &(*cond).codigo;
+  char** sent_codigo = &(*sent).codigo;
+  char** sent2_codigo = &(*sent2).codigo;
+
+  if( nivel_profundidad_funciones_anidadas != 0)
+  {
+    obj_codigo = &(*obj).cod_fun;
+    cond_codigo = &(*cond).cod_fun;
+    sent_codigo = &(*sent).cod_fun;
+    sent2_codigo = &(*sent2).cod_fun;
+  }
+
   char* etfin = etiqueta();
   char* etelse = etiqueta();
 
-  mystrcpy(&(*obj).codigo,&(*cond).codigo);
+  mystrcpy(obj_codigo,cond_codigo);
   paux=strdup("if (!");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*cond).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*cond).nombreTmp);
   paux=strdup(") goto ");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux=strdup(etelse);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux=strdup(";\n{//inicio if\n");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*sent).codigo);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,sent_codigo);
   paux=strdup("}//fin if\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup("goto ");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(etfin);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 
-  mystrcat(&(*obj).codigo,&etelse);
+  mystrcat(obj_codigo,&etelse);
   paux = strdup(": ;\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 
 
   paux=strdup("{//inicio else\n");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*sent2).codigo);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,sent2_codigo);
   paux=strdup("}//fin else\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 
 
 
-  mystrcat(&(*obj).codigo,&etfin);
+  mystrcat(obj_codigo,&etfin);
   paux = strdup(": ;\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 
 }
 
 
 
 void genCodigoMientras(atributos* obj,atributos* cond,atributos* sent){
+
+  char** obj_codigo = &(*obj).codigo;
+  char** cond_codigo = &(*cond).codigo;
+  char** sent_codigo = &(*sent).codigo;
+
+  if( nivel_profundidad_funciones_anidadas != 0)
+  {
+    obj_codigo = &(*obj).cod_fun;
+    cond_codigo = &(*cond).cod_fun;
+    sent_codigo = &(*sent).cod_fun;
+  }
+
+
   char* etini = etiqueta();
   char* etfin = etiqueta();
 
 
   paux = strdup(etini);
-  mystrcpy(&(*obj).codigo,&paux);
+  mystrcpy(obj_codigo,&paux);
   paux=strdup(": ;\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 
-  mystrcat(&(*obj).codigo,&(*cond).codigo);
+  mystrcat(obj_codigo,cond_codigo);
   paux=strdup("if (!");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*cond).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*cond).nombreTmp);
   paux=strdup(") goto ");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux=strdup(etfin);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux=strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 
-  mystrcat(&(*obj).codigo, &(*sent).codigo);
+  mystrcat(obj_codigo, sent_codigo);
 
   paux = strdup("\ngoto ");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(etini);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 
 
   paux = strdup(etfin);
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
   paux = strdup(": ;\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 }
 
 
 void genCodigoHacerHasta(atributos* obj,atributos* cond,atributos* sent){
 
+  char** obj_codigo = &(*obj).codigo;
+  char** cond_codigo = &(*cond).codigo;
+  char** sent_codigo = &(*sent).codigo;
+
+  if( nivel_profundidad_funciones_anidadas != 0)
+  {
+    obj_codigo = &(*obj).cod_fun;
+    cond_codigo = &(*cond).cod_fun;
+    sent_codigo = &(*sent).cod_fun;
+  }
+
   char* etini = etiqueta();
 
   paux = strdup(etini);
-  mystrcpy(&(*obj).codigo,&paux);
+  mystrcpy(obj_codigo,&paux);
   paux = strdup(": ;\n");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*sent).codigo);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,sent_codigo);
 
 
-  mystrcat(&(*obj).codigo,&(*cond).codigo);
+  mystrcat(obj_codigo,cond_codigo);
 
   paux=strdup("if (!");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*cond).nombreTmp);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&(*cond).nombreTmp);
   paux=strdup(") goto ");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&etini);
+  mystrcat(obj_codigo,&paux);
+  mystrcat(obj_codigo,&etini);
   paux=strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(obj_codigo,&paux);
 
 }
 
