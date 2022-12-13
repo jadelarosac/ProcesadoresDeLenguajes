@@ -118,7 +118,7 @@ void genCodigoSi(atributos* ,atributos*,atributos*);
 void genCodigoMientras(atributos* obj,atributos* cond,atributos* sent);
 void genCodigoHacerHasta(atributos* obj,atributos* cond,atributos* sent);
 
-void genCabeceraSubprograma(atributos* obj, char* tipo, atributos* atr);
+void genCabeceraSubprograma(atributos* obj, char* tipo, atributos* atr, atributos* args);
 
 char* opdorUnAString(int opdor);
 char* opdorBinAString(int opdor);
@@ -167,23 +167,46 @@ bloque                      : Inicio_de_bloque {TS_InsertaMARCA();}
                                   Declar_subprogs
                                   Sentencias
                               Fin_de_bloque { TS_VaciarENTRADAS();
-                                                                   //mystrcat($3.codigo,$5.codigo);
+                                                                   mystrcat(&$3.codigo,&$5.codigo);
                                                                    mystrcat(&$3.codigo,&$6.codigo);
                                                                    paux = strdup("\n}//fin bloque\n");
                                                                    mystrcat(&$3.codigo,&paux);
-                                                                   mystrcpy(&$$.codigo,&$3.codigo);}
-Declar_subprogs             : Declar_subprogs Declar_subprog
-                              |
+                                                                   mystrcpy(&$$.codigo,&$3.codigo);
+                                                                   }
+Declar_subprogs             : Declar_subprogs Declar_subprog{mystrcpy(&$$.codigo,&$1.codigo);
+                            paux = strdup("\n");
+                            mystrcat(&$$.codigo,&paux);
+                            mystrcat(&$$.codigo,&$2.codigo);}
+                              | { paux = strdup("");mystrcpy(&$$.codigo,&paux);}
 Declar_subprog              : {anidado_nivel++;} Cabecera_subprog
                               {subprog = 1;}     bloque
                               {
-                                  printf("%s\n", $2.codigo);
-                                  fputs($2.codigo,dec_fun); // Esto da el nombre de la función
-                                  fputs($4.codigo,dec_fun); // Esto da el código de la función
+                                
+                                  if (anidado_nivel == 1)
+                                  {
+                                    paux = strdup("//Inicio declaracion funcion\n");
+                                    fputs(paux, dec_fun);
+                                    fputs($2.codigo,dec_fun); // Esto da el nombre de la función
+                                    paux = strdup("\n");
+                                    fputs(paux, dec_fun);
+                                    fputs($4.codigo,dec_fun); // Esto da el código de la función
+                                    paux = strdup("//Fin declaracion funcion\n");
+                                    fputs(paux, dec_fun);
+                                    paux = strdup("");
+                                    mystrcpy(&$$.codigo,&paux);
 
+                                  }else{
+                                    paux = strdup("//Inicio declaracion funcion\n");
+                                    mystrcpy(&$$.codigo,&paux);
+                                    mystrcat(&$$.codigo,&$2.codigo);
+                                    mystrcat(&$$.codigo,&$4.codigo);
+                                    paux = strdup("//Fin declaracion funcion\n");
+                                    mystrcat(&$$.codigo,&paux);
+                                  }
                                   subprog = 0;
                                   anidado_nivel--;
                               }
+
 Declar_de_variables_locales : Marca_ini_declar_variables
                                   Variables_locales
                                   Marca_fin_declar_variables {mystrcpy(&$$.codigo,&$2.codigo);}
@@ -213,11 +236,29 @@ Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {
                                   tipoTmp=atributoAEnum($1.atrib);
                                   TS_InsertaSUBPROG($2);
                                   paux = strdup(enumAString(tipoTmp));
-                                  genCabeceraSubprograma(&$$, paux, &$2);
+                                  genCabeceraSubprograma(&$$, paux, &$2, &$4);
                                   }
-                              | tipo variable PARIZQ PARDER {tipoTmp=atributoAEnum($1.atrib);TS_InsertaSUBPROG($2);}
-argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {TS_InsertaPARAMF($3);}
-                              |   argumentos COMA tipo {tipoTmp=atributoAEnum($3.atrib);} variable {TS_InsertaPARAMF($5);}
+                              | tipo variable PARIZQ PARDER {tipoTmp=atributoAEnum($1.atrib);
+                              TS_InsertaSUBPROG($2);
+                              paux = strdup(enumAString(tipoTmp));
+                              genCabeceraSubprograma(&$$, paux, &$2, NULL);
+                              }
+argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {TS_InsertaPARAMF($3);
+                            paux = strdup(enumAString(tipoTmp));
+                            mystrcpy(&$$.codigo,&paux);
+                            paux = strdup(" ");
+                            mystrcat(&$$.codigo,&paux);
+                            mystrcat(&$$.codigo,&$3.codigo);}
+                              |   argumentos COMA tipo {tipoTmp=atributoAEnum($3.atrib);} variable {TS_InsertaPARAMF($5);
+                              mystrcpy(&$$.codigo,&$1.codigo);
+                              paux = strdup(", ");
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(enumAString(tipoTmp));
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(" ");
+                              mystrcat(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&$5.codigo);
+                              }
                               |   error
 variable                    : identificador {$$.lexema = $1.lexema;
                                              $$.dimensiones=0; $$.TamDimen1=0; $$.TamDimen2=0;
@@ -287,8 +328,11 @@ Sentencia                   : bloque {mystrcpy(&$$.codigo,&$1.codigo);}
                               paux = strdup("}//fin sentencia salida\n");
                               mystrcat(&$$.codigo,&paux);
                               }
-                              |   sentencia_retornar {paux = strdup("SENTENCIA RETORNAR");
-                              mystrcpy(&$$.codigo,&paux);}
+                              |   sentencia_retornar {paux = strdup("{//inicio sentencia return\n");
+                              mystrcpy(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&$1.codigo);
+                              paux = strdup("}//fin sentencia return\n");
+                              mystrcat(&$$.codigo,&paux);}
 sentencia_asignacion        : variable_expresion ASIG expresion PYC {procesaSentenciaAsignacion($1,$3);genCodigoAsignacion(&$$,&$1,&$3);}
                               |   error
 sentencia_si                : SI PARIZQ expresion PARDER Sentencia {procesaSentenciaControl($3);
@@ -323,7 +367,14 @@ sentencia_salida            : SALIDA lista_expresiones_cadena PYC {mystrcpy(&$$.
                             }
 
 
-sentencia_retornar          : DEVOLVER expresion PYC {procesaSentenciaRetornar($2);}
+sentencia_retornar          : DEVOLVER expresion PYC {procesaSentenciaRetornar($2);
+                            mystrcpy(&$$.codigo,&$2.codigo);
+                            paux = strdup("\nreturn ");
+                            mystrcat(&$$.codigo,&paux);
+                            mystrcat(&$$.codigo,&$2.nombreTmp);
+                            paux = strdup(";\n");
+                            mystrcat(&$$.codigo,&paux);
+                            }
 lista_expresiones_cadena    : lista_expresiones_cadena COMA expresion_cadena {mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
                             paux = strdup(",");
                             mystrcat(&$$.nombreTmp,&paux);
@@ -394,12 +445,17 @@ lista_declaracion_variables :  variable {TS_InsertaIDENT($1);
                                                                              paux = strdup($1.codigo);
                                                                              mystrcpy(&$$.codigo,&paux);}
                               |   error
-lista_expresiones           : expresion {PILARG_insertaARG($1);mystrcpy(&$$.codigo,&$1.codigo);}
+lista_expresiones           : expresion {PILARG_insertaARG($1);mystrcpy(&$$.codigo,&$1.codigo);mystrcpy(&$$.nombreTmp,&$1.nombreTmp);}
                               |   lista_expresiones COMA expresion {PILARG_insertaARG($3);
-                              mystrcpy(&$$.codigo,&$1.codigo);
+                              mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
                               paux = strdup(",");
+                              mystrcat(&$$.nombreTmp,&paux);
+                              mystrcat(&$$.nombreTmp,&$3.nombreTmp);
+                              mystrcpy(&$$.codigo,&$1.codigo);
+                              paux = strdup("\n");
                               mystrcat(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$3.codigo);}
+                              mystrcat(&$$.codigo,&$3.codigo);
+                              }
 expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               |   OPNEG expresion {$$ = procesaOperacionNegacion($2);genCodigoOperadorUnNeg(&$$,&$2);}
                               |   OPSUMA expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);genCodigoOperadorUn(&$$,&$2,$1.atrib);}
@@ -429,10 +485,13 @@ expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               mystrcpy(&$$.codigo,&paux);
                               }
                               |   funcion {$$ = $1;
+                              mystrcpy(&$$.codigo, &$1.codigo);
+                              paux = strdup("\n");
+                              mystrcat(&$$.codigo,&paux);
                               paux = temporal();
                               mystrcpy(&$$.nombreTmp,&paux);
                               paux = strdup(enumAString($$.tipo));
-                              mystrcpy(&$$.codigo,&paux);
+                              mystrcat(&$$.codigo,&paux);
                               paux = strdup(" ");
                               mystrcat(&$$.codigo,&paux);
                               paux = strdup($$.nombreTmp);
@@ -443,28 +502,33 @@ expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               mystrcat(&$$.codigo,&paux);
                               paux = strdup("=");
                               mystrcat(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$1.codigo);
+                              mystrcat(&$$.codigo,&$1.nombreTmp);
                               paux = strdup(";\n");
                               mystrcat(&$$.codigo,&paux);}
                               |   error
 funcion                     : identificador PARIZQ PARDER {entradaTS ets = buscarEntrada($1.lexema);
                                                            procesaLlamadaFuncionSinArgumentos(ets);
                                                            $$ = entradaAAtributos(ets);
-                                                           mystrcpy(&$$.codigo,&$1.codigo);
+                                                           mystrcpy(&$$.nombreTmp,&$1.codigo);
                                                            paux = strdup("(");
-                                                           mystrcat(&$$.codigo,&paux);
+                                                           mystrcat(&$$.nombreTmp,&paux);
                                                            paux = strdup(")");
-                                                           mystrcat(&$$.codigo,&paux);}
+                                                           mystrcat(&$$.nombreTmp,&paux);
+                                                           paux = strdup("");
+                                                           mystrcpy(&$$.codigo,&paux);}
                               |   identificador PARIZQ {PILARG_insertaMARCA();} lista_expresiones PARDER
                               {entradaTS ets = buscarEntrada($1.lexema);
                                procesaLlamadaFuncionConArgumentos(ets);
                                $$ = entradaAAtributos(ets);
-                               mystrcpy(&$$.codigo,&$1.codigo);
-                               paux = strdup("(");
+                               mystrcpy(&$$.codigo,&$4.codigo);
+                               paux = strdup("\n");
                                mystrcat(&$$.codigo,&paux);
-                               mystrcat(&$$.codigo,&$4.codigo);
+                               mystrcpy(&$$.nombreTmp,&$1.codigo);
+                               paux = strdup("(");
+                               mystrcat(&$$.nombreTmp,&paux);
+                               mystrcat(&$$.nombreTmp,&$4.nombreTmp);
                                paux = strdup(")");
-                               mystrcat(&$$.codigo,&paux);}
+                               mystrcat(&$$.nombreTmp,&paux);}
 tipo                        : TIPOEL {$$.atrib = $1.atrib;}
 cadena                      : CADENA {paux = strdup($1.lexema);mystrcpy(&$$.codigo,&paux);}
 identificador               : IDEN  {paux = strdup($1.lexema);mystrcpy(&$$.codigo,&paux);}
@@ -1148,15 +1212,20 @@ void empezarGEN(){
   fputs("#include <stdio.h>\n",intermain);
   fputs("#include <stdlib.h>\n",intermain);
   fputs("#include <stdbool.h>\n",intermain);
+
+  fputs("#ifndef FUNCIONES_DEC\n",dec_fun);
+  fputs("#define FUNCIONES_DEC\n",dec_fun);
+
 }
 
 
 void finalizarGEN(){
   fputs("\n",intermain);
   fputs("\n",dec_fun);
-
+  fputs("#endif\n",dec_fun);
   fclose(dec_fun);
   fclose(intermain);
+
 }
 
 
@@ -1468,11 +1537,20 @@ void genCodigoHacerHasta(atributos* obj,atributos* cond,atributos* sent){
 
 }
 
-void genCabeceraSubprograma(atributos* obj, char* tipo, atributos* atr)
+void genCabeceraSubprograma(atributos* obj, char* tipo, atributos* atr, atributos* args)
 {
   sprintf(paux,"%s ", tipo);
   mystrcpy(&(*obj).codigo, &paux);
-  mystrcat(&(*obj).codigo, &(*atr).lexema);
+  mystrcat(&(*obj).codigo, &(*atr).codigo);
+  paux = strdup("(");
+  mystrcat(&(*obj).codigo,&paux);
+
+  if (args != NULL){
+    mystrcat(&(*obj).codigo,&(*args).codigo);
+  }
+
+  paux = strdup(")");
+  mystrcat(&(*obj).codigo,&paux);
 }
 
 
