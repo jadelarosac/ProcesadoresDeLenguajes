@@ -211,15 +211,9 @@ Declar_de_variables_locales : Marca_ini_declar_variables
                                                                 mystrcpy(codigoS, codigo2);
                                                                 }
                               |   {
-                                                                char** lugar_donde_escribir = &$$.codigo;
-
-                                                                if (nivel_profundidad_funciones_anidadas != 0)
-                                                                {
-                                                                  lugar_donde_escribir = &$$.cod_fun;
-                                                                }
-
                                                                 paux = strdup("");
-                                                                mystrcpy(lugar_donde_escribir,&paux);
+                                                                mystrcpy(&$$.codigo,&paux);
+                                                                mystrcpy(&$$.cod_fun,&paux);
                                   }
 Marca_ini_declar_variables  : INIDEC
 Marca_fin_declar_variables  : FINDEC
@@ -587,7 +581,8 @@ expresion_cadena            : expresion {
 
                                                                 mystrcpy(&$$.nombreTmp,codigo1);
                                                                 paux = strdup("");
-                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcpy(&$$.codigo,&paux);
+                                                                mystrcpy(&$$.cod_fun,&paux);
                                                                 paux = strdup("%s ");
                                                                 if (textoPrintf == NULL) mystrcpy(&textoPrintf, &paux);
                                                                 else mystrcat(&textoPrintf,&paux);
@@ -729,31 +724,18 @@ expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               |   expresion OPMOD expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
                               |   expresion OPSUMA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorMix(&$$,&$1,&$3,$2.atrib);}
                               |   expresion OPRESTA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorMix(&$$,&$1,&$3,$2.atrib);}
-                              |   variable_expresion {
-                                                                char** codigoS = &$$.codigo;
-
-                                                                if (nivel_profundidad_funciones_anidadas != 0)
-                                                                {
-                                                                  codigoS = &$$.cod_fun;
-                                                                }
-
-                                                                $$ = $1;
+                              |   variable_expresion {                                                                $$ = $1;
                                                                 mystrcpy(&$$.nombreTmp,&$1.lexema);
                                                                 paux = strdup("");
-                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcpy(&$$.codigo,&paux);
+                                                                mystrcpy(&$$.cod_fun,&paux);
                               }
                               |   constante {
-                                                                char** codigoS = &$$.codigo;
-
-                                                                if (nivel_profundidad_funciones_anidadas != 0)
-                                                                {
-                                                                  codigoS = &$$.cod_fun;
-                                                                }
-
                                                                 $$ = $1;
                                                                 mystrcpy(&$$.nombreTmp,&$1.lexema);
                                                                 paux = strdup("");
-                                                                mystrcpy(codigoS,&paux);
+                                                                mystrcpy(&$$.codigo,&paux);
+                                                                mystrcpy(&$$.cod_fun,&paux);
                                                                 }
                               |   funcion {
                                                                 char** codigoS = &$$.codigo;
