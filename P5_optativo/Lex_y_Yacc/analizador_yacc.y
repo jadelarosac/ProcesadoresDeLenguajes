@@ -118,7 +118,7 @@ void genCodigoSi(atributos* ,atributos*,atributos*);
 void genCodigoMientras(atributos* obj,atributos* cond,atributos* sent);
 void genCodigoHacerHasta(atributos* obj,atributos* cond,atributos* sent);
 
-void genCabeceraSubprograma(atributos* obj, atributos* at1, atributos* at2);
+void genCabeceraSubprograma(atributos* obj, char* tipo, atributos* atr);
 
 char* opdorUnAString(int opdor);
 char* opdorBinAString(int opdor);
@@ -177,8 +177,9 @@ Declar_subprogs             : Declar_subprogs Declar_subprog
 Declar_subprog              : {anidado_nivel++;} Cabecera_subprog
                               {subprog = 1;}     bloque
                               {
-                                  //fputs($2.codigo,dec_fun); // Esto da el nombre de la función
-                                  //fputs($4.codigo,dec_fun); // Esto da el código de la función
+                                  printf("%s\n", $2.codigo);
+                                  fputs($2.codigo,dec_fun); // Esto da el nombre de la función
+                                  fputs($4.codigo,dec_fun); // Esto da el código de la función
 
                                   subprog = 0;
                                   anidado_nivel--;
@@ -211,8 +212,8 @@ Cuerpo_declar_variables      : tipo {tipoTmp=atributoAEnum($1.atrib);} lista_dec
 Cabecera_subprog            :   tipo variable PARIZQ argumentos PARDER {
                                   tipoTmp=atributoAEnum($1.atrib);
                                   TS_InsertaSUBPROG($2);
-                                  printf("%s %s\n", enumATipoForm(tipoTmp), $2.lexema);
-                                  //genCabeceraSubprograma(&$$, &$2, &$3);
+                                  paux = strdup(enumAString(tipoTmp));
+                                  genCabeceraSubprograma(&$$, paux, &$2);
                                   }
                               | tipo variable PARIZQ PARDER {tipoTmp=atributoAEnum($1.atrib);TS_InsertaSUBPROG($2);}
 argumentos                  : tipo {tipoTmp=atributoAEnum($1.atrib);} variable {TS_InsertaPARAMF($3);}
@@ -1467,15 +1468,11 @@ void genCodigoHacerHasta(atributos* obj,atributos* cond,atributos* sent){
 
 }
 
-void genCabeceraSubprograma(atributos* obj, atributos* at1, atributos* at2)
+void genCabeceraSubprograma(atributos* obj, char* tipo, atributos* atr)
 {
-  paux = strdup("");
-
+  sprintf(paux,"%s ", tipo);
   mystrcpy(&(*obj).codigo, &paux);
-  //mystrcat(&(*obj).codigo, &(*at1).lexema);
-  paux = strdup(" ");
-  //mystrcat(&(*obj).codigo, &paux);
-  mystrcat(&(*obj).codigo, &(*at2).lexema);
+  mystrcat(&(*obj).codigo, &(*atr).lexema);
 }
 
 

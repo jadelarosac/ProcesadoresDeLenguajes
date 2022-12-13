@@ -33,7 +33,7 @@ tmp3=curr<=n;
 if (!tmp3) goto etiqueta5;
 {//inicio bloque
 {//inicio sentencia if
-int tmp4;
+Ninguno tmp4;
 tmp4=es_divisible(,);
 if (!tmp4) goto etiqueta3;
 {//inicio if
