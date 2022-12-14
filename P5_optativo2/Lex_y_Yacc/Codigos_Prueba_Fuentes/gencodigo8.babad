@@ -1,0 +1,13 @@
+programa_principal(){
+  declarar
+    real vec[5];
+    booleano mat[2,3];
+  fin declarar
+  
+  vec = [5.1,2.03,3.1415,0.01,1.0];
+  
+  mat = [cierto, falso; cierto, falso; cierto, falso];
+
+
+  escribir "Hola, mundo";
+}

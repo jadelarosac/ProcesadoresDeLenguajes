@@ -597,11 +597,15 @@ constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);
                               paux = strdup($1.lexema);
                               mystrcpy(&$$.codigo,&paux);
                               }
-                              |   CORIZQ ini_elementos_array CORDER { $$.tipo = $2.tipo;
+                              |   CORIZQ ini_elementos_array CORDER { $$.tipo = $2.tipo; $$.codigo = $2.codigo;
                                                                     if ($2.TamDimen2==1){$$.TamDimen2 = 0; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 1;}
                                                                     else{$$.TamDimen2 = $2.TamDimen2; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 2;}}
 ini_elementos_array         : ini_elementos_array PYC lista_expresiones_array {$$.TamDimen2 = $1.TamDimen2 + 1;
 
+                                                                              $$.codigo = $2.codigo;
+                                                                              paux = strdup("}, {");
+                                                                              mystrcat(&$$.codigo, &paux);
+                                                                              mystrcat(&$$.codigo, &$3.codigo);
                                                                               if ($1.tipo != $3.tipo){
                                                                                 printf("[Linea %d]",linea_actual);
                                                                                 printf("ERROR SEMÁNTICO: Matriz con distintos tipos en distintas columnas.\n");
@@ -612,10 +616,26 @@ ini_elementos_array         : ini_elementos_array PYC lista_expresiones_array {$
                                                                               }else{
                                                                                 $$.TamDimen1 = $1.TamDimen1;
                                                                               }}
-                              |   lista_expresiones_array {$$.TamDimen2 = 1;$$.TamDimen1 = $1.TamDimen1;$$.tipo = $1.tipo;}
+                              |   lista_expresiones_array {
+                                                                          $$.TamDimen2 = 1;
+                                                                          $$.TamDimen1 = $1.TamDimen1;
+                                                                          $$.tipo = $1.tipo;
+                                                                          $$.codigo = $1.codigo;
+                                                                          printf("%s\n",$$.codigo);
+                                                                          }
 
-lista_expresiones_array       : expresion {$$.TamDimen1 = 1; $$.tipo = $1.tipo;}
+lista_expresiones_array       : expresion {
+                                                                          $$.TamDimen1 = 1;
+                                                                          $$.tipo = $1.tipo;
+                                                                          genCodigoExpresionEntreCorchetes(&paux,&$1);
+                                                                          mystrcpy(&$$.codigo, &paux);
+                                                                          }
                               |   lista_expresiones_array COMA expresion {$$.TamDimen1 = $1.TamDimen1 + 1;
+                                                                          $$.codigo = $1.codigo;
+                                                                          paux = strdup(", ");
+                                                                          mystrcat(&$$.codigo, &paux);
+                                                                          genCodigoExpresionEntreCorchetes(&paux,&$3);
+                                                                          mystrcat(&$$.codigo, &paux);
                                                                           if ($1.tipo != $3.tipo){
                                                                                 printf("[Linea %d]",linea_actual);
                                                                                 printf("ERROR SEMÁNTICO: Array con distintos tipos.\n");
