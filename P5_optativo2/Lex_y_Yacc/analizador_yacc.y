@@ -270,7 +270,7 @@ variable                    : identificador {$$.lexema = $1.lexema;
 
                               |   elemento_de_array_decl {
                                                                     $$.lexema = $1.lexema;
-                                                                    $$.codigo = $1.codigo;
+                                                                    mystrcpy(&$$.codigo,&$1.codigo);
                                                                     }
 elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {
                                                                     $$.lexema = $1.lexema;
@@ -298,54 +298,47 @@ elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {
 
 variable_expresion          : identificador  {entradaTS ets = buscarEntrada($1.lexema); $$ = entradaAAtributos(ets);
                             paux = strdup($1.lexema);
+                            mystrcpy(&$$.nombreTmp,&paux);
+                            paux = strdup("");
                             mystrcpy(&$$.codigo,&paux);}
-                              |   elemento_de_array  {$$ = $1;}
+                              |   elemento_de_array  {$$ = $1;
+                                                      mystrcpy(&$$.codigo,&$1.codigo);
+                                                      mystrcpy(&$$.nombreTmp,&$1.nombreTmp);}
 elemento_de_array           : identificador CORIZQ expresion CORDER {
                                                                     entradaTS ets = buscarEntrada($1.lexema);
                                                                     ets.dimensiones = 0;
                                                                     $$ = entradaAAtributos(ets);
 
-                                                                    mystrcpy(&$$.codigo, &$$.lexema);
-
+                                                                    mystrcpy(&$$.codigo, &$3.codigo);
+                                                                    paux = strdup($1.lexema);
+                                                                    mystrcpy(&$$.nombreTmp,&paux);
                                                                     paux = strdup("[");
-                                                                    mystrcat(&$$.codigo, &paux);
-
-                                                                    char * paux2;
-                                                                    paux = strdup("");
-                                                                    paux2 = strdup("");
-                                                                    genCodigoExpresionEntreCorchetes(&paux2,&$3);
-                                                                    mystrcat(&$$.codigo, &paux2);
-
+                                                                    mystrcat(&$$.nombreTmp,&paux);
+                                                                    mystrcat(&$$.nombreTmp, &$3.nombreTmp);
                                                                     paux = strdup("]");
-                                                                    mystrcat(&$$.codigo, &paux);
+                                                                    mystrcat(&$$.nombreTmp,&paux);
                                                                     }
                               |   identificador CORIZQ expresion
                               COMA expresion CORDER {
                                                                     entradaTS ets = buscarEntrada($1.lexema);
                                                                     ets.dimensiones = 0;
                                                                     $$ = entradaAAtributos(ets);
+                                                                    mystrcpy(&$$.codigo, &$3.codigo);
+                                                                    paux = strdup("\n");
+                                                                    mystrcat(&$$.codigo, &paux);
+                                                                    mystrcat(&$$.codigo, &$5.codigo);
 
-                                                                    mystrcpy(&$$.codigo, &$$.lexema);
-
+                                                                    paux = strdup($1.lexema);
+                                                                    mystrcpy(&$$.nombreTmp,&paux);
                                                                     paux = strdup("[");
-                                                                    mystrcat(&$$.codigo, &paux);
-
-                                                                    char * paux2;
-                                                                    paux = strdup("");
-                                                                    paux2 = strdup("");
-                                                                    genCodigoExpresionEntreCorchetes(&paux2,&$3);
-                                                                    mystrcat(&$$.codigo, &paux2);
-
+                                                                    mystrcat(&$$.nombreTmp, &paux);
+                                                                    mystrcat(&$$.nombreTmp, &$3.nombreTmp);
                                                                     paux = strdup("][");
-                                                                    mystrcat(&$$.codigo, &paux);
-
-                                                                    paux = strdup("");
-                                                                    paux2 = strdup("");
-                                                                    genCodigoExpresionEntreCorchetes(&paux2,&$5);
-                                                                    mystrcat(&$$.codigo, &paux2);
-
+                                                                    mystrcat(&$$.nombreTmp, &paux);
+                                                                    mystrcat(&$$.nombreTmp, &$5.nombreTmp);
                                                                     paux = strdup("]");
-                                                                    mystrcat(&$$.codigo, &paux);
+                                                                    mystrcat(&$$.nombreTmp,&paux);
+                                                                    
                                                                     }
 Sentencias                  : Sentencias Sentencia {mystrcpy(&$$.codigo,&$1.codigo);
                             paux = strdup("\n");
@@ -533,14 +526,12 @@ expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               |   expresion OPSUMA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorMix(&$$,&$1,&$3,$2.atrib);}
                               |   expresion OPRESTA expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorMix(&$$,&$1,&$3,$2.atrib);}
                               |   variable_expresion {$$ = $1;
-                              mystrcpy(&$$.nombreTmp,&$1.lexema);
-                              paux = strdup("");
-                              mystrcpy(&$$.codigo,&paux);
+                              mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
+                              mystrcpy(&$$.codigo,&$1.codigo);
                               }
                               |   constante {$$ = $1;
-                              mystrcpy(&$$.nombreTmp,&$1.lexema);
-                              paux = strdup("");
-                              mystrcpy(&$$.codigo,&paux);
+                              mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
+                              mystrcpy(&$$.codigo,&$1.codigo);
                               }
                               |   funcion {$$ = $1;
                               mystrcpy(&$$.codigo, &$1.codigo);
@@ -591,28 +582,52 @@ tipo                        : TIPOEL {$$.atrib = $1.atrib;}
 cadena                      : CADENA {paux = strdup($1.lexema);mystrcpy(&$$.codigo,&paux);}
 identificador               : IDEN  {paux = strdup($1.lexema);mystrcpy(&$$.codigo,&paux);}
 constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);
+                            paux = strdup("");
+                            mystrcpy(&$$.codigo,&paux);
                             paux = strdup($1.lexema);
-                            mystrcpy(&$$.codigo,&paux);}
+                            mystrcpy(&$$.nombreTmp,&paux);}
                               | CONSTENT  {$$.tipo = entero;
-                              paux = strdup($1.lexema);
+                              paux = strdup("");
                               mystrcpy(&$$.codigo,&paux);
+                              paux = strdup($1.lexema);
+                              mystrcpy(&$$.nombreTmp,&paux);
                               }
                               |   CORIZQ ini_elementos_array CORDER { $$.tipo = $2.tipo;
-                                                                      paux = strdup("{");
-                                                                      mystrcpy(&$$.codigo, &paux);
-                                                                      mystrcat(&$$.codigo, &$2.codigo);
-                                                                      paux = strdup("}");
-                                                                      mystrcat(&$$.codigo, &paux);
-                                                                      printf("%s\n",$$.codigo);
-                                                                      if ($2.TamDimen2==1){$$.TamDimen2 = 0; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 1;}
-                                                                      else{$$.TamDimen2 = $2.TamDimen2; $$.TamDimen1 = $2.TamDimen1; $$.dimensiones = 2;}}
+                                                                      mystrcpy(&$$.codigo,&$2.codigo);
+                                                                      if ($2.TamDimen2==1){
+                                                                        $$.TamDimen2 = 0; 
+                                                                        $$.TamDimen1 = $2.TamDimen1; 
+                                                                        $$.dimensiones = 1;
+
+                                                                        mystrcpy(&$$.nombreTmp, &$2.nombreTmp);
+                                                                      }
+                                                                      else{
+                                                                        $$.TamDimen2 = $2.TamDimen2;
+                                                                        $$.TamDimen1 = $2.TamDimen1; 
+                                                                        $$.dimensiones = 2;
+
+                                                                        paux = strdup("{");
+                                                                        mystrcpy(&$$.nombreTmp,&paux);
+                                                                        mystrcat(&$$.nombreTmp,&$2.nombreTmp);
+                                                                        paux = strdup("}");
+                                                                        mystrcat(&$$.nombreTmp,&paux);
+                                                                        
+                                                                      }
+                                                                      }
 ini_elementos_array         : ini_elementos_array PYC lista_expresiones_array {$$.TamDimen2 = $1.TamDimen2 + 1;
 
-                                                                              $$.codigo = $1.codigo;
-                                                                              paux = strdup("}, {");
+                                                                              mystrcpy(&$$.codigo,&$1.codigo);
+                                                                              paux = strdup("\n");
                                                                               mystrcat(&$$.codigo, &paux);
-                                                                              paux = strdup($3.codigo);
-                                                                              mystrcat(&$$.codigo, &paux);
+                                                                              mystrcat(&$$.codigo, &$3.codigo);
+                                                                              
+                                                                              mystrcpy(&$$.nombreTmp,&$1.nombreTmp);
+                                                                              paux = strdup(",{");
+                                                                              mystrcat(&$$.nombreTmp,&paux);
+                                                                              mystrcat(&$$.nombreTmp,&$3.nombreTmp);
+                                                                              paux = strdup("}");
+                                                                              mystrcat(&$$.nombreTmp,&paux);
+                                                                              
                                                                               if ($1.tipo != $3.tipo){
                                                                                 printf("[Linea %d]",linea_actual);
                                                                                 printf("ERROR SEMÁNTICO: Matriz con distintos tipos en distintas columnas.\n");
@@ -627,21 +642,32 @@ ini_elementos_array         : ini_elementos_array PYC lista_expresiones_array {$
                                                                           $$.TamDimen2 = 1;
                                                                           $$.TamDimen1 = $1.TamDimen1;
                                                                           $$.tipo = $1.tipo;
-                                                                          $$.codigo = $1.codigo;
+                                                                          mystrcpy(&$$.codigo,&$1.codigo);
+                                                                          paux = strdup("{");
+                                                                          mystrcpy(&$$.nombreTmp,&paux);
+                                                                          mystrcat(&$$.nombreTmp,&$1.nombreTmp);
+                                                                          paux = strdup("}");
+                                                                          mystrcat(&$$.nombreTmp,&paux);
                                                                           }
 
 lista_expresiones_array       : expresion {
                                                                           $$.TamDimen1 = 1;
                                                                           $$.tipo = $1.tipo;
-                                                                          genCodigoExpresionEntreCorchetes(&paux,&$1);
-                                                                          mystrcpy(&$$.codigo, &paux);
+                                                                          mystrcpy(&$$.nombreTmp, &$1.nombreTmp); 
+                                                                          mystrcpy(&$$.codigo, &$1.codigo);
                                                                           }
                               |   lista_expresiones_array COMA expresion {$$.TamDimen1 = $1.TamDimen1 + 1;
-                                                                          $$.codigo = $1.codigo;
+
+                                                                          mystrcpy(&$$.codigo,&$1.codigo);
+                                                                          paux = strdup("\n");
+                                                                          mystrcat(&$$.codigo,&paux);
+                                                                          mystrcat(&$$.codigo, &$3.codigo);
+                                                                          
+                                                                          mystrcpy(&$$.nombreTmp, &$1.nombreTmp);
                                                                           paux = strdup(", ");
-                                                                          mystrcat(&$$.codigo, &paux);
-                                                                          genCodigoExpresionEntreCorchetes(&paux,&$3);
-                                                                          mystrcat(&$$.codigo, &paux);
+                                                                          mystrcat(&$$.nombreTmp,&paux);
+                                                                          mystrcat(&$$.nombreTmp,&$3.nombreTmp);
+
                                                                           if ($1.tipo != $3.tipo){
                                                                                 printf("[Linea %d]",linea_actual);
                                                                                 printf("ERROR SEMÁNTICO: Array con distintos tipos.\n");
@@ -1295,6 +1321,7 @@ void empezarGEN(){
 
   fputs("#include <stdio.h>\n",intermain);
   fputs("#include <stdlib.h>\n",intermain);
+  fputs("#include <string.h>\n"intermain);
   fputs("#include <stdbool.h>\n",intermain);
   fputs("#include \"FuncionesArrays/dec_dat.h\"\n",intermain);
 
@@ -1382,6 +1409,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
   paux = strdup((*obj).nombreTmp);
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup(";\n");
+  
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup((*obj).nombreTmp);
   mystrcat(&(*obj).codigo,&paux);
@@ -1393,6 +1421,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
   mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
   paux = strdup(";\n");
   mystrcat(&(*obj).codigo,&paux);
+
 }
 
 void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int opdor){
@@ -1411,17 +1440,31 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
   paux = strdup((*obj).nombreTmp);
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
-  paux = strdup((*obj).nombreTmp);
-  mystrcat(&(*obj).codigo,&paux);
-  paux = strdup("=");
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
-  paux = strdup(opdorBinAString(opdor));
-  mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
-  paux = strdup(";\n");
-  mystrcat(&(*obj).codigo,&paux);
+
+  if ((*at1).dimensiones == 0 && (*at2).dimensiones == 0){
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup((*obj).nombreTmp);
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup("=");
+    mystrcat(&(*obj).codigo,&paux);
+    mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
+    paux = strdup(opdorBinAString(opdor));
+    mystrcat(&(*obj).codigo,&paux);
+    mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
+    paux = strdup(";\n");
+    mystrcat(&(*obj).codigo,&paux);
+  }else if ((*at1).dimensiones == 1 && (*at2).dimensiones == 1){
+  }else if ((*at1).dimensiones == 2 && (*at2).dimensiones == 2){
+  }else if ((*at1).dimensiones == 0 && (*at2).dimensiones == 1){
+  }else if ((*at1).dimensiones == 1 && (*at2).dimensiones == 0){
+  }else if ((*at1).dimensiones == 0 && (*at2).dimensiones == 2){
+  }else if ((*at1).dimensiones == 2 && (*at2).dimensiones == 0){
+  }
+
+
+
+
+
 }
 
 void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor){
@@ -1473,6 +1516,10 @@ void genCodigoAsignacion(atributos* obj, atributos* at1, atributos* at2){
   paux = strdup("\n");
   mystrcat(&(*obj).codigo,&paux);
   mystrcat(&(*obj).codigo,&(*at1).codigo);
+  paux = strdup("\n");
+  mystrcat(&(*obj).codigo,&paux);
+
+  mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
   paux = strdup(" = ");
   mystrcat(&(*obj).codigo,&paux);
   mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
