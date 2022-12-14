@@ -14,7 +14,6 @@ $(OBJ)/%.c: $(FUEN)/%.babad
 	./analizador_yacc $^
 	@mv ./main_inter.c $(OBJ)/$(*F)
 	@mv ./dec_fun.c $(OBJ)/$(*F)
-	@mv ./dec_fun.h $(OBJ)/$(*F)
 	@echo "all: main_inter.c\n\tgcc main_inter.c -o main_inter" > $(OBJ)/$(*F)/Makefile
 
 analizador_yacc: main.o y.tab.o

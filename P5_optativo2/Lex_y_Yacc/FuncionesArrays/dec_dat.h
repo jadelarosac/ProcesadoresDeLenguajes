@@ -1,3 +1,5 @@
+#ifndef MAT_DEC
+#define MAT_DEC
 // FUNCIONES CON int
 #define TIPO_DETERMINADO int
 
@@ -105,4 +107,4 @@
 #undef FUNCION_DETERMINADA
 
 #undef TIPO_DETERMINADO
-
+#endif

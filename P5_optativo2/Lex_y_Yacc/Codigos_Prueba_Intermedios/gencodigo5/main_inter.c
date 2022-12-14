@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "FuncionesArrays/dec_dat.h"
 int n;
 
 #include "dec_fun.c"
@@ -15,38 +16,15 @@ printf("%s ","introduce numero :");
 scanf("%d",&n);
 }//fin sentencia entrada
 
-{//inicio sentencia if
+{//inicio sentencia salida
+
+
 
 
 int tmp4;
-tmp4=n>0;
-if (!tmp4) goto etiqueta3;
-{//inicio if
-{//inicio bloque
-{//inicio sentencia salida
-
-
-
-
-int tmp5;
-tmp5=fact(n);
-printf("%d %s %d ",n,"!==",tmp5);
+tmp4=fact(n);
+printf("%d %s %d ",n,"!==",tmp4);
 }//fin sentencia salida
-
-}//fin bloque
-}//fin if
-goto etiqueta2;
-etiqueta3: ;
-{//inicio else
-{//inicio bloque
-{//inicio sentencia salida
-printf("%s ","Debes poner un número positivo");
-}//fin sentencia salida
-
-}//fin bloque
-}//fin else
-etiqueta2: ;
-}//fin sentencia if
 
 {//inicio sentencia salida
 printf("%s ","\n");

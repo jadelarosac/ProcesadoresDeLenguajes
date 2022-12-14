@@ -113,6 +113,7 @@ void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor);
 void genCodigoOperadorUnNeg(atributos* obj, atributos* at1);
 
 void genCodigoAsignacion(atributos*, atributos*, atributos*);
+void genCodigoExpresionEntreCorchetes(char** obj, atributos* atr);
 void genCodigoSino(atributos* ,atributos*,atributos*,atributos*);
 void genCodigoSi(atributos* ,atributos*,atributos*);
 void genCodigoMientras(atributos* obj,atributos* cond,atributos* sent);
@@ -181,7 +182,7 @@ Declar_subprogs             : Declar_subprogs Declar_subprog{mystrcpy(&$$.codigo
 Declar_subprog              : {anidado_nivel++;} Cabecera_subprog
                               {subprog = 1;}     bloque
                               {
-                                
+
                                   if (anidado_nivel == 1)
                                   {
                                     paux = strdup("//Inicio declaracion funcion\n");
@@ -267,28 +268,85 @@ variable                    : identificador {$$.lexema = $1.lexema;
 
                                              }
 
-                              |   elemento_de_array_decl {$$.lexema = $1.lexema;}
-elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {$$.lexema = $1.lexema;
+                              |   elemento_de_array_decl {
+                                                                    $$.lexema = $1.lexema;
+                                                                    $$.codigo = $1.codigo;
+                                                                    }
+elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {
+                                                                    $$.lexema = $1.lexema;
                                                                     $$.dimensiones=1;
                                                                     $$.TamDimen1=atoi($3.lexema);
-                                                                    $$.TamDimen2=0;}
+                                                                    $$.TamDimen2=0;
+
+                                                                    char saux[100];
+                                                                    sprintf(saux, "%s[%d]",$$.lexema,$$.TamDimen1);
+                                                                    paux = strdup(saux);
+                                                                    mystrcpy(&$$.codigo, &paux);
+                                                                    }
                               |   identificador CORIZQ CONSTENT
-                              COMA CONSTENT CORDER {$$.lexema = $1.lexema;
-                                                    $$.dimensiones=2;
-                                                    $$.TamDimen1=atoi($3.lexema);
-                                                    $$.TamDimen2=atoi($5.lexema);}
+                              COMA CONSTENT CORDER {
+                                                                    $$.lexema = $1.lexema;
+                                                                    $$.dimensiones=2;
+                                                                    $$.TamDimen1=atoi($3.lexema);
+                                                                    $$.TamDimen2=atoi($5.lexema);
+
+                                                                    char saux[100];
+                                                                    sprintf(saux, "%s[%d][%d]",$$.lexema,$$.TamDimen1,$$.TamDimen2);
+                                                                    paux = strdup(saux);
+                                                                    mystrcpy(&$$.codigo, &paux);
+                                                                    }
 
 variable_expresion          : identificador  {entradaTS ets = buscarEntrada($1.lexema); $$ = entradaAAtributos(ets);
                             paux = strdup($1.lexema);
                             mystrcpy(&$$.codigo,&paux);}
                               |   elemento_de_array  {$$ = $1;}
-elemento_de_array           : identificador CORIZQ expresion CORDER {entradaTS ets = buscarEntrada($1.lexema);
-                                                                     ets.dimensiones = 0;
-                                                                     $$ = entradaAAtributos(ets);}
+elemento_de_array           : identificador CORIZQ expresion CORDER {
+                                                                    entradaTS ets = buscarEntrada($1.lexema);
+                                                                    ets.dimensiones = 0;
+                                                                    $$ = entradaAAtributos(ets);
+
+                                                                    mystrcpy(&$$.codigo, &$$.lexema);
+
+                                                                    paux = strdup("[");
+                                                                    mystrcat(&$$.codigo, &paux);
+
+                                                                    char * paux2;
+                                                                    paux = strdup("");
+                                                                    paux2 = strdup("");
+                                                                    genCodigoExpresionEntreCorchetes(&paux2,&$3);
+                                                                    mystrcat(&$$.codigo, &paux2);
+
+                                                                    paux = strdup("]");
+                                                                    mystrcat(&$$.codigo, &paux);
+                                                                    }
                               |   identificador CORIZQ expresion
-                              COMA expresion CORDER {entradaTS ets = buscarEntrada($1.lexema);
-                                                     ets.dimensiones = 0;
-                                                     $$ = entradaAAtributos(ets);}
+                              COMA expresion CORDER {
+                                                                    entradaTS ets = buscarEntrada($1.lexema);
+                                                                    ets.dimensiones = 0;
+                                                                    $$ = entradaAAtributos(ets);
+
+                                                                    mystrcpy(&$$.codigo, &$$.lexema);
+
+                                                                    paux = strdup("[");
+                                                                    mystrcat(&$$.codigo, &paux);
+
+                                                                    char * paux2;
+                                                                    paux = strdup("");
+                                                                    paux2 = strdup("");
+                                                                    genCodigoExpresionEntreCorchetes(&paux2,&$3);
+                                                                    mystrcat(&$$.codigo, &paux2);
+
+                                                                    paux = strdup("][");
+                                                                    mystrcat(&$$.codigo, &paux);
+
+                                                                    paux = strdup("");
+                                                                    paux2 = strdup("");
+                                                                    genCodigoExpresionEntreCorchetes(&paux2,&$5);
+                                                                    mystrcat(&$$.codigo, &paux2);
+
+                                                                    paux = strdup("]");
+                                                                    mystrcat(&$$.codigo, &paux);
+                                                                    }
 Sentencias                  : Sentencias Sentencia {mystrcpy(&$$.codigo,&$1.codigo);
                             paux = strdup("\n");
                             mystrcat(&$$.codigo,&paux);
@@ -1212,6 +1270,7 @@ void empezarGEN(){
   fputs("#include <stdio.h>\n",intermain);
   fputs("#include <stdlib.h>\n",intermain);
   fputs("#include <stdbool.h>\n",intermain);
+  fputs("#include \"FuncionesArrays/dec_dat.h\"\n",intermain);
 
   fputs("#ifndef FUNCIONES_DEC\n",dec_fun);
   fputs("#define FUNCIONES_DEC\n",dec_fun);
@@ -1393,6 +1452,11 @@ void genCodigoAsignacion(atributos* obj, atributos* at1, atributos* at2){
   mystrcat(&(*obj).codigo,&(*at2).nombreTmp);
   paux = strdup(";\n");
   mystrcat(&(*obj).codigo,&paux);
+}
+
+void genCodigoExpresionEntreCorchetes(char** obj, atributos* atr){
+  mystrcpy(obj,&(*atr).codigo);
+  mystrcat(obj,&(*atr).nombreTmp);
 }
 
 

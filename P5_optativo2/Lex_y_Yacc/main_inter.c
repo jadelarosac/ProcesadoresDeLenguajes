@@ -1,55 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-int n;
+#include "FuncionesArrays/dec_dat.h"
+double vec[30];
+
+int mat[3][2];
 
 #include "dec_fun.c"
 
 int main(){//inicio bloque
+{//inicio sentencia asig
+
+vec[4] = 7.0;
+}//fin sentencia asig
+
+{//inicio sentencia asig
+
+mat[2][1] = 1;
+}//fin sentencia asig
 
 {//inicio sentencia salida
-printf("%s ","introduce numero :");
-}//fin sentencia salida
-
-{//inicio sentencia entrada
-scanf("%d",&n);
-}//fin sentencia entrada
-
-{//inicio sentencia if
-
-
-int tmp4;
-tmp4=n>0;
-if (!tmp4) goto etiqueta3;
-{//inicio if
-{//inicio bloque
-{//inicio sentencia salida
-
-
-
-
-int tmp5;
-tmp5=fact(n);
-printf("%d %s %d ",n,"!==",tmp5);
-}//fin sentencia salida
-
-}//fin bloque
-}//fin if
-goto etiqueta2;
-etiqueta3: ;
-{//inicio else
-{//inicio bloque
-{//inicio sentencia salida
-printf("%s ","Debes poner un número positivo");
-}//fin sentencia salida
-
-}//fin bloque
-}//fin else
-etiqueta2: ;
-}//fin sentencia if
-
-{//inicio sentencia salida
-printf("%s ","\n");
+printf("%s ","Hola, mundo");
 }//fin sentencia salida
 
 }//fin bloque
