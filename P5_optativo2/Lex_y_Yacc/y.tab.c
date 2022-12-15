@@ -2693,11 +2693,11 @@ yyreduce:
                                                                         mystrcat(&yyval.codigo,&paux);
                                                                       }
                                                                       else{
-                                                                        yyval.TamDimen2 = yyvsp[-1].TamDimen2;
-                                                                        yyval.TamDimen1 = yyvsp[-1].TamDimen1;
+                                                                        yyval.TamDimen2 = yyvsp[-1].TamDimen1;
+                                                                        yyval.TamDimen1 = yyvsp[-1].TamDimen2;
                                                                         yyval.dimensiones = 2;
                                                                         char numero[50];
-                                                                        sprintf(numero,"[%d][%d]={",yyvsp[-1].TamDimen1,yyvsp[-1].TamDimen2);
+                                                                        sprintf(numero,"[%d][%d]={",yyval.TamDimen1,yyval.TamDimen2);
                                                                         paux = strdup(numero);
                                                                         mystrcat(&yyval.codigo,&paux);
 

@@ -14,60 +14,59 @@ int diff[2][2];
 #include "dec_fun.c"
 
 int main(){//inicio bloque
-
 {//inicio sentencia asig
 
-int tmp11;
-tmp11=-10;
+int tmp0;
+tmp0=-10;
 
 
 
-int tmp12;
-tmp12=-36;
+int tmp1;
+tmp1=-36;
 
 
-int tmp13[2][2]={{tmp11, 3},{tmp12, 11}};
+int tmp2[2][2]={{tmp0, 3},{tmp1, 11}};
 
-memcpy(m,tmp13,16);
+memcpy(m,tmp2,16);
 }//fin sentencia asig
 
 {//inicio sentencia asig
 
-int tmp14;
-tmp14=-1;
+int tmp3;
+tmp3=-1;
 
 
 
 
-int tmp15[2][2]={{tmp14, 0},{0, 2}};
+int tmp4[2][2]={{tmp3, 0},{0, 2}};
 
-memcpy(d,tmp15,16);
-}//fin sentencia asig
-
-{//inicio sentencia asig
-
-
-int tmp16;
-tmp16=-1;
-
-
-int tmp17;
-tmp17=-3;
-
-
-int tmp18[2][2]={{4, tmp16},{tmp17, 1}};
-
-memcpy(pd,tmp18,16);
+memcpy(d,tmp4,16);
 }//fin sentencia asig
 
 {//inicio sentencia asig
 
 
+int tmp5;
+tmp5=-1;
 
 
-int tmp19[2][2]={{1, 1},{3, 4}};
+int tmp6;
+tmp6=-3;
 
-memcpy(pi,tmp19,16);
+
+int tmp7[2][2]={{4, tmp5},{tmp6, 1}};
+
+memcpy(pd,tmp7,16);
+}//fin sentencia asig
+
+{//inicio sentencia asig
+
+
+
+
+int tmp8[2][2]={{1, 1},{3, 4}};
+
+memcpy(pi,tmp8,16);
 }//fin sentencia asig
 
 {//inicio sentencia salida
@@ -81,15 +80,86 @@ scanf("%d",&n);
 {//inicio sentencia asig
 
 
+memcpy(r1,m,16);
+}//fin sentencia asig
+
+{//inicio sentencia asig
 
 
+memcpy(r2,d,16);
+}//fin sentencia asig
+
+{//inicio sentencia while
+etiqueta0: ;
 
 
-int tmp20[2][2];
-memcpy(tmp20,diferenciaPotencias(n,m,d,pi,pd),16);
+int tmp9;
+tmp9=n>1;
+if (!tmp9) goto etiqueta1;
+{//inicio bloque
+{//inicio sentencia asig
 
 
-memcpy(diff,tmp20,16);
+int tmp10[2][2];
+int_producto_mat_array(tmp10, r1, m, 2, 2, 2);
+
+
+memcpy(r1,tmp10,16);
+}//fin sentencia asig
+
+{//inicio sentencia asig
+
+
+int tmp11[2][2];
+int_producto_mat_array(tmp11, r2, d, 2, 2, 2);
+
+
+memcpy(r2,tmp11,16);
+}//fin sentencia asig
+
+{//inicio sentencia asig
+
+
+int tmp12;
+tmp12=n-1;
+
+
+n = tmp12;
+}//fin sentencia asig
+
+{//inicio sentencia salida
+
+printf("%d %s ",n,"\n");
+}//fin sentencia salida
+
+}//fin bloque
+
+goto etiqueta0;
+etiqueta1: ;
+}//fin sentencia while
+
+{//inicio sentencia asig
+
+
+int tmp13[2][2];
+int_producto_mat_array(tmp13, pi, r2, 2, 2, 2);
+
+
+int tmp14[2][2];
+int_producto_mat_array(tmp14, tmp13, pd, 2, 2, 2);
+
+
+memcpy(r2,tmp14,16);
+}//fin sentencia asig
+
+{//inicio sentencia asig
+
+
+int tmp15[2][2];
+int_diferencia_array(tmp15, r2, r1, 2, 2);
+
+
+memcpy(diff,tmp15,16);
 }//fin sentencia asig
 
 {//inicio sentencia salida

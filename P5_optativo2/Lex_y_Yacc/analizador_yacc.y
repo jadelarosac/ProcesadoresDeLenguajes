@@ -773,11 +773,11 @@ constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);
                                                                         mystrcat(&$$.codigo,&paux);
                                                                       }
                                                                       else{
-                                                                        $$.TamDimen2 = $2.TamDimen2;
-                                                                        $$.TamDimen1 = $2.TamDimen1;
+                                                                        $$.TamDimen2 = $2.TamDimen1;
+                                                                        $$.TamDimen1 = $2.TamDimen2;
                                                                         $$.dimensiones = 2;
                                                                         char numero[50];
-                                                                        sprintf(numero,"[%d][%d]={",$2.TamDimen1,$2.TamDimen2);
+                                                                        sprintf(numero,"[%d][%d]={",$$.TamDimen1,$$.TamDimen2);
                                                                         paux = strdup(numero);
                                                                         mystrcat(&$$.codigo,&paux);
 
