@@ -3,177 +3,116 @@
 #include <string.h>
 #include <stdbool.h>
 #include "FuncionesArrays/dec_dat.h"
-int m[2][2],d[2][2],pi[2][2],pd[2][2];
+int ve;
 
-int r1[2][2],r2[2][2];
+int ve2;
 
-int i,j,n;
+double vf;
 
-int diff[2][2];
+char vc;
+
+int vl;
+
+int pe[5],pe2[2][2],pe23[2][3],pe32[3][2];
+
+double pf[5],pf2[2][10];
+
+char pc[2][2],pc2[5];
+
+int pl[300][1000];
 
 #include "dec_fun.c"
 
 int main(){//inicio bloque
-{//inicio sentencia asig
 
-int tmp0;
-tmp0=-10;
-
-
-
-int tmp1;
-tmp1=-36;
-
-
-int tmp2[2][2]={{tmp0, 3},{tmp1, 11}};
-
-memcpy(m,tmp2,16);
-}//fin sentencia asig
-
-{//inicio sentencia asig
-
-int tmp3;
-tmp3=-1;
-
-
-
-
-int tmp4[2][2]={{tmp3, 0},{0, 2}};
-
-memcpy(d,tmp4,16);
-}//fin sentencia asig
-
-{//inicio sentencia asig
-
-
-int tmp5;
-tmp5=-1;
-
-
-int tmp6;
-tmp6=-3;
-
-
-int tmp7[2][2]={{4, tmp5},{tmp6, 1}};
-
-memcpy(pd,tmp7,16);
-}//fin sentencia asig
 
 {//inicio sentencia asig
 
 
 
 
-int tmp8[2][2]={{1, 1},{3, 4}};
-
-memcpy(pi,tmp8,16);
-}//fin sentencia asig
-
-{//inicio sentencia salida
-printf("%s ","introduce numero :");
-}//fin sentencia salida
-
-{//inicio sentencia entrada
-scanf("%d",&n);
-}//fin sentencia entrada
-
-{//inicio sentencia asig
 
 
-memcpy(r1,m,16);
+double tmp20[5]={5.1, 2.03, 3.1415, 0.01, 1.0};
+double tmp21[5];
+double_suma_array_num(tmp21, vf, tmp20, 5, 1);
+
+
+memcpy(pf,tmp21,40);
 }//fin sentencia asig
 
 {//inicio sentencia asig
 
 
-memcpy(r2,d,16);
-}//fin sentencia asig
 
-{//inicio sentencia while
-etiqueta0: ;
-
-
-int tmp9;
-tmp9=n>1;
-if (!tmp9) goto etiqueta1;
-{//inicio bloque
-{//inicio sentencia asig
-
-
-int tmp10[2][2];
-int_producto_mat_array(tmp10, r1, m, 2, 2, 2);
-
-
-memcpy(r1,tmp10,16);
+pc[1][1] = '#';
 }//fin sentencia asig
 
 {//inicio sentencia asig
 
 
-int tmp11[2][2];
-int_producto_mat_array(tmp11, r2, d, 2, 2, 2);
+int tmp22[3][2];
+int_producto_mat_array(tmp22, pe23, pe32, 2, 3, 2);
 
 
-memcpy(r2,tmp11,16);
+memcpy(pe2,tmp22,16);
 }//fin sentencia asig
+
+{//inicio sentencia if
+
+
+int tmp23;
+tmp23=pe[1]-20;
+
+
+int tmp24;
+tmp24=tmp23==20;
+if (!tmp24) goto etiqueta11;
+{//inicio if
+{//inicio sentencia asig
+
+
+ve = pe[2];
+}//fin sentencia asig
+}//fin if
+goto etiqueta10;
+etiqueta11: ;
+{//inicio else
+{//inicio sentencia asig
+
+
+int tmp25[2][2];
+int_producto_mat_array(tmp25, pe2, pe2, 2, 2, 2);
+
+
+memcpy(pe2,tmp25,16);
+}//fin sentencia asig
+}//fin else
+etiqueta10: ;
+}//fin sentencia if
 
 {//inicio sentencia asig
 
 
-int tmp12;
-tmp12=n-1;
+
+int tmp26;
+tmp26=pe2[0][1]-pe[2];
 
 
-n = tmp12;
+
+
+int tmp27;
+tmp27=20/2000;
+
+int tmp28;
+tmp28=10*tmp27;
+
+int tmp29;
+tmp29=tmp26+tmp28;
+
+
+pe[3] = tmp29;
 }//fin sentencia asig
-
-{//inicio sentencia salida
-
-printf("%d %s ",n,"\n");
-}//fin sentencia salida
-
-}//fin bloque
-
-goto etiqueta0;
-etiqueta1: ;
-}//fin sentencia while
-
-{//inicio sentencia asig
-
-
-int tmp13[2][2];
-int_producto_mat_array(tmp13, pi, r2, 2, 2, 2);
-
-
-int tmp14[2][2];
-int_producto_mat_array(tmp14, tmp13, pd, 2, 2, 2);
-
-
-memcpy(r2,tmp14,16);
-}//fin sentencia asig
-
-{//inicio sentencia asig
-
-
-int tmp15[2][2];
-int_diferencia_array(tmp15, r2, r1, 2, 2);
-
-
-memcpy(diff,tmp15,16);
-}//fin sentencia asig
-
-{//inicio sentencia salida
-
-
-
-
-
-
-
-
-
-printf("%s %d %d %d %d %s ","Las diferencias en cada componente son :",diff[0][0],diff[0][1],diff[1][0],diff[1][1],"\n");
-}//fin sentencia salida
 
 }//fin bloque
 

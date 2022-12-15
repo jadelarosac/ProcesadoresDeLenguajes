@@ -21,7 +21,7 @@ programa_principal(){
   
 	  r2 = mi**r2**md;
   
-  	retornar ((r2-r1)+2)/[2,1;1,2];
+  	retornar (r2-r1);
   }
   
   m = [-10,3;-36,11];
