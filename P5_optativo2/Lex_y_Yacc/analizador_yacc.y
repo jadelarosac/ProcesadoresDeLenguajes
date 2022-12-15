@@ -2066,12 +2066,12 @@ void genCodigoOperadorUnNeg(atributos* obj, atributos* at1){
   mystrcpy(&(*obj).codigo,&(*at1).codigo);
   paux = strdup("\n");
   mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&paux);
   paux = strdup(enumAString((*obj).tipo));
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup(" ");
   mystrcat(&(*obj).codigo,&paux);
-  mystrcat(&(*obj).codigo,&(*obj).nombreTmp);
+  paux = strdup((*obj).nombreTmp);
+  mystrcat(&(*obj).codigo,&paux);
   paux = strdup(";\n");
   mystrcat(&(*obj).codigo,&paux);
   mystrcat(&(*obj).codigo,&(*obj).nombreTmp);
