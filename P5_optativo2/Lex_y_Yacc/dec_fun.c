@@ -77,12 +77,24 @@ memcpy(r2,tmp5,16);
 {//inicio sentencia return
 
 
+
 int tmp6[2][2];
 int_diferencia_array(tmp6, r2, r1, 2, 2);
 
-int** tmp7=(int **) malloc(16);
-memcpy(tmp7,tmp6,16);
-return tmp7;
+int tmp7[2][2];
+int_suma_array_num(tmp7, 2, tmp6, 2, 2);
+
+
+
+
+
+int tmp8[2][2]={{2, 1},{1, 2}};
+int tmp9[2][2];
+int_division_array(tmp9, tmp7, tmp8, 2, 2);
+
+int** tmp10=(int **) malloc(16);
+memcpy(tmp10,tmp9,16);
+return tmp10;
 }//fin sentencia return
 
 }//fin bloque

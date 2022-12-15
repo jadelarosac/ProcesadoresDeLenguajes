@@ -17,47 +17,47 @@ int main(){//inicio bloque
 
 {//inicio sentencia asig
 
-int tmp8;
-tmp8=-10;
-
-
-
-int tmp9;
-tmp9=-36;
-
-
-int tmp10[2][2]={{tmp8, 3},{tmp9, 11}};
-
-memcpy(m,tmp10,16);
-}//fin sentencia asig
-
-{//inicio sentencia asig
-
 int tmp11;
-tmp11=-1;
+tmp11=-10;
 
 
 
+int tmp12;
+tmp12=-36;
 
-int tmp12[2][2]={{tmp11, 0},{0, 2}};
 
-memcpy(d,tmp12,16);
+int tmp13[2][2]={{tmp11, 3},{tmp12, 11}};
+
+memcpy(m,tmp13,16);
 }//fin sentencia asig
 
 {//inicio sentencia asig
-
-
-int tmp13;
-tmp13=-1;
-
 
 int tmp14;
-tmp14=-3;
+tmp14=-1;
 
 
-int tmp15[2][2]={{4, tmp13},{tmp14, 1}};
 
-memcpy(pd,tmp15,16);
+
+int tmp15[2][2]={{tmp14, 0},{0, 2}};
+
+memcpy(d,tmp15,16);
+}//fin sentencia asig
+
+{//inicio sentencia asig
+
+
+int tmp16;
+tmp16=-1;
+
+
+int tmp17;
+tmp17=-3;
+
+
+int tmp18[2][2]={{4, tmp16},{tmp17, 1}};
+
+memcpy(pd,tmp18,16);
 }//fin sentencia asig
 
 {//inicio sentencia asig
@@ -65,9 +65,9 @@ memcpy(pd,tmp15,16);
 
 
 
-int tmp16[2][2]={{1, 1},{3, 4}};
+int tmp19[2][2]={{1, 1},{3, 4}};
 
-memcpy(pi,tmp16,16);
+memcpy(pi,tmp19,16);
 }//fin sentencia asig
 
 {//inicio sentencia salida
@@ -85,11 +85,11 @@ scanf("%d",&n);
 
 
 
-int tmp17[2][2];
-memcpy(tmp17,diferenciaPotencias(n,m,d,pi,pd),16);
+int tmp20[2][2];
+memcpy(tmp20,diferenciaPotencias(n,m,d,pi,pd),16);
 
 
-memcpy(diff,tmp17,16);
+memcpy(diff,tmp20,16);
 }//fin sentencia asig
 
 {//inicio sentencia salida
