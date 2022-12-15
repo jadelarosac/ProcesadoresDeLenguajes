@@ -102,6 +102,7 @@ void empezarGEN();
 void finalizarGEN();
 char* temporal();
 char* etiqueta();
+int enumATamByte(dtipo t);
 
 char* enumAString();
 char* enumATipoForm(dtipo t);
@@ -271,6 +272,9 @@ variable                    : identificador {$$.lexema = $1.lexema;
 
                               |   elemento_de_array_decl {
                                                                     $$.lexema = $1.lexema;
+                                                                    $$.dimensiones = $1.dimensiones;
+                                                                    $$.TamDimen1 = $1.TamDimen1;
+                                                                    $$.TamDimen2 = $1.TamDimen2;
                                                                     mystrcpy(&$$.codigo,&$1.codigo);
                                                                     }
 elemento_de_array_decl      : identificador CORIZQ CONSTENT CORDER {
@@ -421,6 +425,100 @@ sentencia_salida            : SALIDA lista_expresiones_cadena PYC {mystrcpy(&$$.
 
 sentencia_retornar          : DEVOLVER expresion PYC {procesaSentenciaRetornar($2);
                             mystrcpy(&$$.codigo,&$2.codigo);
+                            
+                            if ($2.dimensiones == 1){
+    
+                              char* temporal_ret = temporal();
+                              paux = strdup("\n");
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(enumAString($2.tipo));
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup("* ");
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(temporal_ret);
+                              mystrcat(&$$.codigo,&paux);
+                              
+                              char numero[50];
+                              paux = strdup("=(");
+                              mystrcat(&$$.codigo,&paux);
+
+                              paux = strdup(enumAString($2.tipo));
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(" *) ");
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup("malloc(");
+                              mystrcat(&$$.codigo,&paux);
+
+                              sprintf(numero,"%d",$2.TamDimen1*enumATamByte($2.tipo));
+                              paux = strdup(numero);
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(");\nmemcpy(");
+                              mystrcat(&$$.codigo,&paux);
+                            
+                              paux = strdup(temporal_ret);
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(",");
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup($2.nombreTmp);
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(",");
+                              mystrcat(&$$.codigo,&paux);
+                              
+                              sprintf(numero,"%d",$2.TamDimen1*enumATamByte($2.tipo));
+                              paux = strdup(numero);
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(");");
+                              mystrcat(&$$.codigo,&paux);
+
+                              mystrcpy(&$2.nombreTmp,&temporal_ret);
+                            }else if ($2.dimensiones == 2){
+                              char* temporal_ret = temporal();
+                              paux = strdup("\n");
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(enumAString($2.tipo));
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup("** ");
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(temporal_ret);
+                              mystrcat(&$$.codigo,&paux);
+                              
+                              char numero[50];
+                              
+                              paux = strdup("=(");
+                              mystrcat(&$$.codigo,&paux);
+
+                              paux = strdup(enumAString($2.tipo));
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(" **) ");
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup("malloc(");
+                              mystrcat(&$$.codigo,&paux);
+
+                              sprintf(numero,"%d",$2.TamDimen1*$2.TamDimen2*enumATamByte($2.tipo));
+                              paux = strdup(numero);
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(");\nmemcpy(");
+                              mystrcat(&$$.codigo,&paux);
+                            
+                              paux = strdup(temporal_ret);
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(",");
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup($2.nombreTmp);
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(",");
+                              mystrcat(&$$.codigo,&paux);
+                              
+                              sprintf(numero,"%d",$2.TamDimen1*$2.TamDimen2*enumATamByte($2.tipo));
+                              paux = strdup(numero);
+                              mystrcat(&$$.codigo,&paux);
+                              paux = strdup(");");
+                              mystrcat(&$$.codigo,&paux);
+
+                              mystrcpy(&$2.nombreTmp,&temporal_ret);
+
+                            }
+
                             paux = strdup("\nreturn ");
                             mystrcat(&$$.codigo,&paux);
                             mystrcat(&$$.codigo,&$2.nombreTmp);
@@ -513,6 +611,7 @@ expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               |   OPSUMA expresion {$$ = procesaOperacionMixtaCuandoUnaria($2);genCodigoOperadorUn(&$$,&$2,$1.atrib);}
                               |   OPRESTA expresion %prec OPNEG {$$ = procesaOperacionMixtaCuandoUnaria($2);genCodigoOperadorUn(&$$,&$2,$1.atrib);}
                               |   expresion OPMULT expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
+  
                               |   expresion OPDIV expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
                               |   expresion OPMULTM expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
                               |   expresion OPAND expresion {$$ = procesaOperacionBinariaOMixta($1,$3,$2.atrib);genCodigoOperadorBin(&$$,&$1,&$3,$2.atrib);}
@@ -540,21 +639,75 @@ expresion                   : PARIZQ expresion PARDER {$$ = $2;}
                               mystrcat(&$$.codigo,&paux);
                               paux = temporal();
                               mystrcpy(&$$.nombreTmp,&paux);
-                              paux = strdup(enumAString($$.tipo));
-                              mystrcat(&$$.codigo,&paux);
-                              paux = strdup(" ");
-                              mystrcat(&$$.codigo,&paux);
-                              paux = strdup($$.nombreTmp);
-                              mystrcat(&$$.codigo,&paux);
-                              paux = strdup(";\n");
-                              mystrcat(&$$.codigo,&paux);
-                              paux = strdup($$.nombreTmp);
-                              mystrcat(&$$.codigo,&paux);
-                              paux = strdup("=");
-                              mystrcat(&$$.codigo,&paux);
-                              mystrcat(&$$.codigo,&$1.nombreTmp);
-                              paux = strdup(";\n");
-                              mystrcat(&$$.codigo,&paux);}
+                              if ($$.dimensiones == 0){
+                                paux = strdup(enumAString($$.tipo));
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup(" ");
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup($$.nombreTmp);
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup(";\n");
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup($$.nombreTmp);
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup("=");
+                                mystrcat(&$$.codigo,&paux);
+                                mystrcat(&$$.codigo,&$1.nombreTmp);
+                                paux = strdup(";\n");
+                                mystrcat(&$$.codigo,&paux);
+                              }else if ($$.dimensiones == 1){
+                                paux = strdup(enumAString($$.tipo));
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup(" ");
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup($$.nombreTmp);
+                                mystrcat(&$$.codigo,&paux);
+
+                                char numero[50];
+                                sprintf(numero,"[%d];\n",$$.TamDimen1);
+                                paux = strdup(numero);
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup("memcpy(");
+                                mystrcat(&$$.codigo, &paux);
+                                paux = strdup($$.nombreTmp);
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup(",");
+                                mystrcat(&$$.codigo,&paux);
+                                mystrcat(&$$.codigo, &$1.nombreTmp);
+                                paux = strdup(",");
+                                mystrcat(&$$.codigo,&paux);
+                                sprintf(numero,"%d);\n",$$.TamDimen1*enumATamByte($$.tipo));
+                                paux = strdup(numero);
+                                mystrcat(&$$.codigo,&paux);
+
+                              }else if ($$.dimensiones == 2){
+                                paux = strdup(enumAString($$.tipo));
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup(" ");
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup($$.nombreTmp);
+                                mystrcat(&$$.codigo,&paux);
+
+                                char numero[50];
+                                sprintf(numero,"[%d][%d];\n",$$.TamDimen1,$$.TamDimen2);
+                                paux = strdup(numero);
+                                mystrcat(&$$.codigo,&paux);
+
+                                paux = strdup("memcpy(");
+                                mystrcat(&$$.codigo, &paux);
+                                paux = strdup($$.nombreTmp);
+                                mystrcat(&$$.codigo,&paux);
+                                paux = strdup(",");
+                                mystrcat(&$$.codigo,&paux);
+                                mystrcat(&$$.codigo, &$1.nombreTmp);
+                                paux = strdup(",");
+                                mystrcat(&$$.codigo,&paux);
+                                sprintf(numero,"%d);\n",$$.TamDimen1*$$.TamDimen2*enumATamByte($$.tipo));
+                                paux = strdup(numero);
+                                mystrcat(&$$.codigo,&paux);
+
+                              }
+                              }
                               |   error
 funcion                     : identificador PARIZQ PARDER {entradaTS ets = buscarEntrada($1.lexema);
                                                            procesaLlamadaFuncionSinArgumentos(ets);
@@ -586,7 +739,8 @@ constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);
                             paux = strdup("");
                             mystrcpy(&$$.codigo,&paux);
                             paux = strdup($1.lexema);
-                            mystrcpy(&$$.nombreTmp,&paux);}
+                            mystrcpy(&$$.nombreTmp,&paux);
+                            }
                               | CONSTENT  {$$.tipo = entero;
                               paux = strdup("");
                               mystrcpy(&$$.codigo,&paux);
@@ -595,24 +749,41 @@ constante                   : CONST {$$.tipo = atributoAEnum($1.atrib+1);
                               }
                               |   CORIZQ ini_elementos_array CORDER { $$.tipo = $2.tipo;
                                                                       mystrcpy(&$$.codigo,&$2.codigo);
+                                                                      paux = temporal();
+                                                                      mystrcpy(&$$.nombreTmp,&paux);
+                                                                      paux = strdup("\n");
+                                                                      mystrcat(&$$.codigo,&paux);
+                                                                      paux = strdup(enumAString($2.tipo));
+                                                                      mystrcat(&$$.codigo,&paux);
+                                                                      paux = strdup(" ");
+                                                                      mystrcat(&$$.codigo,&paux);
+                                                                      paux = strdup($$.nombreTmp);
+                                                                      mystrcat(&$$.codigo,&paux);
                                                                       if ($2.TamDimen2==1){
                                                                         $$.TamDimen2 = 0;
                                                                         $$.TamDimen1 = $2.TamDimen1;
                                                                         $$.dimensiones = 1;
-
-                                                                        mystrcpy(&$$.nombreTmp, &$2.nombreTmp);
+                                                                        
+                                                                        char numero[50];
+                                                                        sprintf(numero,"[%d]=",$2.TamDimen1);
+                                                                        paux = strdup(numero);
+                                                                        mystrcat(&$$.codigo,&paux);
+                                                                        mystrcat(&$$.codigo, &$2.nombreTmp);
+                                                                        paux = strdup(";");
+                                                                        mystrcat(&$$.codigo,&paux);
                                                                       }
                                                                       else{
                                                                         $$.TamDimen2 = $2.TamDimen2;
                                                                         $$.TamDimen1 = $2.TamDimen1;
                                                                         $$.dimensiones = 2;
+                                                                        char numero[50];
+                                                                        sprintf(numero,"[%d][%d]={",$2.TamDimen1,$2.TamDimen2);
+                                                                        paux = strdup(numero);
+                                                                        mystrcat(&$$.codigo,&paux);
 
-                                                                        paux = strdup("{");
-                                                                        mystrcpy(&$$.nombreTmp,&paux);
-                                                                        mystrcat(&$$.nombreTmp,&$2.nombreTmp);
-                                                                        paux = strdup("}");
-                                                                        mystrcat(&$$.nombreTmp,&paux);
-
+                                                                        mystrcat(&$$.codigo,&$2.nombreTmp);
+                                                                        paux = strdup("};");
+                                                                        mystrcat(&$$.codigo,&paux);
                                                                       }
                                                                       }
 ini_elementos_array         : ini_elementos_array PYC lista_expresiones_array {$$.TamDimen2 = $1.TamDimen2 + 1;
@@ -1234,6 +1405,18 @@ void procesaSentenciaRetornar(atributos ret){
      if (TS[i].tipoDato != ret.tipo){
        printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El valor retornado no se corresponde con el que devuelve la función.\n");
      }
+     if (TS[i].dimensiones != ret.dimensiones){
+       printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: La dimension del valor retornado no se corresponde con la que devuelve la función.\n");
+     }
+
+
+     if (TS[i].TamDimen1 != ret.TamDimen1){
+       printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: La dimension 1 del valor retornado no se corresponde con la que devuelve la función.\n");
+     }
+
+     if (TS[i].TamDimen2 != ret.TamDimen2){
+       printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: La dimension 2 del valor retornado no se corresponde con la que devuelve la función.\n");
+     }
   }
 }
 
@@ -1307,6 +1490,15 @@ char* enumAChar(dtipo t){
   return strdup("Ninguno");
 }
 
+int enumATamByte(dtipo t){
+
+  if (t == entero)return 4;
+  if (t == booleano)return 4;
+  if (t == real)return 8; 
+  if (t == caracter)return 1;
+
+  return 0;
+}
 
 
 
@@ -1410,6 +1602,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,dimy)
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,1)
     genCodigoOperadorMix(obj, at2, at1, opdor);
+    return;
   }
 
   paux = temporal();
@@ -1457,7 +1650,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array(tmp%d,op1,op2,dimx,1)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -1501,7 +1694,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array(tmp%d,op1,op2,dimx,dimy)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -1543,7 +1736,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,1)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -1587,7 +1780,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,dimy)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -1624,6 +1817,7 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,dimy)
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,1)
     genCodigoOperadorBin(obj, at2, at1, opdor);
+    return;
   }
   paux = temporal();
   mystrcpy(&(*obj).nombreTmp,&paux);
@@ -1669,7 +1863,7 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array(tmp%d,op1,op2,dimx,1)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -1713,7 +1907,7 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array(tmp%d,op1,op2,dimx,dimy)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -1732,10 +1926,18 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(", ");
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("");
-    sprintf(paux, "%d", (*at2).TamDimen1);
+    sprintf(paux, "%d", (*at1).TamDimen1);
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup(", ");
     mystrcat(&(*obj).codigo,&paux);
+    if (opdor == 2){
+        
+      paux = strdup("");
+      sprintf(paux, "%d", (*at1).TamDimen2);
+      mystrcat(&(*obj).codigo,&paux);
+      paux = strdup(", ");
+      mystrcat(&(*obj).codigo,&paux);
+    }
     paux = strdup("");
     sprintf(paux, "%d", (*at2).TamDimen2);
     mystrcat(&(*obj).codigo,&paux);
@@ -1755,7 +1957,7 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,1)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -1799,7 +2001,7 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,dimy)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -1836,15 +2038,20 @@ void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor){
   mystrcpy(&(*obj).codigo,&(*at1).codigo);
   paux = strdup("\n");
   mystrcat(&(*obj).codigo,&paux);
-  paux = (*obj).nombreTmp;
+  paux = strdup(enumAString((*obj).tipo));
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(" ");
+  mystrcat(&(*obj).codigo,&paux);
+
+  paux = strdup((*obj).nombreTmp);
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup(";\n");
   mystrcat(&(*obj).codigo,&paux);
-  paux = (*obj).nombreTmp;
+  paux = strdup((*obj).nombreTmp);
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup("=");
   mystrcat(&(*obj).codigo,&paux);
-  paux = strdup(opdorBinAString(opdor));
+  paux = strdup(opdorUnAString(opdor));
   mystrcat(&(*obj).codigo,&paux);
   mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
   paux = strdup(";\n");
@@ -1858,6 +2065,9 @@ void genCodigoOperadorUnNeg(atributos* obj, atributos* at1){
   mystrcpy(&(*obj).nombreTmp,&paux);
   mystrcpy(&(*obj).codigo,&(*at1).codigo);
   paux = strdup("\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(enumAString((*obj).tipo));
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup(" ");
   mystrcat(&(*obj).codigo,&paux);
@@ -1895,9 +2105,22 @@ void genCodigoAsignacion(atributos* obj, atributos* at1, atributos* at2){
   {
     int dx = (*at2).TamDimen1;
     int dy = ((*at2).dimensiones == 2)? (*at2).TamDimen2 : 1;
-
-    paux = strdup("");
-    sprintf(paux, "memcpy(%s,%s,%d);\n",(*at1).nombreTmp,(*at2).nombreTmp,dy*dx);
+    int tam_bytes = enumATamByte((*obj).tipo);
+    paux = strdup("memcpy(");
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup((*at1).nombreTmp);
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup(",");
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup((*at2).nombreTmp);
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup(",");
+    mystrcat(&(*obj).codigo,&paux);
+    char numero[50];
+    sprintf(numero,"%d",dy*dx*tam_bytes);
+    paux = strdup(numero);
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup(");\n");
     mystrcat(&(*obj).codigo,&paux);
   }
 }
@@ -2049,10 +2272,37 @@ void genCodigoHacerHasta(atributos* obj,atributos* cond,atributos* sent){
 
 }
 
+void quitarCorchetesCabecera(char* cadena){
+  char* aux;
+  int i = 0;
+  while (i < strlen(cadena)){
+    if (cadena[i] == '[') break;
+    i++;
+  }
+
+  while (i < strlen(cadena)){
+    cadena[i] = '\0';
+  }
+}
+
 void genCabeceraSubprograma(atributos* obj, char* tipo, atributos* atr, atributos* args)
 {
-  sprintf(paux,"%s ", tipo);
+  sprintf(paux,"%s", tipo);
   mystrcpy(&(*obj).codigo, &paux);
+
+  if ((*atr).dimensiones == 1){
+    paux = strdup("*");
+    mystrcat(&(*obj).codigo, &paux);
+    quitarCorchetesCabecera((*atr).codigo);
+  } else if ((*atr).dimensiones == 2){
+    paux = strdup("**");
+    mystrcat(&(*obj).codigo, &paux);
+    quitarCorchetesCabecera((*atr).codigo);
+ }
+
+  paux = strdup(" ");
+  mystrcat(&(*obj).codigo, &paux);
+  
   mystrcat(&(*obj).codigo, &(*atr).codigo);
   paux = strdup("(");
   mystrcat(&(*obj).codigo,&paux);

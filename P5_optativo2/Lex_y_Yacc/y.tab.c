@@ -171,6 +171,7 @@ void empezarGEN();
 void finalizarGEN();
 char* temporal();
 char* etiqueta();
+int enumATamByte(dtipo t);
 
 char* enumAString();
 char* enumATipoForm(dtipo t);
@@ -198,7 +199,7 @@ void mystrcat(char**,char**);
 void mystrcpy(char**,char**);
 
 
-#line 202 "y.tab.c"
+#line 203 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -664,17 +665,17 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   151,   151,   151,   152,   153,   152,   178,   182,   183,
-     184,   183,   212,   215,   216,   217,   218,   219,   220,   221,
-     225,   227,   227,   236,   237,   243,   248,   248,   254,   254,
-     264,   265,   272,   276,   287,   300,   305,   308,   322,   344,
-     348,   349,   350,   355,   360,   365,   371,   377,   383,   388,
-     389,   390,   392,   394,   396,   397,   408,   422,   430,   439,
-     441,   449,   456,   472,   489,   493,   499,   500,   501,   511,
-     512,   513,   514,   515,   516,   517,   518,   519,   520,   521,
-     522,   523,   524,   525,   526,   527,   528,   529,   533,   537,
-     558,   559,   569,   569,   582,   583,   584,   585,   590,   596,
-     618,   642,   654,   660
+       0,   152,   152,   152,   153,   154,   153,   179,   183,   184,
+     185,   184,   213,   216,   217,   218,   219,   220,   221,   222,
+     226,   228,   228,   237,   238,   244,   249,   249,   255,   255,
+     265,   266,   273,   280,   291,   304,   309,   312,   326,   348,
+     352,   353,   354,   359,   364,   369,   375,   381,   387,   392,
+     393,   394,   396,   398,   400,   401,   412,   426,   528,   537,
+     539,   547,   554,   570,   587,   591,   597,   598,   599,   609,
+     610,   611,   612,   613,   615,   616,   617,   618,   619,   620,
+     621,   622,   623,   624,   625,   626,   627,   628,   632,   636,
+     711,   712,   722,   722,   735,   736,   737,   738,   744,   750,
+     789,   813,   825,   831
 };
 #endif
 
@@ -1651,25 +1652,25 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 151 "analizador_yacc.y"
+#line 152 "analizador_yacc.y"
                                                 {empezarGEN();}
-#line 1657 "y.tab.c"
+#line 1658 "y.tab.c"
     break;
 
   case 3:
-#line 151 "analizador_yacc.y"
+#line 152 "analizador_yacc.y"
                                                                        {fputs(yyvsp[0].codigo,intermain);finalizarGEN();}
-#line 1663 "y.tab.c"
+#line 1664 "y.tab.c"
     break;
 
   case 4:
-#line 152 "analizador_yacc.y"
+#line 153 "analizador_yacc.y"
                                                {TS_InsertaMARCA();}
-#line 1669 "y.tab.c"
+#line 1670 "y.tab.c"
     break;
 
   case 5:
-#line 153 "analizador_yacc.y"
+#line 154 "analizador_yacc.y"
                                                               {
                                                                 if (bloqueMain == 0){
                                                                   bloqueMain = 1;
@@ -1686,11 +1687,11 @@ yyreduce:
                                                                   mystrcpy(&yyvsp[0].codigo,&paux);
                                                                 }
                                                                 }
-#line 1690 "y.tab.c"
+#line 1691 "y.tab.c"
     break;
 
   case 6:
-#line 171 "analizador_yacc.y"
+#line 172 "analizador_yacc.y"
                                             { TS_VaciarENTRADAS();
                                                                    mystrcat(&yyvsp[-4].codigo,&yyvsp[-2].codigo);
                                                                    mystrcat(&yyvsp[-4].codigo,&yyvsp[-1].codigo);
@@ -1698,38 +1699,38 @@ yyreduce:
                                                                    mystrcat(&yyvsp[-4].codigo,&paux);
                                                                    mystrcpy(&yyval.codigo,&yyvsp[-4].codigo);
                                                                    }
-#line 1702 "y.tab.c"
+#line 1703 "y.tab.c"
     break;
 
   case 7:
-#line 178 "analizador_yacc.y"
+#line 179 "analizador_yacc.y"
                                                             {mystrcpy(&yyval.codigo,&yyvsp[-1].codigo);
                             paux = strdup("\n");
                             mystrcat(&yyval.codigo,&paux);
                             mystrcat(&yyval.codigo,&yyvsp[0].codigo);}
-#line 1711 "y.tab.c"
+#line 1712 "y.tab.c"
     break;
 
   case 8:
-#line 182 "analizador_yacc.y"
+#line 183 "analizador_yacc.y"
                                 { paux = strdup("");mystrcpy(&yyval.codigo,&paux);}
-#line 1717 "y.tab.c"
+#line 1718 "y.tab.c"
     break;
 
   case 9:
-#line 183 "analizador_yacc.y"
+#line 184 "analizador_yacc.y"
                               {anidado_nivel++;}
-#line 1723 "y.tab.c"
+#line 1724 "y.tab.c"
     break;
 
   case 10:
-#line 184 "analizador_yacc.y"
+#line 185 "analizador_yacc.y"
                               {subprog = 1;}
-#line 1729 "y.tab.c"
+#line 1730 "y.tab.c"
     break;
 
   case 11:
-#line 185 "analizador_yacc.y"
+#line 186 "analizador_yacc.y"
                               {
 
                                   if (anidado_nivel == 1)
@@ -1756,45 +1757,45 @@ yyreduce:
                                   subprog = 0;
                                   anidado_nivel--;
                               }
-#line 1760 "y.tab.c"
+#line 1761 "y.tab.c"
     break;
 
   case 12:
-#line 214 "analizador_yacc.y"
+#line 215 "analizador_yacc.y"
                                                              {mystrcpy(&yyval.codigo,&yyvsp[-1].codigo);}
-#line 1766 "y.tab.c"
+#line 1767 "y.tab.c"
     break;
 
   case 13:
-#line 215 "analizador_yacc.y"
+#line 216 "analizador_yacc.y"
                                   {paux = strdup("");mystrcpy(&yyval.codigo,&paux);}
-#line 1772 "y.tab.c"
+#line 1773 "y.tab.c"
     break;
 
   case 19:
-#line 221 "analizador_yacc.y"
+#line 222 "analizador_yacc.y"
                                                                         {paux = strdup("\n");
                                                                          mystrcat(&yyvsp[-1].codigo,&paux);
                                                                          mystrcat(&yyvsp[-1].codigo,&yyvsp[0].codigo);
                                                                          mystrcpy(&yyval.codigo,&yyvsp[-1].codigo);}
-#line 1781 "y.tab.c"
+#line 1782 "y.tab.c"
     break;
 
   case 20:
-#line 225 "analizador_yacc.y"
+#line 226 "analizador_yacc.y"
                                                         {paux = strdup(yyvsp[0].codigo);
                               mystrcpy(&yyval.codigo,&paux);}
-#line 1788 "y.tab.c"
+#line 1789 "y.tab.c"
     break;
 
   case 21:
-#line 227 "analizador_yacc.y"
+#line 228 "analizador_yacc.y"
                                     {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
-#line 1794 "y.tab.c"
+#line 1795 "y.tab.c"
     break;
 
   case 22:
-#line 227 "analizador_yacc.y"
+#line 228 "analizador_yacc.y"
                                                                                                        {paux = strdup(enumAString(tipoTmp));
                                                                                                         mystrcpy(&yyvsp[-3].codigo,&paux);
                                                                                                         paux = strdup(" ");
@@ -1804,55 +1805,55 @@ yyreduce:
                                                                                                         mystrcat(&yyvsp[-3].codigo,&paux);
                                                                                                         paux = strdup(yyvsp[-3].codigo);
                                                                                                         mystrcpy(&yyval.codigo,&paux);}
-#line 1808 "y.tab.c"
+#line 1809 "y.tab.c"
     break;
 
   case 24:
-#line 237 "analizador_yacc.y"
+#line 238 "analizador_yacc.y"
                                                                        {
                                   tipoTmp=atributoAEnum(yyvsp[-4].atrib);
                                   TS_InsertaSUBPROG(yyvsp[-3]);
                                   paux = strdup(enumAString(tipoTmp));
                                   genCabeceraSubprograma(&yyval, paux, &yyvsp[-3], &yyvsp[-1]);
                                   }
-#line 1819 "y.tab.c"
+#line 1820 "y.tab.c"
     break;
 
   case 25:
-#line 243 "analizador_yacc.y"
+#line 244 "analizador_yacc.y"
                                                             {tipoTmp=atributoAEnum(yyvsp[-3].atrib);
                               TS_InsertaSUBPROG(yyvsp[-2]);
                               paux = strdup(enumAString(tipoTmp));
                               genCabeceraSubprograma(&yyval, paux, &yyvsp[-2], NULL);
                               }
-#line 1829 "y.tab.c"
+#line 1830 "y.tab.c"
     break;
 
   case 26:
-#line 248 "analizador_yacc.y"
+#line 249 "analizador_yacc.y"
                                    {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
-#line 1835 "y.tab.c"
+#line 1836 "y.tab.c"
     break;
 
   case 27:
-#line 248 "analizador_yacc.y"
+#line 249 "analizador_yacc.y"
                                                                                {TS_InsertaPARAMF(yyvsp[0]);
                             paux = strdup(enumAString(tipoTmp));
                             mystrcpy(&yyval.codigo,&paux);
                             paux = strdup(" ");
                             mystrcat(&yyval.codigo,&paux);
                             mystrcat(&yyval.codigo,&yyvsp[0].codigo);}
-#line 1846 "y.tab.c"
+#line 1847 "y.tab.c"
     break;
 
   case 28:
-#line 254 "analizador_yacc.y"
+#line 255 "analizador_yacc.y"
                                                        {tipoTmp=atributoAEnum(yyvsp[0].atrib);}
-#line 1852 "y.tab.c"
+#line 1853 "y.tab.c"
     break;
 
   case 29:
-#line 254 "analizador_yacc.y"
+#line 255 "analizador_yacc.y"
                                                                                                    {TS_InsertaPARAMF(yyvsp[0]);
                               mystrcpy(&yyval.codigo,&yyvsp[-4].codigo);
                               paux = strdup(", ");
@@ -1863,31 +1864,34 @@ yyreduce:
                               mystrcat(&yyval.codigo,&paux);
                               mystrcat(&yyval.codigo,&yyvsp[0].codigo);
                               }
-#line 1867 "y.tab.c"
+#line 1868 "y.tab.c"
     break;
 
   case 31:
-#line 265 "analizador_yacc.y"
+#line 266 "analizador_yacc.y"
                                             {yyval.lexema = yyvsp[0].lexema;
                                              yyval.dimensiones=0; yyval.TamDimen1=0; yyval.TamDimen2=0;
                                              paux = strdup(yyvsp[0].lexema);
                                              mystrcpy(&yyval.codigo,&paux);
 
                                              }
-#line 1878 "y.tab.c"
+#line 1879 "y.tab.c"
     break;
 
   case 32:
-#line 272 "analizador_yacc.y"
+#line 273 "analizador_yacc.y"
                                                          {
                                                                     yyval.lexema = yyvsp[0].lexema;
+                                                                    yyval.dimensiones = yyvsp[0].dimensiones;
+                                                                    yyval.TamDimen1 = yyvsp[0].TamDimen1;
+                                                                    yyval.TamDimen2 = yyvsp[0].TamDimen2;
                                                                     mystrcpy(&yyval.codigo,&yyvsp[0].codigo);
                                                                     }
-#line 1887 "y.tab.c"
+#line 1891 "y.tab.c"
     break;
 
   case 33:
-#line 276 "analizador_yacc.y"
+#line 280 "analizador_yacc.y"
                                                                    {
                                                                     yyval.lexema = yyvsp[-3].lexema;
                                                                     yyval.dimensiones=1;
@@ -1899,11 +1903,11 @@ yyreduce:
                                                                     paux = strdup(saux);
                                                                     mystrcpy(&yyval.codigo, &paux);
                                                                     }
-#line 1903 "y.tab.c"
+#line 1907 "y.tab.c"
     break;
 
   case 34:
-#line 288 "analizador_yacc.y"
+#line 292 "analizador_yacc.y"
                                                    {
                                                                     yyval.lexema = yyvsp[-5].lexema;
                                                                     yyval.dimensiones=2;
@@ -1915,29 +1919,29 @@ yyreduce:
                                                                     paux = strdup(saux);
                                                                     mystrcpy(&yyval.codigo, &paux);
                                                                     }
-#line 1919 "y.tab.c"
+#line 1923 "y.tab.c"
     break;
 
   case 35:
-#line 300 "analizador_yacc.y"
+#line 304 "analizador_yacc.y"
                                              {entradaTS ets = buscarEntrada(yyvsp[0].lexema); yyval = entradaAAtributos(ets);
                             paux = strdup(yyvsp[0].lexema);
                             mystrcpy(&yyval.nombreTmp,&paux);
                             paux = strdup("");
                             mystrcpy(&yyval.codigo,&paux);}
-#line 1929 "y.tab.c"
+#line 1933 "y.tab.c"
     break;
 
   case 36:
-#line 305 "analizador_yacc.y"
+#line 309 "analizador_yacc.y"
                                                      {yyval = yyvsp[0];
                                                       mystrcpy(&yyval.codigo,&yyvsp[0].codigo);
                                                       mystrcpy(&yyval.nombreTmp,&yyvsp[0].nombreTmp);}
-#line 1937 "y.tab.c"
+#line 1941 "y.tab.c"
     break;
 
   case 37:
-#line 308 "analizador_yacc.y"
+#line 312 "analizador_yacc.y"
                                                                     {
                                                                     entradaTS ets = buscarEntrada(yyvsp[-3].lexema);
                                                                     ets.dimensiones = 0;
@@ -1952,11 +1956,11 @@ yyreduce:
                                                                     paux = strdup("]");
                                                                     mystrcat(&yyval.nombreTmp,&paux);
                                                                     }
-#line 1956 "y.tab.c"
+#line 1960 "y.tab.c"
     break;
 
   case 38:
-#line 323 "analizador_yacc.y"
+#line 327 "analizador_yacc.y"
                                                     {
                                                                     entradaTS ets = buscarEntrada(yyvsp[-5].lexema);
                                                                     ets.dimensiones = 0;
@@ -1978,137 +1982,137 @@ yyreduce:
                                                                     mystrcat(&yyval.nombreTmp,&paux);
 
                                                                     }
-#line 1982 "y.tab.c"
+#line 1986 "y.tab.c"
     break;
 
   case 39:
-#line 344 "analizador_yacc.y"
+#line 348 "analizador_yacc.y"
                                                    {mystrcpy(&yyval.codigo,&yyvsp[-1].codigo);
                             paux = strdup("\n");
                             mystrcat(&yyval.codigo,&paux);
                             mystrcat(&yyval.codigo,&yyvsp[0].codigo);}
-#line 1991 "y.tab.c"
+#line 1995 "y.tab.c"
     break;
 
   case 40:
-#line 348 "analizador_yacc.y"
+#line 352 "analizador_yacc.y"
                                             {mystrcpy(&yyval.codigo, &yyvsp[0].codigo);}
-#line 1997 "y.tab.c"
+#line 2001 "y.tab.c"
     break;
 
   case 41:
-#line 349 "analizador_yacc.y"
+#line 353 "analizador_yacc.y"
                                      {mystrcpy(&yyval.codigo,&yyvsp[0].codigo);}
-#line 2003 "y.tab.c"
+#line 2007 "y.tab.c"
     break;
 
   case 42:
-#line 350 "analizador_yacc.y"
+#line 354 "analizador_yacc.y"
                                                        {paux = strdup("{//inicio sentencia asig\n");
                               mystrcpy(&yyval.codigo,&paux);
                               mystrcat(&yyval.codigo, &yyvsp[0].codigo);
                               paux = strdup("}//fin sentencia asig\n");
                               mystrcat(&yyval.codigo,&paux);}
-#line 2013 "y.tab.c"
+#line 2017 "y.tab.c"
     break;
 
   case 43:
-#line 355 "analizador_yacc.y"
+#line 359 "analizador_yacc.y"
                                                 {paux = strdup("{//inicio sentencia if\n");
                               mystrcpy(&yyval.codigo,&paux);
                               mystrcat(&yyval.codigo,&yyvsp[0].codigo);
                               paux = strdup("}//fin sentencia if\n");
                               mystrcat(&yyval.codigo,&paux);}
-#line 2023 "y.tab.c"
+#line 2027 "y.tab.c"
     break;
 
   case 44:
-#line 360 "analizador_yacc.y"
+#line 364 "analizador_yacc.y"
                                                      {paux = strdup("{//inicio sentencia while\n");
                               mystrcpy(&yyval.codigo,&paux);
                               mystrcat(&yyval.codigo,&yyvsp[0].codigo);
                               paux = strdup("}//fin sentencia while\n");
                               mystrcat(&yyval.codigo,&paux);}
-#line 2033 "y.tab.c"
+#line 2037 "y.tab.c"
     break;
 
   case 45:
-#line 365 "analizador_yacc.y"
+#line 369 "analizador_yacc.y"
                                                         { paux = strdup("{//inicio sentencia do-until\n");
                               mystrcpy(&yyval.codigo,&paux);
                               mystrcat(&yyval.codigo,&yyvsp[0].codigo);
                               paux = strdup("}//fin sentencia do-until\n");
                               mystrcat(&yyval.codigo,&paux);
                               }
-#line 2044 "y.tab.c"
+#line 2048 "y.tab.c"
     break;
 
   case 46:
-#line 371 "analizador_yacc.y"
+#line 375 "analizador_yacc.y"
                                                     {paux = strdup("{//inicio sentencia entrada\n");
                               mystrcpy(&yyval.codigo,&paux);
                               mystrcat(&yyval.codigo,&yyvsp[0].codigo);
                               paux = strdup("}//fin sentencia entrada\n");
                               mystrcat(&yyval.codigo,&paux);
                               }
-#line 2055 "y.tab.c"
+#line 2059 "y.tab.c"
     break;
 
   case 47:
-#line 377 "analizador_yacc.y"
+#line 381 "analizador_yacc.y"
                                                    {paux = strdup("{//inicio sentencia salida\n");
                               mystrcpy(&yyval.codigo,&paux);
                               mystrcat(&yyval.codigo,&yyvsp[0].codigo);
                               paux = strdup("}//fin sentencia salida\n");
                               mystrcat(&yyval.codigo,&paux);
                               }
-#line 2066 "y.tab.c"
+#line 2070 "y.tab.c"
     break;
 
   case 48:
-#line 383 "analizador_yacc.y"
+#line 387 "analizador_yacc.y"
                                                      {paux = strdup("{//inicio sentencia return\n");
                               mystrcpy(&yyval.codigo,&paux);
                               mystrcat(&yyval.codigo,&yyvsp[0].codigo);
                               paux = strdup("}//fin sentencia return\n");
                               mystrcat(&yyval.codigo,&paux);}
-#line 2076 "y.tab.c"
+#line 2080 "y.tab.c"
     break;
 
   case 49:
-#line 388 "analizador_yacc.y"
+#line 392 "analizador_yacc.y"
                                                                     {procesaSentenciaAsignacion(yyvsp[-3],yyvsp[-1]);genCodigoAsignacion(&yyval,&yyvsp[-3],&yyvsp[-1]);}
-#line 2082 "y.tab.c"
+#line 2086 "y.tab.c"
     break;
 
   case 51:
-#line 390 "analizador_yacc.y"
+#line 394 "analizador_yacc.y"
                                                                    {procesaSentenciaControl(yyvsp[-2]);
                             genCodigoSi(&yyval,&yyvsp[-2],&yyvsp[0]);}
-#line 2089 "y.tab.c"
+#line 2093 "y.tab.c"
     break;
 
   case 52:
-#line 393 "analizador_yacc.y"
+#line 397 "analizador_yacc.y"
                                              {procesaSentenciaControl(yyvsp[-4]);genCodigoSino(&yyval,&yyvsp[-4],&yyvsp[-2],&yyvsp[0]);}
-#line 2095 "y.tab.c"
+#line 2099 "y.tab.c"
     break;
 
   case 53:
-#line 394 "analizador_yacc.y"
+#line 398 "analizador_yacc.y"
                                                                          {procesaSentenciaControl(yyvsp[-2]);
                             genCodigoMientras(&yyval,&yyvsp[-2],&yyvsp[0]);}
-#line 2102 "y.tab.c"
+#line 2106 "y.tab.c"
     break;
 
   case 54:
-#line 396 "analizador_yacc.y"
+#line 400 "analizador_yacc.y"
                                                                                 {procesaSentenciaControl(yyvsp[-2]);genCodigoHacerHasta(&yyval,&yyvsp[-2],&yyvsp[-5]);}
-#line 2108 "y.tab.c"
+#line 2112 "y.tab.c"
     break;
 
   case 55:
-#line 397 "analizador_yacc.y"
+#line 401 "analizador_yacc.y"
                                                           {paux = strdup("scanf(\"");
                             mystrcpy(&yyval.codigo,&paux);
                             mystrcat(&yyval.codigo,&textoScanf);
@@ -2120,11 +2124,11 @@ yyreduce:
                             // Se resetea la variable global
                             textoScanf = NULL;
                             }
-#line 2124 "y.tab.c"
+#line 2128 "y.tab.c"
     break;
 
   case 56:
-#line 408 "analizador_yacc.y"
+#line 412 "analizador_yacc.y"
                                                                   {mystrcpy(&yyval.codigo,&yyvsp[-1].codigo);
                             paux = strdup("printf(\"");
                             mystrcat(&yyval.codigo,&paux);
@@ -2137,24 +2141,118 @@ yyreduce:
                             // Se resetea la variable global
                             textoPrintf = NULL;
                             }
-#line 2141 "y.tab.c"
+#line 2145 "y.tab.c"
     break;
 
   case 57:
-#line 422 "analizador_yacc.y"
+#line 426 "analizador_yacc.y"
                                                      {procesaSentenciaRetornar(yyvsp[-1]);
                             mystrcpy(&yyval.codigo,&yyvsp[-1].codigo);
+                            
+                            if (yyvsp[-1].dimensiones == 1){
+    
+                              char* temporal_ret = temporal();
+                              paux = strdup("\n");
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(enumAString(yyvsp[-1].tipo));
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup("* ");
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(temporal_ret);
+                              mystrcat(&yyval.codigo,&paux);
+                              
+                              char numero[50];
+                              paux = strdup("=(");
+                              mystrcat(&yyval.codigo,&paux);
+
+                              paux = strdup(enumAString(yyvsp[-1].tipo));
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(" *) ");
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup("malloc(");
+                              mystrcat(&yyval.codigo,&paux);
+
+                              sprintf(numero,"%d",yyvsp[-1].TamDimen1*enumATamByte(yyvsp[-1].tipo));
+                              paux = strdup(numero);
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(");\nmemcpy(");
+                              mystrcat(&yyval.codigo,&paux);
+                            
+                              paux = strdup(temporal_ret);
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(",");
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(yyvsp[-1].nombreTmp);
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(",");
+                              mystrcat(&yyval.codigo,&paux);
+                              
+                              sprintf(numero,"%d",yyvsp[-1].TamDimen1*enumATamByte(yyvsp[-1].tipo));
+                              paux = strdup(numero);
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(");");
+                              mystrcat(&yyval.codigo,&paux);
+
+                              mystrcpy(&yyvsp[-1].nombreTmp,&temporal_ret);
+                            }else if (yyvsp[-1].dimensiones == 2){
+                              char* temporal_ret = temporal();
+                              paux = strdup("\n");
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(enumAString(yyvsp[-1].tipo));
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup("** ");
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(temporal_ret);
+                              mystrcat(&yyval.codigo,&paux);
+                              
+                              char numero[50];
+                              
+                              paux = strdup("=(");
+                              mystrcat(&yyval.codigo,&paux);
+
+                              paux = strdup(enumAString(yyvsp[-1].tipo));
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(" **) ");
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup("malloc(");
+                              mystrcat(&yyval.codigo,&paux);
+
+                              sprintf(numero,"%d",yyvsp[-1].TamDimen1*yyvsp[-1].TamDimen2*enumATamByte(yyvsp[-1].tipo));
+                              paux = strdup(numero);
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(");\nmemcpy(");
+                              mystrcat(&yyval.codigo,&paux);
+                            
+                              paux = strdup(temporal_ret);
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(",");
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(yyvsp[-1].nombreTmp);
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(",");
+                              mystrcat(&yyval.codigo,&paux);
+                              
+                              sprintf(numero,"%d",yyvsp[-1].TamDimen1*yyvsp[-1].TamDimen2*enumATamByte(yyvsp[-1].tipo));
+                              paux = strdup(numero);
+                              mystrcat(&yyval.codigo,&paux);
+                              paux = strdup(");");
+                              mystrcat(&yyval.codigo,&paux);
+
+                              mystrcpy(&yyvsp[-1].nombreTmp,&temporal_ret);
+
+                            }
+
                             paux = strdup("\nreturn ");
                             mystrcat(&yyval.codigo,&paux);
                             mystrcat(&yyval.codigo,&yyvsp[-1].nombreTmp);
                             paux = strdup(";\n");
                             mystrcat(&yyval.codigo,&paux);
                             }
-#line 2154 "y.tab.c"
+#line 2252 "y.tab.c"
     break;
 
   case 58:
-#line 430 "analizador_yacc.y"
+#line 528 "analizador_yacc.y"
                                                                              {mystrcpy(&yyval.nombreTmp,&yyvsp[-2].nombreTmp);
                             paux = strdup(",");
                             mystrcat(&yyval.nombreTmp,&paux);
@@ -2164,18 +2262,18 @@ yyreduce:
                             mystrcat(&yyval.codigo,&paux);
                             mystrcat(&yyval.codigo,&yyvsp[0].codigo);
                             }
-#line 2168 "y.tab.c"
+#line 2266 "y.tab.c"
     break;
 
   case 59:
-#line 439 "analizador_yacc.y"
+#line 537 "analizador_yacc.y"
                                                    {mystrcpy(&yyval.nombreTmp,&yyvsp[0].nombreTmp);
                               mystrcpy(&yyval.codigo,&yyvsp[0].codigo);}
-#line 2175 "y.tab.c"
+#line 2273 "y.tab.c"
     break;
 
   case 60:
-#line 441 "analizador_yacc.y"
+#line 539 "analizador_yacc.y"
                                         {mystrcpy(&yyval.nombreTmp,&yyvsp[0].nombreTmp);
                             mystrcpy(&yyval.codigo,&yyvsp[0].codigo);
                             paux = strdup(enumATipoForm(yyvsp[0].tipo));
@@ -2184,11 +2282,11 @@ yyreduce:
                             paux = strdup(" ");
                             mystrcat(&textoPrintf,&paux);
                             }
-#line 2188 "y.tab.c"
+#line 2286 "y.tab.c"
     break;
 
   case 61:
-#line 449 "analizador_yacc.y"
+#line 547 "analizador_yacc.y"
                                      {mystrcpy(&yyval.nombreTmp,&yyvsp[0].codigo);
                             paux = strdup("");
                             mystrcpy(&yyval.codigo,&paux);
@@ -2196,11 +2294,11 @@ yyreduce:
                             if (textoPrintf == NULL) mystrcpy(&textoPrintf, &paux);
                             else mystrcat(&textoPrintf,&paux);
                             }
-#line 2200 "y.tab.c"
+#line 2298 "y.tab.c"
     break;
 
   case 62:
-#line 456 "analizador_yacc.y"
+#line 554 "analizador_yacc.y"
                                        {
                             entradaTS ets = buscarEntrada(yyvsp[0].lexema);
                             yyvsp[0].tipo = ets.tipoDato;
@@ -2217,11 +2315,11 @@ yyreduce:
                             }
 
                             }
-#line 2221 "y.tab.c"
+#line 2319 "y.tab.c"
     break;
 
   case 63:
-#line 472 "analizador_yacc.y"
+#line 570 "analizador_yacc.y"
                                                                 {mystrcpy(&yyval.codigo,&yyvsp[-2].codigo);
                               paux = strdup(",&");
                               mystrcat(&yyval.codigo,&paux);
@@ -2239,37 +2337,37 @@ yyreduce:
                                 mystrcat(&textoScanf,&paux);
                               }
                               }
-#line 2243 "y.tab.c"
+#line 2341 "y.tab.c"
     break;
 
   case 64:
-#line 489 "analizador_yacc.y"
+#line 587 "analizador_yacc.y"
                                         {TS_InsertaIDENT(yyvsp[0]);
                             paux = strdup(yyvsp[0].codigo);
                             mystrcpy(&yyval.codigo,&paux);
                             }
-#line 2252 "y.tab.c"
+#line 2350 "y.tab.c"
     break;
 
   case 65:
-#line 493 "analizador_yacc.y"
+#line 591 "analizador_yacc.y"
                                                                             {TS_InsertaIDENT(yyvsp[0]);
                                                                              paux = strdup(",");
                                                                              mystrcat(&yyvsp[-2].codigo,&paux);
                                                                              mystrcat(&yyvsp[-2].codigo,&yyvsp[0].codigo);
                                                                              paux = strdup(yyvsp[-2].codigo);
                                                                              mystrcpy(&yyval.codigo,&paux);}
-#line 2263 "y.tab.c"
+#line 2361 "y.tab.c"
     break;
 
   case 67:
-#line 500 "analizador_yacc.y"
+#line 598 "analizador_yacc.y"
                                         {PILARG_insertaARG(yyvsp[0]);mystrcpy(&yyval.codigo,&yyvsp[0].codigo);mystrcpy(&yyval.nombreTmp,&yyvsp[0].nombreTmp);}
-#line 2269 "y.tab.c"
+#line 2367 "y.tab.c"
     break;
 
   case 68:
-#line 501 "analizador_yacc.y"
+#line 599 "analizador_yacc.y"
                                                                    {PILARG_insertaARG(yyvsp[0]);
                               mystrcpy(&yyval.nombreTmp,&yyvsp[-2].nombreTmp);
                               paux = strdup(",");
@@ -2280,163 +2378,217 @@ yyreduce:
                               mystrcat(&yyval.codigo,&paux);
                               mystrcat(&yyval.codigo,&yyvsp[0].codigo);
                               }
-#line 2284 "y.tab.c"
+#line 2382 "y.tab.c"
     break;
 
   case 69:
-#line 511 "analizador_yacc.y"
+#line 609 "analizador_yacc.y"
                                                       {yyval = yyvsp[-1];}
-#line 2290 "y.tab.c"
+#line 2388 "y.tab.c"
     break;
 
   case 70:
-#line 512 "analizador_yacc.y"
+#line 610 "analizador_yacc.y"
                                                   {yyval = procesaOperacionNegacion(yyvsp[0]);genCodigoOperadorUnNeg(&yyval,&yyvsp[0]);}
-#line 2296 "y.tab.c"
+#line 2394 "y.tab.c"
     break;
 
   case 71:
-#line 513 "analizador_yacc.y"
+#line 611 "analizador_yacc.y"
                                                    {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);genCodigoOperadorUn(&yyval,&yyvsp[0],yyvsp[-1].atrib);}
-#line 2302 "y.tab.c"
+#line 2400 "y.tab.c"
     break;
 
   case 72:
-#line 514 "analizador_yacc.y"
+#line 612 "analizador_yacc.y"
                                                                 {yyval = procesaOperacionMixtaCuandoUnaria(yyvsp[0]);genCodigoOperadorUn(&yyval,&yyvsp[0],yyvsp[-1].atrib);}
-#line 2308 "y.tab.c"
+#line 2406 "y.tab.c"
     break;
 
   case 73:
-#line 515 "analizador_yacc.y"
+#line 613 "analizador_yacc.y"
                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2314 "y.tab.c"
+#line 2412 "y.tab.c"
     break;
 
   case 74:
-#line 516 "analizador_yacc.y"
+#line 615 "analizador_yacc.y"
                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2320 "y.tab.c"
+#line 2418 "y.tab.c"
     break;
 
   case 75:
-#line 517 "analizador_yacc.y"
+#line 616 "analizador_yacc.y"
                                                               {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2326 "y.tab.c"
+#line 2424 "y.tab.c"
     break;
 
   case 76:
-#line 518 "analizador_yacc.y"
+#line 617 "analizador_yacc.y"
                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2332 "y.tab.c"
+#line 2430 "y.tab.c"
     break;
 
   case 77:
-#line 519 "analizador_yacc.y"
+#line 618 "analizador_yacc.y"
                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2338 "y.tab.c"
+#line 2436 "y.tab.c"
     break;
 
   case 78:
-#line 520 "analizador_yacc.y"
+#line 619 "analizador_yacc.y"
                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2344 "y.tab.c"
+#line 2442 "y.tab.c"
     break;
 
   case 79:
-#line 521 "analizador_yacc.y"
+#line 620 "analizador_yacc.y"
                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2350 "y.tab.c"
+#line 2448 "y.tab.c"
     break;
 
   case 80:
-#line 522 "analizador_yacc.y"
+#line 621 "analizador_yacc.y"
                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2356 "y.tab.c"
+#line 2454 "y.tab.c"
     break;
 
   case 81:
-#line 523 "analizador_yacc.y"
+#line 622 "analizador_yacc.y"
                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2362 "y.tab.c"
+#line 2460 "y.tab.c"
     break;
 
   case 82:
-#line 524 "analizador_yacc.y"
+#line 623 "analizador_yacc.y"
                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2368 "y.tab.c"
+#line 2466 "y.tab.c"
     break;
 
   case 83:
-#line 525 "analizador_yacc.y"
+#line 624 "analizador_yacc.y"
                                                            {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2374 "y.tab.c"
+#line 2472 "y.tab.c"
     break;
 
   case 84:
-#line 526 "analizador_yacc.y"
+#line 625 "analizador_yacc.y"
                                                             {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorBin(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2380 "y.tab.c"
+#line 2478 "y.tab.c"
     break;
 
   case 85:
-#line 527 "analizador_yacc.y"
+#line 626 "analizador_yacc.y"
                                                              {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorMix(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2386 "y.tab.c"
+#line 2484 "y.tab.c"
     break;
 
   case 86:
-#line 528 "analizador_yacc.y"
+#line 627 "analizador_yacc.y"
                                                               {yyval = procesaOperacionBinariaOMixta(yyvsp[-2],yyvsp[0],yyvsp[-1].atrib);genCodigoOperadorMix(&yyval,&yyvsp[-2],&yyvsp[0],yyvsp[-1].atrib);}
-#line 2392 "y.tab.c"
+#line 2490 "y.tab.c"
     break;
 
   case 87:
-#line 529 "analizador_yacc.y"
+#line 628 "analizador_yacc.y"
                                                      {yyval = yyvsp[0];
                               mystrcpy(&yyval.nombreTmp,&yyvsp[0].nombreTmp);
                               mystrcpy(&yyval.codigo,&yyvsp[0].codigo);
                               }
-#line 2401 "y.tab.c"
+#line 2499 "y.tab.c"
     break;
 
   case 88:
-#line 533 "analizador_yacc.y"
+#line 632 "analizador_yacc.y"
                                             {yyval = yyvsp[0];
                               mystrcpy(&yyval.nombreTmp,&yyvsp[0].nombreTmp);
                               mystrcpy(&yyval.codigo,&yyvsp[0].codigo);
                               }
-#line 2410 "y.tab.c"
+#line 2508 "y.tab.c"
     break;
 
   case 89:
-#line 537 "analizador_yacc.y"
+#line 636 "analizador_yacc.y"
                                           {yyval = yyvsp[0];
                               mystrcpy(&yyval.codigo, &yyvsp[0].codigo);
                               paux = strdup("\n");
                               mystrcat(&yyval.codigo,&paux);
                               paux = temporal();
                               mystrcpy(&yyval.nombreTmp,&paux);
-                              paux = strdup(enumAString(yyval.tipo));
-                              mystrcat(&yyval.codigo,&paux);
-                              paux = strdup(" ");
-                              mystrcat(&yyval.codigo,&paux);
-                              paux = strdup(yyval.nombreTmp);
-                              mystrcat(&yyval.codigo,&paux);
-                              paux = strdup(";\n");
-                              mystrcat(&yyval.codigo,&paux);
-                              paux = strdup(yyval.nombreTmp);
-                              mystrcat(&yyval.codigo,&paux);
-                              paux = strdup("=");
-                              mystrcat(&yyval.codigo,&paux);
-                              mystrcat(&yyval.codigo,&yyvsp[0].nombreTmp);
-                              paux = strdup(";\n");
-                              mystrcat(&yyval.codigo,&paux);}
-#line 2436 "y.tab.c"
+                              if (yyval.dimensiones == 0){
+                                paux = strdup(enumAString(yyval.tipo));
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup(" ");
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup(yyval.nombreTmp);
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup(";\n");
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup(yyval.nombreTmp);
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup("=");
+                                mystrcat(&yyval.codigo,&paux);
+                                mystrcat(&yyval.codigo,&yyvsp[0].nombreTmp);
+                                paux = strdup(";\n");
+                                mystrcat(&yyval.codigo,&paux);
+                              }else if (yyval.dimensiones == 1){
+                                paux = strdup(enumAString(yyval.tipo));
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup(" ");
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup(yyval.nombreTmp);
+                                mystrcat(&yyval.codigo,&paux);
+
+                                char numero[50];
+                                sprintf(numero,"[%d];\n",yyval.TamDimen1);
+                                paux = strdup(numero);
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup("memcpy(");
+                                mystrcat(&yyval.codigo, &paux);
+                                paux = strdup(yyval.nombreTmp);
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup(",");
+                                mystrcat(&yyval.codigo,&paux);
+                                mystrcat(&yyval.codigo, &yyvsp[0].nombreTmp);
+                                paux = strdup(",");
+                                mystrcat(&yyval.codigo,&paux);
+                                sprintf(numero,"%d);\n",yyval.TamDimen1*enumATamByte(yyval.tipo));
+                                paux = strdup(numero);
+                                mystrcat(&yyval.codigo,&paux);
+
+                              }else if (yyval.dimensiones == 2){
+                                paux = strdup(enumAString(yyval.tipo));
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup(" ");
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup(yyval.nombreTmp);
+                                mystrcat(&yyval.codigo,&paux);
+
+                                char numero[50];
+                                sprintf(numero,"[%d][%d];\n",yyval.TamDimen1,yyval.TamDimen2);
+                                paux = strdup(numero);
+                                mystrcat(&yyval.codigo,&paux);
+
+                                paux = strdup("memcpy(");
+                                mystrcat(&yyval.codigo, &paux);
+                                paux = strdup(yyval.nombreTmp);
+                                mystrcat(&yyval.codigo,&paux);
+                                paux = strdup(",");
+                                mystrcat(&yyval.codigo,&paux);
+                                mystrcat(&yyval.codigo, &yyvsp[0].nombreTmp);
+                                paux = strdup(",");
+                                mystrcat(&yyval.codigo,&paux);
+                                sprintf(numero,"%d);\n",yyval.TamDimen1*yyval.TamDimen2*enumATamByte(yyval.tipo));
+                                paux = strdup(numero);
+                                mystrcat(&yyval.codigo,&paux);
+
+                              }
+                              }
+#line 2588 "y.tab.c"
     break;
 
   case 91:
-#line 559 "analizador_yacc.y"
+#line 712 "analizador_yacc.y"
                                                           {entradaTS ets = buscarEntrada(yyvsp[-2].lexema);
                                                            procesaLlamadaFuncionSinArgumentos(ets);
                                                            yyval = entradaAAtributos(ets);
@@ -2447,17 +2599,17 @@ yyreduce:
                                                            mystrcat(&yyval.nombreTmp,&paux);
                                                            paux = strdup("");
                                                            mystrcpy(&yyval.codigo,&paux);}
-#line 2451 "y.tab.c"
+#line 2603 "y.tab.c"
     break;
 
   case 92:
-#line 569 "analizador_yacc.y"
+#line 722 "analizador_yacc.y"
                                                        {PILARG_insertaMARCA();}
-#line 2457 "y.tab.c"
+#line 2609 "y.tab.c"
     break;
 
   case 93:
-#line 570 "analizador_yacc.y"
+#line 723 "analizador_yacc.y"
                               {entradaTS ets = buscarEntrada(yyvsp[-4].lexema);
                                procesaLlamadaFuncionConArgumentos(ets);
                                yyval = entradaAAtributos(ets);
@@ -2470,77 +2622,95 @@ yyreduce:
                                mystrcat(&yyval.nombreTmp,&yyvsp[-1].nombreTmp);
                                paux = strdup(")");
                                mystrcat(&yyval.nombreTmp,&paux);}
-#line 2474 "y.tab.c"
+#line 2626 "y.tab.c"
     break;
 
   case 94:
-#line 582 "analizador_yacc.y"
+#line 735 "analizador_yacc.y"
                                      {yyval.atrib = yyvsp[0].atrib;}
-#line 2480 "y.tab.c"
+#line 2632 "y.tab.c"
     break;
 
   case 95:
-#line 583 "analizador_yacc.y"
+#line 736 "analizador_yacc.y"
                                      {paux = strdup(yyvsp[0].lexema);mystrcpy(&yyval.codigo,&paux);}
-#line 2486 "y.tab.c"
+#line 2638 "y.tab.c"
     break;
 
   case 96:
-#line 584 "analizador_yacc.y"
+#line 737 "analizador_yacc.y"
                                     {paux = strdup(yyvsp[0].lexema);mystrcpy(&yyval.codigo,&paux);}
-#line 2492 "y.tab.c"
+#line 2644 "y.tab.c"
     break;
 
   case 97:
-#line 585 "analizador_yacc.y"
+#line 738 "analizador_yacc.y"
                                     {yyval.tipo = atributoAEnum(yyvsp[0].atrib+1);
                             paux = strdup("");
                             mystrcpy(&yyval.codigo,&paux);
                             paux = strdup(yyvsp[0].lexema);
-                            mystrcpy(&yyval.nombreTmp,&paux);}
-#line 2502 "y.tab.c"
+                            mystrcpy(&yyval.nombreTmp,&paux);
+                            }
+#line 2655 "y.tab.c"
     break;
 
   case 98:
-#line 590 "analizador_yacc.y"
+#line 744 "analizador_yacc.y"
                                           {yyval.tipo = entero;
                               paux = strdup("");
                               mystrcpy(&yyval.codigo,&paux);
                               paux = strdup(yyvsp[0].lexema);
                               mystrcpy(&yyval.nombreTmp,&paux);
                               }
-#line 2513 "y.tab.c"
+#line 2666 "y.tab.c"
     break;
 
   case 99:
-#line 596 "analizador_yacc.y"
+#line 750 "analizador_yacc.y"
                                                                     { yyval.tipo = yyvsp[-1].tipo;
                                                                       mystrcpy(&yyval.codigo,&yyvsp[-1].codigo);
+                                                                      paux = temporal();
+                                                                      mystrcpy(&yyval.nombreTmp,&paux);
+                                                                      paux = strdup("\n");
+                                                                      mystrcat(&yyval.codigo,&paux);
+                                                                      paux = strdup(enumAString(yyvsp[-1].tipo));
+                                                                      mystrcat(&yyval.codigo,&paux);
+                                                                      paux = strdup(" ");
+                                                                      mystrcat(&yyval.codigo,&paux);
+                                                                      paux = strdup(yyval.nombreTmp);
+                                                                      mystrcat(&yyval.codigo,&paux);
                                                                       if (yyvsp[-1].TamDimen2==1){
                                                                         yyval.TamDimen2 = 0;
                                                                         yyval.TamDimen1 = yyvsp[-1].TamDimen1;
                                                                         yyval.dimensiones = 1;
-
-                                                                        mystrcpy(&yyval.nombreTmp, &yyvsp[-1].nombreTmp);
+                                                                        
+                                                                        char numero[50];
+                                                                        sprintf(numero,"[%d]=",yyvsp[-1].TamDimen1);
+                                                                        paux = strdup(numero);
+                                                                        mystrcat(&yyval.codigo,&paux);
+                                                                        mystrcat(&yyval.codigo, &yyvsp[-1].nombreTmp);
+                                                                        paux = strdup(";");
+                                                                        mystrcat(&yyval.codigo,&paux);
                                                                       }
                                                                       else{
                                                                         yyval.TamDimen2 = yyvsp[-1].TamDimen2;
                                                                         yyval.TamDimen1 = yyvsp[-1].TamDimen1;
                                                                         yyval.dimensiones = 2;
+                                                                        char numero[50];
+                                                                        sprintf(numero,"[%d][%d]={",yyvsp[-1].TamDimen1,yyvsp[-1].TamDimen2);
+                                                                        paux = strdup(numero);
+                                                                        mystrcat(&yyval.codigo,&paux);
 
-                                                                        paux = strdup("{");
-                                                                        mystrcpy(&yyval.nombreTmp,&paux);
-                                                                        mystrcat(&yyval.nombreTmp,&yyvsp[-1].nombreTmp);
-                                                                        paux = strdup("}");
-                                                                        mystrcat(&yyval.nombreTmp,&paux);
-
+                                                                        mystrcat(&yyval.codigo,&yyvsp[-1].nombreTmp);
+                                                                        paux = strdup("};");
+                                                                        mystrcat(&yyval.codigo,&paux);
                                                                       }
                                                                       }
-#line 2540 "y.tab.c"
+#line 2710 "y.tab.c"
     break;
 
   case 100:
-#line 618 "analizador_yacc.y"
+#line 789 "analizador_yacc.y"
                                                                               {yyval.TamDimen2 = yyvsp[-2].TamDimen2 + 1;
 
                                                                               mystrcpy(&yyval.codigo,&yyvsp[-2].codigo);
@@ -2565,11 +2735,11 @@ yyreduce:
                                                                               }else{
                                                                                 yyval.TamDimen1 = yyvsp[-2].TamDimen1;
                                                                               }}
-#line 2569 "y.tab.c"
+#line 2739 "y.tab.c"
     break;
 
   case 101:
-#line 642 "analizador_yacc.y"
+#line 813 "analizador_yacc.y"
                                                           {
                                                                           yyval.TamDimen2 = 1;
                                                                           yyval.TamDimen1 = yyvsp[0].TamDimen1;
@@ -2581,22 +2751,22 @@ yyreduce:
                                                                           paux = strdup("}");
                                                                           mystrcat(&yyval.nombreTmp,&paux);
                                                                           }
-#line 2585 "y.tab.c"
+#line 2755 "y.tab.c"
     break;
 
   case 102:
-#line 654 "analizador_yacc.y"
+#line 825 "analizador_yacc.y"
                                           {
                                                                           yyval.TamDimen1 = 1;
                                                                           yyval.tipo = yyvsp[0].tipo;
                                                                           mystrcpy(&yyval.nombreTmp, &yyvsp[0].nombreTmp);
                                                                           mystrcpy(&yyval.codigo, &yyvsp[0].codigo);
                                                                           }
-#line 2596 "y.tab.c"
+#line 2766 "y.tab.c"
     break;
 
   case 103:
-#line 660 "analizador_yacc.y"
+#line 831 "analizador_yacc.y"
                                                                          {yyval.TamDimen1 = yyvsp[-2].TamDimen1 + 1;
 
                                                                           mystrcpy(&yyval.codigo,&yyvsp[-2].codigo);
@@ -2613,11 +2783,11 @@ yyreduce:
                                                                                 printf("[Linea %d]",linea_actual);
                                                                                 printf("ERROR SEMÁNTICO: Array con distintos tipos.\n");
                                                                           }}
-#line 2617 "y.tab.c"
+#line 2787 "y.tab.c"
     break;
 
 
-#line 2621 "y.tab.c"
+#line 2791 "y.tab.c"
 
       default: break;
     }
@@ -2849,7 +3019,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 678 "analizador_yacc.y"
+#line 849 "analizador_yacc.y"
 
 
 #ifdef DOSWINDOWS
@@ -3409,6 +3579,18 @@ void procesaSentenciaRetornar(atributos ret){
      if (TS[i].tipoDato != ret.tipo){
        printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: El valor retornado no se corresponde con el que devuelve la función.\n");
      }
+     if (TS[i].dimensiones != ret.dimensiones){
+       printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: La dimension del valor retornado no se corresponde con la que devuelve la función.\n");
+     }
+
+
+     if (TS[i].TamDimen1 != ret.TamDimen1){
+       printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: La dimension 1 del valor retornado no se corresponde con la que devuelve la función.\n");
+     }
+
+     if (TS[i].TamDimen2 != ret.TamDimen2){
+       printf("[Linea %d]",linea_actual);   printf("ERROR SEMÁNTICO: La dimension 2 del valor retornado no se corresponde con la que devuelve la función.\n");
+     }
   }
 }
 
@@ -3482,6 +3664,15 @@ char* enumAChar(dtipo t){
   return strdup("Ninguno");
 }
 
+int enumATamByte(dtipo t){
+
+  if (t == entero)return 4;
+  if (t == booleano)return 4;
+  if (t == real)return 8; 
+  if (t == caracter)return 1;
+
+  return 0;
+}
 
 
 
@@ -3585,6 +3776,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,dimy)
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,1)
     genCodigoOperadorMix(obj, at2, at1, opdor);
+    return;
   }
 
   paux = temporal();
@@ -3632,7 +3824,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array(tmp%d,op1,op2,dimx,1)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -3676,7 +3868,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array(tmp%d,op1,op2,dimx,dimy)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -3718,7 +3910,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,1)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -3762,7 +3954,7 @@ void genCodigoOperadorMix(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,dimy)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -3799,6 +3991,7 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,dimy)
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,1)
     genCodigoOperadorBin(obj, at2, at1, opdor);
+    return;
   }
   paux = temporal();
   mystrcpy(&(*obj).nombreTmp,&paux);
@@ -3844,7 +4037,7 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array(tmp%d,op1,op2,dimx,1)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -3888,7 +4081,7 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array(tmp%d,op1,op2,dimx,dimy)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -3907,10 +4100,18 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(", ");
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("");
-    sprintf(paux, "%d", (*at2).TamDimen1);
+    sprintf(paux, "%d", (*at1).TamDimen1);
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup(", ");
     mystrcat(&(*obj).codigo,&paux);
+    if (opdor == 2){
+        
+      paux = strdup("");
+      sprintf(paux, "%d", (*at1).TamDimen2);
+      mystrcat(&(*obj).codigo,&paux);
+      paux = strdup(", ");
+      mystrcat(&(*obj).codigo,&paux);
+    }
     paux = strdup("");
     sprintf(paux, "%d", (*at2).TamDimen2);
     mystrcat(&(*obj).codigo,&paux);
@@ -3930,7 +4131,7 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,1)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -3974,7 +4175,7 @@ void genCodigoOperadorBin(atributos* obj, atributos* at1, atributos* at2, int op
     paux = strdup(";\n");
     mystrcat(&(*obj).codigo,&paux);
     // tipo_operador_array_num(tmp%d,op1,op2,dimx,dimy)
-    sprintf(paux, "%s",enumAString(buscarEntrada((*at1).nombreTmp).tipoDato));//tipo
+    sprintf(paux, "%s",enumAString((*at1).tipo));//tipo
     mystrcat(&(*obj).codigo,&paux);
     paux = strdup("_");
     mystrcat(&(*obj).codigo,&paux);
@@ -4011,15 +4212,20 @@ void genCodigoOperadorUn(atributos* obj, atributos* at1, int opdor){
   mystrcpy(&(*obj).codigo,&(*at1).codigo);
   paux = strdup("\n");
   mystrcat(&(*obj).codigo,&paux);
-  paux = (*obj).nombreTmp;
+  paux = strdup(enumAString((*obj).tipo));
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(" ");
+  mystrcat(&(*obj).codigo,&paux);
+
+  paux = strdup((*obj).nombreTmp);
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup(";\n");
   mystrcat(&(*obj).codigo,&paux);
-  paux = (*obj).nombreTmp;
+  paux = strdup((*obj).nombreTmp);
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup("=");
   mystrcat(&(*obj).codigo,&paux);
-  paux = strdup(opdorBinAString(opdor));
+  paux = strdup(opdorUnAString(opdor));
   mystrcat(&(*obj).codigo,&paux);
   mystrcat(&(*obj).codigo,&(*at1).nombreTmp);
   paux = strdup(";\n");
@@ -4033,6 +4239,9 @@ void genCodigoOperadorUnNeg(atributos* obj, atributos* at1){
   mystrcpy(&(*obj).nombreTmp,&paux);
   mystrcpy(&(*obj).codigo,&(*at1).codigo);
   paux = strdup("\n");
+  mystrcat(&(*obj).codigo,&paux);
+  mystrcat(&(*obj).codigo,&paux);
+  paux = strdup(enumAString((*obj).tipo));
   mystrcat(&(*obj).codigo,&paux);
   paux = strdup(" ");
   mystrcat(&(*obj).codigo,&paux);
@@ -4070,9 +4279,22 @@ void genCodigoAsignacion(atributos* obj, atributos* at1, atributos* at2){
   {
     int dx = (*at2).TamDimen1;
     int dy = ((*at2).dimensiones == 2)? (*at2).TamDimen2 : 1;
-
-    paux = strdup("");
-    sprintf(paux, "memcpy(%s,%s,%d);\n",(*at1).nombreTmp,(*at2).nombreTmp,dy*dx);
+    int tam_bytes = enumATamByte((*obj).tipo);
+    paux = strdup("memcpy(");
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup((*at1).nombreTmp);
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup(",");
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup((*at2).nombreTmp);
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup(",");
+    mystrcat(&(*obj).codigo,&paux);
+    char numero[50];
+    sprintf(numero,"%d",dy*dx*tam_bytes);
+    paux = strdup(numero);
+    mystrcat(&(*obj).codigo,&paux);
+    paux = strdup(");\n");
     mystrcat(&(*obj).codigo,&paux);
   }
 }
@@ -4224,10 +4446,37 @@ void genCodigoHacerHasta(atributos* obj,atributos* cond,atributos* sent){
 
 }
 
+void quitarCorchetesCabecera(char* cadena){
+  char* aux;
+  int i = 0;
+  while (i < strlen(cadena)){
+    if (cadena[i] == '[') break;
+    i++;
+  }
+
+  while (i < strlen(cadena)){
+    cadena[i] = '\0';
+  }
+}
+
 void genCabeceraSubprograma(atributos* obj, char* tipo, atributos* atr, atributos* args)
 {
-  sprintf(paux,"%s ", tipo);
+  sprintf(paux,"%s", tipo);
   mystrcpy(&(*obj).codigo, &paux);
+
+  if ((*atr).dimensiones == 1){
+    paux = strdup("*");
+    mystrcat(&(*obj).codigo, &paux);
+    quitarCorchetesCabecera((*atr).codigo);
+  } else if ((*atr).dimensiones == 2){
+    paux = strdup("**");
+    mystrcat(&(*obj).codigo, &paux);
+    quitarCorchetesCabecera((*atr).codigo);
+ }
+
+  paux = strdup(" ");
+  mystrcat(&(*obj).codigo, &paux);
+  
   mystrcat(&(*obj).codigo, &(*atr).codigo);
   paux = strdup("(");
   mystrcat(&(*obj).codigo,&paux);

@@ -6,7 +6,15 @@ programa_principal(){
   fin declarar
   
   entero foo[5](entero a[2,5],caracter b[5]){
-  	retornar 1;
+  	declarar
+  	entero asdfa[5];
+  	fin declarar
+  	asdfa = [2,3,1,2,3];
+  	retornar asdfa;
+  }
+  
+  caracter boo[2,2](){
+  	retornar ['a','b';'c','d'];
   }
   
   vec1[4] = 3.0;
@@ -19,4 +27,5 @@ programa_principal(){
   vec = vec1 + vec2 +vec3;
   vec = vec * 3.0;
   matR = (mat1 - mat2);
+  
 }

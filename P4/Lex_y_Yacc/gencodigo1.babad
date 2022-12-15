@@ -1,0 +1,16 @@
+programa_principal(){
+
+  declarar
+  entero n, curr;
+  entero a[5];
+  fin declarar
+
+  escribir "introduce numero :";
+  leer n;
+  escribir n, "==";
+  curr = 2;
+  a = 2*a;
+
+  escribir "\n";
+
+}
