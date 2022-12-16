@@ -1,0 +1,82 @@
+programa_principal(){
+declarar
+	entero n_ent, lista_ent[10];
+fin declarar
+entero finbonnaci[10](entero n){
+
+	declarar
+		entero lista_fib[10], i;
+	fin declarar
+	
+	entero mult_por_dos[10](entero list[10]){
+		declarar
+			entero lista_dos[10],j, resultado_final;
+		fin declarar
+		
+		entero mult_matrc(entero array_a_matriz[10]){
+			declarar
+				entero m1[1,10], m2[10,1], m_res[1,1], resultado, ind_array_a_mat;
+			fin declarar
+			
+			ind_array_a_mat = 0;
+			mientras (ind_array_a_mat < 10){
+				m1[0,ind_array_a_mat] = array_a_matriz[ind_array_a_mat];
+				m2[ind_array_a_mat,0] = array_a_matriz[ind_array_a_mat];
+				ind_array_a_mat = ind_array_a_mat + 1;
+			}
+
+			m_res = m1**m2;
+			resultado = m_res[0,0];
+			escribir "EL resultado es: ", resultado;
+			retornar resultado;
+		}
+
+		lista_dos = list*2;
+
+		j = 0;
+		mientras (j < 10){
+			escribir lista_dos[j], " ";
+			j = j+ 1;
+		}
+		escribir "\n";
+		resultado_final = mult_matrc(lista_dos);
+
+		retornar lista_dos;
+	}
+
+	i = 0;
+	mientras (i < 10){
+		lista_fib[i] = 0;
+		i = i + 1;
+	}
+	si (n > 1){
+		lista_fib[1] = 1;
+	}
+	i = 2;
+	mientras (i < n){
+		lista_fib[i] = lista_fib[i-1]+lista_fib[i-2];
+		i = i + 1;
+	}
+
+
+	i = 0;
+	mientras (i < 10){
+		escribir lista_fib[i], " ";
+		i = i + 1;
+	}
+	escribir "\n";
+
+	lista_fib = mult_por_dos(lista_fib);
+	retornar lista_fib;
+}
+	escribir "Introduzca la entrada: ";
+	leer n_ent;
+	
+
+	si (n_ent <= 10 && n_ent >= 1){	
+		lista_ent = finbonnaci(n_ent);
+	} si no{
+		escribir "EL número intrdoducido debe estar entre 1 y 10\n";
+	}
+
+}
