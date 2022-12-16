@@ -1,0 +1,19 @@
+programa_principal(){
+  declarar
+	booleano clave[10];
+	caracter mensaje[10];
+	entero n;
+  fin declarar
+  n = 0; 
+  mensaje = ['x','c','d','a','l','r','u','l','o','s']; 
+ 
+  clave = [falso,cierto,falso,cierto,falso,cierto,falso,cierto,cierto,cierto];
+  n = 0;
+  escribir "El mensaje descifrado es: ";
+  mientras (n != 10){
+  	si (clave[n]) escribir mensaje[n];
+  	n = n + 1; 
+  }
+  escribir "\n";
+  
+}

@@ -1,0 +1,32 @@
+programa_principal(){
+  declarar
+    real vec[5], vec1[5], vec2[5], vec3[5];
+    booleano mat[2,3];
+    entero mat1[2,3], matR[2,3], mat2[2,3], mat3[2,3];
+  fin declarar
+  
+  entero foo[5](entero a[2,5],caracter b[5]){
+  	declarar
+  	entero asdfa[5];
+  	fin declarar
+  	asdfa = [2,3,1,2,3];
+  	retornar asdfa;
+  }
+  
+  caracter boo[2,2](){
+  	retornar ['a','b';'c','d'];
+  }
+  
+  vec1[4] = 3.0;
+  vec2[4] = (3.0+2.0)*2.0;
+
+  mat[1,3*3-2*2*2] = mat[1,5*3-13];
+  
+  vec = vec1 * vec2 ;
+  mat2 = [2,3,4;5,1,2];
+  matR = (mat1 / mat2);
+  vec = vec1 + vec2 +vec3;
+  vec = vec * 3.0;
+  matR = (mat1 - mat2);
+  
+}

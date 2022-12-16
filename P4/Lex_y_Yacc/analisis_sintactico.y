@@ -368,10 +368,16 @@ void TS_VaciarENTRADAS(){
 
   while (TS[TOPE-1].entrada != marca) TOPE--;
 
-  if (TOPE > 0)
+  if (TOPE > 0){
     TOPE--;
-  else
+    int iaux = TOPE-1;
+    if (iaux > 0){
+      while (TS[iaux].entrada != funcion){TS[iaux].valido = -1;iaux--;}
+      TS[iaux].valido = -1;
+    }
+  }else{
     fprintf(stderr, "Error: No se encontró marca al vaciar tabla de símbolos\n");
+  }
 }
 
 
@@ -753,7 +759,7 @@ void procesaSentenciaRetornar(atributos ret){
   int i = TOPE-1;
   
   while (i>=1){
-    if (TS[i].entrada == marca && (TS[i-1].entrada == parametro_formal || TS[i-1].entrada == funcion)) break;
+    if (TS[i].entrada == marca && TS[i-1].valido != -1 && ((TS[i-1].entrada == parametro_formal || TS[i-1].entrada == funcion))) break;
     i--;
   }
 

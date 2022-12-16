@@ -1,0 +1,38 @@
+programa_principal(){
+  declarar
+    entero m[2,2],d[2,2],pi[2,2],pd[2,2];
+    entero r1[2,2],r2[2,2];
+    entero i,j,n;
+    entero diff[2,2];
+  fin declarar
+  
+  entero diferenciaPotencias[2,2](entero num, entero a[2,2],entero diag[2,2],entero mi[2,2],entero md[2,2]){
+  	declarar
+  		entero r1[2,2],r2[2,2];
+  	fin declarar
+  	  r1 = a;
+	  r2 = diag;
+  
+	  mientras (num > 1){
+ 	 	r1 = r1 ** a;
+  		r2 = r2 ** diag;
+  		num = num - 1;
+  	}
+  
+	  r2 = mi**r2**md;
+  
+  	retornar (r2-r1);
+  }
+  
+  m = [-10,3;-36,11];
+  d = [-1,0;0,2];
+  pd = [4,-1;-3,1];
+  pi = [1,1;3,4];
+  escribir "introduce numero :";
+  leer n;
+  
+  diff = diferenciaPotencias(n,m,d,pi,pd);
+  
+  escribir "Las diferencias en cada componente son :", diff[0,0],diff[0,1],diff[1,0],diff[1,1],"\n";
+  
+}

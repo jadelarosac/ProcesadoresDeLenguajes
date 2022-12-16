@@ -1,0 +1,40 @@
+programa_principal(){
+
+  declarar
+    entero n, curr;
+  fin declarar
+
+  booleano es_divisible(entero a, entero b)
+  {
+    declarar
+      entero d;
+      booleano resultado;
+    fin declarar
+
+    d = a / b;
+
+    si ( d * b == a ) resultado = cierto;
+    si no resultado = falso;
+
+    retornar resultado;
+  }
+
+  escribir "introduce numero :";
+  leer n;
+  escribir n, "==";
+  curr = 2;
+
+  mientras (curr <= n){
+    si (es_divisible(n, curr))
+    {
+      escribir "*", curr;
+      n = n/curr;
+    }
+    si no
+      curr = curr + 1;
+  }
+  escribir "\n";
+
+}
+
+

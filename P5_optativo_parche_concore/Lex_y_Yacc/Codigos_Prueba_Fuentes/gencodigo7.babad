@@ -1,0 +1,13 @@
+programa_principal(){
+  declarar
+    real vec[30];
+    booleano mat[3,2];
+  fin declarar
+  
+  vec[4] = 7.0;
+  
+  mat[2,1] = cierto;
+
+
+  escribir "Hola, mundo";
+}
